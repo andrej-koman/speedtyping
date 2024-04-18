@@ -5,9 +5,12 @@ export default async function HomePage() {
   return (
     <>
       <SignedOut>
-        <main className="flex justify-center items-center mt-3">
+        <main className="flex justify-center items-center mt-3 flex-col">
           <h1 className="text-4xl font-bold text-center">
-            Welcome to the Quote Game. Please sign in to play!
+            Welcome.
+          </h1>
+          <h1>
+            Please sign in to play!
           </h1>
         </main>
       </SignedOut>
