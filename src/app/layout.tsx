@@ -28,6 +28,7 @@ export default function RootLayout({
           <TopNav />
           {children}
         </body>
+        <script rel="preload" src="https://kit.fontawesome.com/4482d0fd90.js" crossOrigin="anonymous" async />
       </html>
     </ClerkProvider>
   );

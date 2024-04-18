@@ -7,12 +7,10 @@ export default async function Play() {
 
     const text = (await getRandomQuote())[0];
     if (!text) {
-        throw new Error("No quotes found");
+        throw new Error("No quotes found. Please add some quotes to the database.");
     };
 
     return (
-        <div className="container flex flex-col h-14 max-w-screen-lg items-center justify-between">
-            <Game text={text.text} />
-        </div>
+        <Game text={text.text} />
     )
 }

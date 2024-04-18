@@ -8,6 +8,7 @@ type GameProps = {
     currentWord: string;
     typing: string;
     hasStarted: boolean;
+    hasEnded?: boolean;
     time: number;
     wpm: number;
 }
@@ -16,7 +17,7 @@ export default function Game({ text }: { text: string }) {
     // Splice the text into an array of words
     const tmp = text.split(" ");
 
-    const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
+    const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     const [game, setGame] = useState<GameProps>({
         text: "",
@@ -54,7 +55,34 @@ export default function Game({ text }: { text: string }) {
         setGame((prevGame) => ({ ...prevGame, hasStarted: false }));
     }
 
+    const startTimer = () => {
+        const id = setInterval(() => {
+            setGame(prevGame => ({ ...prevGame, time: prevGame.time + 1 }));
+        }, 100);
+        setIntervalId(id);
+    };
+
+    const stopTimer = () => {
+        if (intervalId) {
+            clearInterval(intervalId);
+            setIntervalId(null);
+        }
+    };
+
     /** HOOKS */
+    useEffect(() => {
+        if (game.hasStarted) {
+            startTimer();
+        } else {
+            stopTimer();
+        }
+
+        return () => {
+            stopTimer();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [game.hasStarted]);
+
     useEffect(() => {
         const calculateWPM = () => {
             // Calculate the words per minute
@@ -105,7 +133,8 @@ export default function Game({ text }: { text: string }) {
                         ...prevGame,
                         text: (prevGame.text || '') + " " + prevGame.currentWord,
                         hasStarted: false,
-                        typing: ""
+                        typing: "",
+                        hasEnded: true,
                     };
                 }
 
@@ -116,47 +145,45 @@ export default function Game({ text }: { text: string }) {
 
         if (game.hasStarted) {
             document.addEventListener("keydown", handleKeyDown);
-
-            // setting time from 0 to 1 every 100 milisecond using javascript setInterval method
-
-            setIntervalId(setInterval(() => setGame((prevGame) => ({ ...prevGame, time: prevGame.time + 1 })), 100));
         } else {
             document.removeEventListener("keydown", handleKeyDown);
-            clearInterval(intervalId);
         }
 
         // Cleanup function to remove the event listener when the component unmounts
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
-            clearInterval(intervalId);
         };
     }, [game.hasStarted, game.typing, game.currentWord, game.words, intervalId, game.text, game.time]); // Empty dependency array means this effe</GameProps></Timeout>ct runs once on mount and cleanup on unmount
 
     return (
-        <>
-            <div className="text-foreground relative">
-                <span>{text}</span>
-                <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
+        <div className="w-full flex items-center justify-center flex-col">
+            <div className="w-96 border border-white rounded-lg p-10 m-10">
+                <div className="text-foreground relative">
+                    <span>{text}</span>
+                    <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
+                </div>
             </div>
-            <div className="text-foreground relative">
-                <span>{text}</span>
-                <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
-            </div>
-            <div className="flex items-center">
+            {game.hasEnded && (
+                <div className="p-3 bg-red-500 rounded-lg text-white">
+                    Game over!
+                </div>
+            )}
+            <div className="flex items-center p-5 h-10 w-96 border m-10 rounded-lg">
                 <span className="text-foreground">{game.typing}</span>
             </div>
             <div>
-                <button onClick={handleStart} disabled={game.hasStarted} className="me-3">
-                    <i className="fa-solid fa-play me-3" aria-hidden></i> Start
+                <button onClick={handleStart} disabled={game.hasStarted} className="bg-blue-500 hover:bg-blue-700 disabled:bg-blue-950 text-white font-bold py-2 px-4 rounded me-3">
+                    <i className="fa-solid fa-play me-1" aria-hidden></i> Start
                 </button>
-                <button onClick={handleCancel} disabled={!game.hasStarted}>
-                    <i className="fa-solid fa-xmark me-3" aria-hidden></i>Cancel
+                <button onClick={handleCancel} disabled={!game.hasStarted} className="bg-blue-500 hover:bg-blue-700 disabled:bg-blue-950 text-white font-bold py-2 px-4 rounded">
+                    <i className="fa-solid fa-xmark me-1" aria-hidden></i>Cancel
                 </button>
             </div>
-            <div>
+            <div className="mt-3">
                 <span className="me-3">Time: {game.time / 10}s</span>
                 <span>WPM: {game.wpm}</span>
             </div>
-        </>
+
+        </div>
     )
 }
