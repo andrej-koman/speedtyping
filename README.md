@@ -4,11 +4,5 @@ Aplikacija za vajo in za tekmovanja v tipkanju.
 
 ## TODO
 
-- [ ] Hiter rebuild z create-t3-app
-- [ ] Hostaj na vercel
-- [x] Dodaj avtentikacijo z Clerk
-    - [ ] Preveri ali je vse plačljivo 
-- [x] Namisli podatkovno bazo (Supabase, Pocketbase ?)
-    - [x] Ustvari osnovno shemo
-    - [x] Ustvari bazo in nafilaj z dummy data
-    - [x] Poveži podatkovno bazo z UI
+- [ ] Razmisli, kaj je bolj pomembno v appu (wpm, accuracy, itd..)
+- [ ] Dokončaj game, prosim implementiraj to, da se za vsako črko posebej naredi div in za vsako besedo
