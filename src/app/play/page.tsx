@@ -5,12 +5,12 @@ export const dynamic = "force-dynamic";
 
 export default async function Play() {
 
-    const text = (await getRandomQuote())[0];
-    if (!text) {
+    const quote = (await getRandomQuote())[0];
+    if (!quote) {
         throw new Error("No quotes found. Please add some quotes to the database.");
     };
 
     return (
-        <Game text={text.text} />
+        <Game quote={quote} />
     )
 }

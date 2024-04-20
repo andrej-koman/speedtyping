@@ -1,7 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default async function HomePage() {
-  // Add a button, that goes to /play
   return (
     <>
       <SignedOut>

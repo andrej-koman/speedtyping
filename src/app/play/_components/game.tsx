@@ -3,20 +3,10 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 
-
-type GameProps = {
-    text: string;
-    words: string[];
-    currentWord: string;
-    typing: string;
-    hasStarted: boolean;
-    hasEnded?: boolean;
-    time: number;
-    wpm: number;
-}
-
-export default function Game({ text }: { text: string }) {
+export default function Game({ quote }: { quote: Quote }) {
     // Splice the text into an array of words
+    const text = quote.text;
+
     const tmp = text.split(" ");
 
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
@@ -164,11 +154,9 @@ export default function Game({ text }: { text: string }) {
                     <CardTitle></CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="w-96 border border-white rounded-lg p-10 m-10">
-                        <div className="text-foreground relative">
-                            <span>{text}</span>
-                            <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
-                        </div>
+                    <div className="text-foreground relative">
+                        <span>{text}</span>
+                        <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
                     </div>
                 </CardContent>
             </Card>
