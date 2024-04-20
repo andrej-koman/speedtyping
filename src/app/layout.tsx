@@ -24,9 +24,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`font-sans ${inter.variable} flex-col gap-4 flex dark`}>
+        <body className={`font-sans ${inter.variable} flex flex-col dark`}>
           <Header />
-          {children}
+          <div className="px-52">
+            {children}
+          </div>
         </body>
         <script rel="preload" src="https://kit.fontawesome.com/4482d0fd90.js" crossOrigin="anonymous" async />
       </html>
