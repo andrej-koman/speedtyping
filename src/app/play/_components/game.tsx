@@ -1,7 +1,13 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+
+import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
+import { Separator} from "~/components/ui/separator"
+import { Button } from "~/components/ui/button";
+import PlayIcon from "~/icons/play-icon";
+import XMarkIcon from "~/icons/x-mark-icon";
 
 export default function Game({ quote }: { quote: Quote }) {
     // Splice the text into an array of words
@@ -148,39 +154,57 @@ export default function Game({ quote }: { quote: Quote }) {
     }, [game.hasStarted, game.typing, game.currentWord, game.words, intervalId, game.text, game.time]); // Empty dependency array means this effe</GameProps></Timeout>ct runs once on mount and cleanup on unmount
 
     return (
-        <div className="flex items-center justify-center flex-col w-full">
-            <Card>
-                <CardHeader>
-                    <CardTitle></CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="text-foreground relative">
-                        <span>{text}</span>
-                        <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
-                    </div>
-                </CardContent>
-            </Card>
-            {game.hasEnded && (
-                <div className="p-3 bg-red-500 rounded-lg text-white">
-                    Game over!
-                </div>
-            )}
-            <div className="flex items-center p-5 h-10 w-96 border m-10 rounded-lg">
-                <span className="text-foreground">{game.typing}</span>
-            </div>
-            <div>
-                <button onClick={handleStart} disabled={game.hasStarted} className="bg-blue-500 hover:bg-blue-700 disabled:bg-blue-950 text-white font-bold py-2 px-4 rounded me-3">
-                    <i className="fa-solid fa-play me-1" aria-hidden></i> Start
-                </button>
-                <button onClick={handleCancel} disabled={!game.hasStarted} className="bg-blue-500 hover:bg-blue-700 disabled:bg-blue-950 text-white font-bold py-2 px-4 rounded">
-                    <i className="fa-solid fa-xmark me-1" aria-hidden></i>Cancel
-                </button>
-            </div>
-            <div className="mt-3">
-                <span className="me-3">Time: {game.time / 10}s</span>
-                <span>WPM: {game.wpm}</span>
-            </div>
+        <TooltipProvider>
+            <div className="flex items-center justify-center flex-col w-full">
+                <Card className="mx-96 mt-10">
+                    <CardHeader className="flex flex-row items-center justify-between">
+                        <div className="flex items-center">
+                            <span className="me-3">Time: {game.time / 10}s</span>
+                            <span>WPM: {game.wpm}</span>
+                        </div>
+                        <div className="flex items-center ms-auto space-x-3">
 
-        </div>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button onClick={handleStart} size="icon">
+                                        <PlayIcon />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Start the game</p>
+                                </TooltipContent>
+                            </Tooltip>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button onClick={handleCancel} variant="destructive" size="icon">
+                                        <XMarkIcon />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Cancel the game</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <Separator />
+                        <div className="text-foreground relative mt-5">
+                            <span>{text}</span>
+                            <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
+                        </div>
+                    </CardContent>
+                    <CardFooter>
+                        <div className="flex items-center rounded-lg">
+                            <span className="text-foreground">{game.typing}</span>
+                        </div>
+                    </CardFooter>
+                </Card>
+                {game.hasEnded && (
+                    <div className="p-3 bg-red-500 rounded-lg text-white">
+                        Game over!
+                    </div>
+                )}
+            </div>
+        </TooltipProvider>
     )
 }
