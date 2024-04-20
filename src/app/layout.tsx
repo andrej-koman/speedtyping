@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`font-sans ${inter.variable} flex-col gap-4 flex`}>
+        <body className={`font-sans ${inter.variable} flex-col gap-4 flex dark`}>
           <TopNav />
           {children}
         </body>

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+
 
 type GameProps = {
     text: string;
@@ -157,12 +159,19 @@ export default function Game({ text }: { text: string }) {
 
     return (
         <div className="w-full flex items-center justify-center flex-col">
-            <div className="w-96 border border-white rounded-lg p-10 m-10">
-                <div className="text-foreground relative">
-                    <span>{text}</span>
-                    <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
-                </div>
-            </div>
+            <Card>
+                <CardHeader>
+                    <CardTitle></CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="w-96 border border-white rounded-lg p-10 m-10">
+                        <div className="text-foreground relative">
+                            <span>{text}</span>
+                            <span className="text-green-500 absolute left-0 top-0">{game.text}</span>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
             {game.hasEnded && (
                 <div className="p-3 bg-red-500 rounded-lg text-white">
                     Game over!
