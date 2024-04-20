@@ -1,6 +1,6 @@
 import "~/styles/globals.css";
 
-import TopNav from "./_components/topnav";
+import Header from "./_components/header";
 
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -25,7 +25,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`font-sans ${inter.variable} flex-col gap-4 flex dark`}>
-          <TopNav />
+          <Header />
           {children}
         </body>
         <script rel="preload" src="https://kit.fontawesome.com/4482d0fd90.js" crossOrigin="anonymous" async />

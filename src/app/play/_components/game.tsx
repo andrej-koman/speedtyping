@@ -148,7 +148,7 @@ export default function Game({ quote }: { quote: Quote }) {
     }, [game.hasStarted, game.typing, game.currentWord, game.words, intervalId, game.text, game.time]); // Empty dependency array means this effe</GameProps></Timeout>ct runs once on mount and cleanup on unmount
 
     return (
-        <div className="w-full flex items-center justify-center flex-col">
+        <div className="flex items-center justify-center flex-col w-full">
             <Card>
                 <CardHeader>
                     <CardTitle></CardTitle>
