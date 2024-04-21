@@ -9,3 +9,6 @@ Aplikacija za vajo in za tekmovanja v tipkanju.
 - [ ] Sprememba UI od gama
     - [ ] Odstrani card, povečaj tekst
     - [ ] Naredi izbiro prikazane statistike
+- [ ] Auth login page
+    - [ ] Dodaj formo za login (v resnici samo rabim gumba za login z github ali google)
+    - [ ] Ugotovi zakaj svg se tak čudno obnaša
