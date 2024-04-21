@@ -1,12 +1,12 @@
 import Link from "next/link"
 import { Button } from "./button"
-import UserIcon from "~/icons/user-icon"
+import SignInIcon from "~/icons/sign-in-icon"
 
 export default function SignInButton() {
     return (
         <Button asChild variant="ghost" size="icon">
             <Link href="/sign-in">
-                <UserIcon />
+                <SignInIcon className="h-4 w-4" />
             </Link>
         </Button>
     )

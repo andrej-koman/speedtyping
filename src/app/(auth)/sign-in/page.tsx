@@ -33,9 +33,11 @@ export default function SignInPage() {
 
             <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
                 <div className="hidden h-full flex-col bg-muted p-10 pb-40 bg-zinc-900 text-white lg:flex dark:border-r">
-                    <div className="relative flex-col z-20 h-full flex text-lg font-medium">
+                    <div className="relative flex-col z-20 h-full flex justify-center text-lg font-medium">
                         <Logo />
-                        <SignInIllustration className="mt-auto overflow-hidden w-max md:w-max/50" />
+                        <div className="mt-auto m-auto w-3/4">
+                            <SignInIllustration />
+                        </div>
                     </div>
                 </div>
                 <div className="lg:p-8">
