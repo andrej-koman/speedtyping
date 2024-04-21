@@ -11,6 +11,8 @@ export default async function Play() {
     };
 
     return (
-        <Game quote={quote} />
+        <div className="container">
+            <Game quote={quote} />
+        </div>
     )
 }

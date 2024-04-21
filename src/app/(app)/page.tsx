@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedOut } from "@clerk/nextjs";
 
 export default async function HomePage() {
   return (

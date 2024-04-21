@@ -1,14 +1,20 @@
-import { SignedIn, UserButton, SignedOut, SignInButton } from "@clerk/nextjs";
+"use client";
+
+import { SignedIn, SignedOut, SignOutButton, useUser } from "@clerk/nextjs";
+import SignInButton from "~/components/ui/sign-in-button";
 
 export default function UserNav() {
+    const { user } = useUser();
+
     return (
-        <div>
+        <>
             <SignedIn>
-                <UserButton />
+                <div>{user?.firstName}</div>
+                <SignOutButton />
             </SignedIn>
             <SignedOut>
                 <SignInButton />
             </SignedOut>
-        </div>
+        </>
     );
 }

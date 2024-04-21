@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
-import { Separator} from "~/components/ui/separator"
+import { Separator } from "~/components/ui/separator"
 import { Button } from "~/components/ui/button";
 import PlayIcon from "~/icons/play-icon";
 import XMarkIcon from "~/icons/x-mark-icon";
@@ -154,6 +154,7 @@ export default function Game({ quote }: { quote: Quote }) {
     }, [game.hasStarted, game.typing, game.currentWord, game.words, intervalId, game.text, game.time]); // Empty dependency array means this effe</GameProps></Timeout>ct runs once on mount and cleanup on unmount
 
     return (
+        /* 
         <TooltipProvider>
             <div className="flex items-center justify-center flex-col w-full">
                 <Card className="mx-96 mt-10">
@@ -206,5 +207,9 @@ export default function Game({ quote }: { quote: Quote }) {
                 )}
             </div>
         </TooltipProvider>
+        */
+        <div className="w-full flex justify-center">
+            test
+        </div>
     )
 }

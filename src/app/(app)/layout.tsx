@@ -1,6 +1,6 @@
 import "~/styles/globals.css";
 
-import Header from "./_components/header";
+import Header from "../_components/header";
 
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -26,11 +26,8 @@ export default function RootLayout({
       <html lang="en">
         <body className={`font-sans ${inter.variable} flex flex-col dark`}>
           <Header />
-          <div className="px-52">
-            {children}
-          </div>
+          {children}
         </body>
-        <script rel="preload" src="https://kit.fontawesome.com/4482d0fd90.js" crossOrigin="anonymous" async />
       </html>
     </ClerkProvider>
   );

@@ -6,3 +6,6 @@ Aplikacija za vajo in za tekmovanja v tipkanju.
 
 - [ ] Razmisli, kaj je bolj pomembno v appu (wpm, accuracy, itd..)
 - [ ] Dokončaj game, prosim implementiraj to, da se za vsako črko posebej naredi div in za vsako besedo
+- [ ] Sprememba UI od gama
+    - [ ] Odstrani card, povečaj tekst
+    - [ ] Naredi izbiro prikazane statistike

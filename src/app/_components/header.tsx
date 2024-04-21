@@ -6,16 +6,18 @@ import { SignedIn } from "@clerk/nextjs";
 
 export default function Header() {
     return (
-        <div className="border-b px-52">
-            <div className="flex h-16 items-center px-4">
-                <div className="flex items-center space-x-4 mr-auto">
+        <header className="sticky top-0 z-50 w-full border-b border-border/40 backdrop-blur">
+            <div className="container flex h-14 max-w-screen-2xl justify-between items-center">
+                <div className="mr-4 flex items-center space-x-4">
                     <Logo />
                     <SignedIn>
                         <MainNav />
                     </SignedIn>
                 </div>
-                <UserNav />
+                <div className="">
+                    <UserNav />
+                </div>
             </div>
-        </div>
+        </header>
     )
 }
