@@ -1,10 +1,13 @@
 import Link from "next/link"
 import { Button } from "./button"
+import UserIcon from "~/icons/user-icon"
 
 export default function SignInButton() {
     return (
-        <Button variant="secondary" asChild>
-            <Link href="/sign-in">Sign in</Link>
+        <Button asChild variant="ghost" size="icon">
+            <Link href="/sign-in">
+                <UserIcon />
+            </Link>
         </Button>
     )
 }
