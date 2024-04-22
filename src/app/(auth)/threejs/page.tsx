@@ -4,7 +4,7 @@ import { Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber"
 import { Suspense } from "react";
 
-import { Model } from "~/models/car-model/car-model";
+import Model from "~/models/car-model";
 
 export default function Page() {
     return (
@@ -12,7 +12,7 @@ export default function Page() {
             <Canvas>
                 <Suspense fallback={null}>
                     <Model />
-                    <Environment preset="sunset" background />
+                    <Environment preset="studio" background />
                 </Suspense>
             </Canvas>
         </div>

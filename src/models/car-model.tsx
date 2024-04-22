@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Model(props: unknown) {
+export default function Model(props: unknown) {
     const { nodes, materials } = useGLTF('/car-model/scene.gltf')
 
     if (!props || !nodes || !materials) return null;
