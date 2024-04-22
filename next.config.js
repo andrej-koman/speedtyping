@@ -12,6 +12,7 @@ const config = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    transpilePackages: ["three"]
 };
 
 export default config;
