@@ -1,18 +1,23 @@
 "use client";
 
-import { Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber"
 import { Suspense } from "react";
+import { OrbitControls } from "@react-three/drei";
 
-import Model from "~/models/car-model";
+import { RoadModel } from "~/models/road-model";
+import { Vector3 } from "three";
 
 export default function Page() {
+
+    const center: Vector3 = new Vector3(-5, -15, -85);
+
     return (
         <div className="w-screen h-screen">
             <Canvas>
+                <directionalLight position={[0, 20, 150]} intensity={2} />
+                <OrbitControls target={[-5, -15, -85]} />
                 <Suspense fallback={null}>
-                    <Model />
-                    <Environment preset="studio" background />
+                    <RoadModel position={center} />
                 </Suspense>
             </Canvas>
         </div>

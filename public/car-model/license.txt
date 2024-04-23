@@ -1,8 +1,0 @@
-Model Information:
-* title:	Chevrolet Malibu 2013
-* source:	https://sketchfab.com/3d-models/chevrolet-malibu-2013-54f54a00c222499085c314b6ce22ca4a
-* author:	Q.SARDOR (https://sketchfab.com/qsardor57913)
-
-Model License:
-* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
-* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
