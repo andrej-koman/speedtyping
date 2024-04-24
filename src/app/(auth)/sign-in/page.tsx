@@ -2,6 +2,7 @@
 import Link from "next/link"
 import Logo from "~/app/_components/logo"
 import { Button } from "~/components/ui/button"
+import Loader from "~/app/_components/loader";
 import GitHubIcon from "~/icons/github-icon"
 import GoogleIcon from "~/icons/google-icon"
 import SignInIllustration from "~/illustrations/sign-in-illustration"
@@ -16,12 +17,12 @@ export default function SignInPage() {
     const router = useRouter();
 
     if (!isLoaded) {
-        return null;
+        return <Loader />;
     }
 
     if (isSignedIn) {
         router.push("/play");
-        return null;
+        return <Loader />;
     }
 
     const signInWithGoogle = () => {
