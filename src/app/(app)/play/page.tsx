@@ -12,9 +12,6 @@ export default async function Play() {
 
     return (
         <div className="container flex items-center justify-center">
-            <div>
-                Welcome to the game
-            </div>
             <div className="w-screen h-screen absolute left-0 top-0 -z-10">
                 <Game3DModel />
             </div>

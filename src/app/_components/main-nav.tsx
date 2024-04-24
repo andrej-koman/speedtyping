@@ -13,6 +13,7 @@ export default function MainNav({
         <NavigationMenu
             className={cn("flex items-center space-x-4 lg:space-x-6", className)}
         >
+            {/* I will remove the play option, as this will be the "home" page
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <Link href="/play" legacyBehavior passHref>
@@ -22,6 +23,7 @@ export default function MainNav({
                     </Link>
                 </NavigationMenuItem>
             </NavigationMenuList>
+*/}
         </NavigationMenu>
     )
 }

@@ -1,7 +1,7 @@
 import { useGLTF, Text } from "@react-three/drei";
 import { CatmullRomCurve3, type Group, type Mesh, type Object3D, type Object3DEventMap, Quaternion, Vector3 } from "three";
 import { useEffect, useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useThree } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { loadModelAndCreateCurve } from "~/server/3d";
 
@@ -38,7 +38,7 @@ export default function CarModel({
         if (textRef.current) {
             (textRef.current as unknown as Object3D).lookAt(textPointAt);
         }
-    }, []);
+    }, [textPointAt]);
 
     useEffect(() => {
         const handleKeyDown = () => {
@@ -47,7 +47,6 @@ export default function CarModel({
                 // eslint-disable-next-line react-hooks/exhaustive-deps
                 t += speed;
                 if (t > 1) {
-                    console.log(t);
                     t = 0; // reset t to 0 when it reaches 1 to loop the animation
                 }
                 const point = curveRef.current.getPointAt(t);
