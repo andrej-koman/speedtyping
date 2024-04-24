@@ -1,5 +1,5 @@
-import Game from "./_components/game";
 import { getRandomQuote } from "~/server/queries";
+import Game3DModel from "./_components/game-model";
 
 export const dynamic = "force-dynamic";
 
@@ -11,8 +11,13 @@ export default async function Play() {
     };
 
     return (
-        <div className="container">
-            <Game quote={quote} />
+        <div className="container flex items-center justify-center">
+            <div>
+                Welcome to the game
+            </div>
+            <div className="w-screen h-screen absolute left-0 top-0 -z-10">
+                <Game3DModel />
+            </div>
         </div>
     )
 }
