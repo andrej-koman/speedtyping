@@ -6,11 +6,23 @@ import GitHubIcon from "~/icons/github-icon"
 import GoogleIcon from "~/icons/google-icon"
 import SignInIllustration from "~/illustrations/sign-in-illustration"
 
-import { useSignIn } from "@clerk/nextjs";
+import { useSignIn, useSession } from "@clerk/nextjs";
 import { TooltipContent, TooltipProvider, TooltipTrigger, Tooltip } from "~/components/ui/tooltip";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
     const { signIn } = useSignIn();
+    const { isSignedIn, isLoaded } = useSession();
+    const router = useRouter();
+
+    if (!isLoaded) {
+        return null;
+    }
+
+    if (isSignedIn) {
+        router.push("/play");
+        return null;
+    }
 
     const signInWithGoogle = () => {
         return signIn?.authenticateWithRedirect({
