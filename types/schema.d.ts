@@ -1,3 +1,5 @@
+declare module 'tailwindcss/lib/util/flattenColorPalette'
+
 /**
  * This object is created and should only be used in the Game component. It represents the state of the game.
  */

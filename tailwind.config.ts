@@ -1,13 +1,14 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -74,7 +75,22 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
+} satisfies Config;
 
-export default config
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function addVariablesForColors({ addBase, theme }: any) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+  const allColors = flattenColorPalette(theme("colors"));
+  const newVars = Object.fromEntries(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  addBase({
+    ":root": newVars,
+  });
+}
+
+export default config;

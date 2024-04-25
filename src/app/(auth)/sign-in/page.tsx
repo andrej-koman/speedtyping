@@ -29,7 +29,7 @@ export default function SignInPage() {
         return signIn?.authenticateWithRedirect({
             strategy: "oauth_google",
             redirectUrl: "/sso-callback",
-            redirectUrlComplete: "/",
+            redirectUrlComplete: "/play",
         });
     };
 
@@ -37,7 +37,7 @@ export default function SignInPage() {
         return signIn?.authenticateWithRedirect({
             strategy: "oauth_github",
             redirectUrl: "/sso-callback",
-            redirectUrlComplete: "/",
+            redirectUrlComplete: "/play",
         });
     };
 

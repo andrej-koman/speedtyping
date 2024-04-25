@@ -29,7 +29,11 @@ export default function UserNav() {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                            <SignOutButton />
+                            <SignOutButton signOutOptions={
+                                {
+                                    redirectUrl: "/play"
+                                }
+                            } />
                             <DropdownMenuShortcut>
                                 <SignOutIcon className="h-4 w-4" />
                             </DropdownMenuShortcut>
