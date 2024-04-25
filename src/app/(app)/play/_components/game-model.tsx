@@ -21,12 +21,6 @@ export default function Game3DModel() {
             <RoadModel />
             <CarModel name="Andrej" color={0x00000} textPointAt={cameraPosition} />
             <FinishLineModel />
-            {isTesting && (
-                <mesh position={center}>
-                    <sphereGeometry args={[1, 32, 32]} /> {/* args: [radius, widthSegments, heightSegments] */}
-                    <meshStandardMaterial color="red" /> {/* change the color as needed */}
-                </mesh>
-            )}
         </Canvas>
     )
 }
