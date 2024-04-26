@@ -8,7 +8,6 @@ import FinishLineModel from "~/app/_models/finish-line-model";
 import { Vector3 } from "three";
 
 export default function Game3DModel() {
-    const isTesting = false;
     const cameraPosition = new Vector3(-20, 40, 90);
     const center = new Vector3(-10, 0 + 10, 20);
 
@@ -19,7 +18,7 @@ export default function Game3DModel() {
                 <OrbitControls enablePan={false} target={center} />
             </PerspectiveCamera>
             <RoadModel />
-            <CarModel name="Andrej" color={0x00000} textPointAt={cameraPosition} />
+            <CarModel name="Mark" color={0x00000} textPointAt={cameraPosition} />
             <FinishLineModel />
         </Canvas>
     )
