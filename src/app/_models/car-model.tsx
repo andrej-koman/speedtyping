@@ -1,3 +1,4 @@
+"use client";
 import { useGLTF, Text } from "@react-three/drei";
 import { CatmullRomCurve3, type Euler, type Group, type Mesh, type Object3D, type Object3DEventMap, Quaternion, Vector3, MeshStandardMaterial } from "three";
 import { useEffect, useRef, useState } from "react";
@@ -75,17 +76,15 @@ export default function CarModel({
 
     return (
         <group ref={carRef} position={[0, -0.5, 0]} rotation={[0, -2, 0]} dispose={null}>
-            {name && (
-                <Text
-                    ref={textRef}
-                    position={[0, 5, 0]}
-                    fontSize={2.5}
-                    font="/fonts/Inter-Regular.woff"
-                    color="white"
-                >
-                    {name}
-                </Text>
-            )}
+            <Text
+                ref={textRef}
+                position={[0, 5, 0]}
+                fontSize={2.5}
+                font="/fonts/Inter-Regular.woff"
+                color="white"
+            >
+                {name}
+            </Text>
             <mesh castShadow receiveShadow geometry={(nodes.Cube as Mesh).geometry} material={materials.Body} />
             <mesh castShadow receiveShadow geometry={(nodes.Cube_1 as Mesh).geometry} material={materials.Black} />
             <mesh castShadow receiveShadow geometry={(nodes.Cube_2 as Mesh).geometry} material={materials.Window} />

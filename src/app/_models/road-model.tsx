@@ -1,3 +1,4 @@
+"use client";
 import { useGLTF } from "@react-three/drei";
 import { MeshStandardMaterial, type Mesh, TextureLoader } from "three";
 import { memo } from "react";
