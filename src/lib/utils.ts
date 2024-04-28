@@ -5,6 +5,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function calculateCarSpeed(numOfLetters: number) {
+  return 1 / numOfLetters;
+};
+
 export const ColorSchemes = [
   {
     body: "#e11d48",
