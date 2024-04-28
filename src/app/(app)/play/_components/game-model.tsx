@@ -21,7 +21,7 @@ export default function Game3DModel({
         <Canvas>
             <ambientLight intensity={1.5} />
             <PerspectiveCamera position={cameraPosition} makeDefault>
-                <OrbitControls enablePan={false} enableRotate={false}  target={center} />
+                <OrbitControls enablePan={false} target={center} />
             </PerspectiveCamera>
             <RoadModel />
             <CarModel carSpeed={carSpeed} name="Mark" textPointAt={cameraPosition} />
