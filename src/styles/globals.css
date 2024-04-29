@@ -144,3 +144,19 @@
     y: 12.5px;
   }
 }
+
+/** CURSOR **/
+.cursor {
+  text-decoration: underline;
+  animation: blink 1.5s steps(5, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    text-decoration: none;
+  }
+}
+
+.letter {
+  margin-left: 0.1em;
+}

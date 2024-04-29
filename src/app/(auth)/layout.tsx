@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { CSPostHogProvider } from "~/app/providers";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -22,9 +23,11 @@ export default function RootLayout({
     return (
         <ClerkProvider>
             <html lang="en">
-                <body className={`font-sans ${inter.variable} flex flex-col dark`}>
-                    {children}
-                </body>
+                <CSPostHogProvider>
+                    <body className={`font-sans ${inter.variable} flex flex-col dark`}>
+                        {children}
+                    </body>
+                </CSPostHogProvider>
             </html>
         </ClerkProvider>
     );

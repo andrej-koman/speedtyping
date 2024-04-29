@@ -22,7 +22,7 @@ export default async function Play() {
     return (
         <GameProvider>
             <div className="container flex flex-col p-0 items-center justify-center w-screen h-[calc(100vh-3.6rem)]">
-                <Game quote={quote} />
+                <Game carSpeed={carSpeed} quote={quote} />
                 <Game3DModel cameraRotation={cameraRotation} cameraPosition={cameraPosition} center={center} carSpeed={carSpeed} />
             </div>
         </GameProvider>

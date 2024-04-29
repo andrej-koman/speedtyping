@@ -5,13 +5,14 @@ import { useGame } from "~/contexts/GameContext";
 
 export default function Game({
     quote,
+    carSpeed,
 }: {
-    quote: Quote
+    quote: Quote,
+    carSpeed: number
 }) {
     const { carRef, curveRef, textRef, cameraRef } = useGame();
     let t = 0;
     const targetQuaternion = new Quaternion();
-    const carSpeed = 0.003;
 
     useEffect(() => {
         const handleKeyDown = (e: { key: string; }) => {
@@ -20,15 +21,18 @@ export default function Game({
             if (carRef.current && curveRef.current) {
                 // update the car's position to create the animation
                 // eslint-disable-next-line react-hooks/exhaustive-deps
-                t = (t + carSpeed) % 1;
+                t += carSpeed;
+
+                // Make the car stop at the end of the curve
+                t = Math.min(1, t);
                 const point = curveRef.current.getPointAt(t);
                 const tangent = curveRef.current.getTangentAt(t);
                 carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
 
-                // calculate the target rotation
+                // Calculate the target rotation
                 targetQuaternion.setFromAxisAngle(new Vector3(0, 1, 0), - Math.atan2(-tangent.x, tangent.z));
 
-                // gradually rotate the car towards the target rotation
+                // Gradually rotate the car towards the target rotation
                 carRef.current.quaternion.slerp(targetQuaternion, 0.5);
             }
 
@@ -38,6 +42,12 @@ export default function Game({
         };
 
         window.addEventListener("keydown", handleKeyDown);
+
+        // Find the first .letter div and add a cursor class to it
+        const firstLetter = document.querySelectorAll(".letter");
+        if (firstLetter[0]) {
+            firstLetter[0].classList.add("cursor");
+        }
 
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
