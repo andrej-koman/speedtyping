@@ -6,7 +6,6 @@ export default function Logo() {
     return (
         <Link className="flex items-center space-x-1 select-none" href="/">
             <img src="/logo.png" alt="logo" className="h-8" />
-            <span className="text-sm font-bold">hitrostnotipkanje</span>
         </Link>
     );
 };

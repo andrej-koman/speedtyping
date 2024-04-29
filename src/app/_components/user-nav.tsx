@@ -1,5 +1,4 @@
 "use client";
-
 import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 
 import SignInButton from "~/components/ui/sign-in-button";
@@ -8,9 +7,26 @@ import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuLabel, DropdownMenuShortcut } from "~/components/ui/dropdown-menu";
 import { SignOutButton } from "@clerk/nextjs";
 import SignOutIcon from "~/icons/sign-out-icon";
+import { Button } from "~/components/ui/button";
+import Link from "next/link";
+import PlayIcon from "~/icons/play-icon";
+import { usePathname } from "next/navigation";
 
 export default function UserNav() {
     const { user } = useUser();
+    const pathname = usePathname();
+
+    if (pathname === "/") {
+        return (
+            <Button variant="default" size="sm" className="text-md flex items-center justify-center" asChild>
+                <Link href="/play" className="text-justify">
+                    <PlayIcon className="h-5 w-5" />
+                    <span className="ml-1 mb-1">Play</span>
+                </Link>
+            </Button>
+        )
+    }
+
     return (
         <>
             <SignedIn>
