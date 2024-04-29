@@ -148,13 +148,6 @@
 /** CURSOR **/
 .cursor {
   text-decoration: underline;
-  animation: blink 1.5s steps(5, start) infinite;
-}
-
-@keyframes blink {
-  to {
-    text-decoration: none;
-  }
 }
 
 .letter {

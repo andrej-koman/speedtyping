@@ -33,11 +33,6 @@ export default function CarModel({
         });
     }, [curveRef]);
 
-    useEffect(() => {
-        cameraRef.current = camera;
-    }, [camera, cameraRef])
-
-
     if (colors === undefined) throw new Error("Color scheme is undefined");
 
     return (

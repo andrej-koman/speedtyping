@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function calculateCarSpeed(numOfLetters: number) {
   return 1 / numOfLetters;
-};
+}
 
 export const ColorSchemes = [
   {

@@ -16,7 +16,7 @@ export default function Game({
 
     useEffect(() => {
         const handleKeyDown = (e: { key: string; }) => {
-            if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;.]{1}$/)) return;
+            if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
             if (carRef.current && curveRef.current) {
                 // update the car's position to create the animation
