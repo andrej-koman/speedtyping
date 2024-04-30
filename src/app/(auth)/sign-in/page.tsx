@@ -78,7 +78,9 @@ export default function SignInPage() {
                     <GoogleIcon />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>Google</TooltipContent>
+                <TooltipContent align="center" side="top">
+                  <p>Google</p>
+                </TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -90,7 +92,9 @@ export default function SignInPage() {
                     <GitHubIcon />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>GitHub</TooltipContent>
+                <TooltipContent align="center" side="top">
+                  <p>GitHub</p>
+                </TooltipContent>
               </Tooltip>
             </div>
             <p className="px-8 text-center text-sm text-muted-foreground">

@@ -15,11 +15,9 @@ export function setUpGame(words: NodeListOf<Element>) {
   words.forEach((word) => {
     const letters = word.querySelectorAll(".letter");
     letters.forEach((letter) => {
-      console.log(letter);
+      // Do nothing
     });
   });
-
-  console.log(object);
 }
 
 export const ColorSchemes = [
@@ -66,3 +64,7 @@ export const ColorSchemes = [
     wheels: "#d3d3d3",
   },
 ];
+
+export const DefaultGameSettings = {
+  has3D: true,
+};

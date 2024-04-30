@@ -2,15 +2,19 @@
 import { useEffect } from "react";
 import { type Object3D, Quaternion, Vector3 } from "three";
 import { useGame } from "~/contexts/GameContext";
+import { useGameSettings } from "~/contexts/GameSettingsContext";
 import { setUpGame } from "~/lib/utils";
 
-export default function Game({
+export default function GameText({
   quote,
   carSpeed,
+  className,
 }: {
   quote: Quote;
   carSpeed: number;
+  className?: string;
 }) {
+  const { has3D } = useGameSettings();
   const { carRef, curveRef, textRef, cameraRef } = useGame();
   const targetQuaternion = new Quaternion();
   let t = 0;
@@ -21,7 +25,7 @@ export default function Game({
     const handleKeyDown = (e: { key: string }) => {
       if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
-      if (carRef.current && curveRef.current) {
+      if (carRef.current && curveRef.current && has3D.current) {
         // update the car's position to create the animation
         // eslint-disable-next-line react-hooks/exhaustive-deps
         t += carSpeed;
@@ -57,19 +61,19 @@ export default function Game({
   }, []);
 
   return (
-    <div className="flex h-[100%] items-center justify-center text-2xl">
-      <div className="flex w-[40rem] flex-row flex-wrap justify-center">
-        {quote.text.split(" ").map((word, index) => (
-          <span key={`${index} ${word}`} className="word">
-            {word.split("").map((letter, index) => (
-              <span key={`${index} ${letter}`} className="letter">
-                {letter}
-              </span>
-            ))}
-            &nbsp;
-          </span>
-        ))}
-      </div>
+    <div
+      className={`flex w-[60rem] flex-row flex-wrap justify-center ${className ?? ""}`}
+    >
+      {quote.text.split(" ").map((word, index) => (
+        <span key={`${index} ${word}`} className="word">
+          {word.split("").map((letter, index) => (
+            <span key={`${index} ${letter}`} className="letter">
+              {letter}
+            </span>
+          ))}
+          &nbsp;
+        </span>
+      ))}
     </div>
   );
 }
