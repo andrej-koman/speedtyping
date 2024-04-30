@@ -15,9 +15,11 @@ import { useState } from "react";
 export default function Play({
   quote,
   carSpeed,
+  defaultLayout = [960, 960],
 }: {
   quote: Quote;
   carSpeed: number;
+  defaultLayout?: number[];
 }) {
   const { has3D, textSize } = useGameSettings();
   const [show3D, setShow3D] = useState(has3D.current);
@@ -25,7 +27,7 @@ export default function Play({
 
   const handle3DChange = (pressed: boolean) => {
     has3D.current = pressed;
-    setShow3D(pressed);
+    setShow3D(has3D.current);
   };
 
   const handleTextSizeChange = (value: string) => {
@@ -36,8 +38,15 @@ export default function Play({
   return (
     <>
       {show3D ? (
-        <ResizablePanelGroup direction="vertical">
-          <ResizablePanel className="min-h-[250px]">
+        <ResizablePanelGroup
+          direction="vertical"
+          onLayout={(sizes: number[]) => {
+            document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+              sizes,
+            )}; max-age=${24 * 60 * 60 * 365};`;
+          }}
+        >
+          <ResizablePanel minSize={30} defaultSize={defaultLayout[0]}>
             <Options
               handle3DChange={handle3DChange}
               handleTextSizeChange={handleTextSizeChange}
@@ -49,7 +58,7 @@ export default function Play({
             </div>
           </ResizablePanel>
           <ResizableHandle withHandle className={"w-[100%]"} />
-          <ResizablePanel className="min-h-[250px]">
+          <ResizablePanel minSize={40} defaultSize={defaultLayout[1]}>
             <Game3DModel carSpeed={carSpeed} />
           </ResizablePanel>
         </ResizablePanelGroup>

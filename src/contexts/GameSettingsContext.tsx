@@ -25,6 +25,7 @@ export function GameSettingsProvider({
 }) {
   const has3D = useRef(true);
   const textSize = useRef("2xl");
+
   return (
     <GameSettingsContext.Provider
       value={{

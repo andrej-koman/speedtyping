@@ -20,6 +20,13 @@ export function setUpGame(words: NodeListOf<Element>) {
   });
 }
 
+export const textSizeMapping: Record<string, string> = {
+  sm: "Small",
+  md: "Medium",
+  "2xl": "Large",
+  "4xl": "Extra Large",
+};
+
 export const ColorSchemes = [
   {
     body: "#e11d48",

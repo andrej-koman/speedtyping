@@ -1,22 +1,22 @@
 "use client";
 import { Toggle } from "~/components/ui/toggle";
 import Icon3D from "~/icons/3d-icon";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "~/components/ui/hover-card";
 
 import {
   DropdownMenu,
-  DropdownMenuItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
 } from "~/components/ui/dropdown-menu";
 
 import { useGameSettings } from "~/contexts/GameSettingsContext";
 import { Button } from "~/components/ui/button";
 import TextIcon from "~/icons/text-icon";
+
+import { textSizeMapping } from "~/lib/utils";
 
 export default function Options({
   handle3DChange,
@@ -34,29 +34,24 @@ export default function Options({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="outline">
-                <TextIcon className="h-4 w-4 mr-2" />
-                {textSize.current}
+                <TextIcon className="mr-2 h-4 w-4" />
+                {textSizeMapping[textSize.current]}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => handleTextSizeChange("sm")}>
-                sm
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleTextSizeChange("md")}>
-                md
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleTextSizeChange("lg")}>
-                lg
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleTextSizeChange("xl")}>
-                xl
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleTextSizeChange("2xl")}>
-                2xl
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleTextSizeChange("3xl")}>
-                3xl
-              </DropdownMenuItem>
+              <DropdownMenuLabel>Text Size</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={textSize.current}
+                onValueChange={handleTextSizeChange}
+              >
+                <DropdownMenuRadioItem value="sm">Small</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="md">Medium</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="2xl">Large</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="4xl">
+                  Extra Large
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
           <Toggle
