@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { type Object3D, Quaternion, Vector3 } from "three";
 import { useGame } from "~/contexts/GameContext";
+import { setUpGame } from "~/lib/utils";
 
 export default function Game({
     quote,
@@ -11,10 +12,13 @@ export default function Game({
     carSpeed: number
 }) {
     const { carRef, curveRef, textRef, cameraRef } = useGame();
-    let t = 0;
     const targetQuaternion = new Quaternion();
+    let t = 0;
 
     useEffect(() => {
+
+        setUpGame(document.querySelectorAll(".word"));
+
         const handleKeyDown = (e: { key: string; }) => {
             if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
@@ -43,12 +47,6 @@ export default function Game({
 
         window.addEventListener("keydown", handleKeyDown);
 
-        // Find the first .letter div and add a cursor class to it
-        const firstLetter = document.querySelectorAll(".letter");
-        if (firstLetter[0]) {
-            firstLetter[0].classList.add("cursor");
-        }
-
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
@@ -56,7 +54,7 @@ export default function Game({
 
 
     return (
-        <div className="h-[60%] text-2xl flex items-center justify-center">
+        <div className="h-[100%] text-2xl flex items-center justify-center">
             <div className="flex flex-row justify-center flex-wrap w-[40rem]">
                 {quote.text.split(" ").map((word, index) => (
                     <span key={`${index} ${word}`} className="word">

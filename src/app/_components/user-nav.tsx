@@ -47,7 +47,7 @@ export default function UserNav() {
                         <DropdownMenuItem>
                             <SignOutButton signOutOptions={
                                 {
-                                    redirectUrl: "/play"
+                                    redirectUrl: pathname
                                 }
                             } />
                             <DropdownMenuShortcut>

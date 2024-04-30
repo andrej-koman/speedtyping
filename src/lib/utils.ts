@@ -9,6 +9,19 @@ export function calculateCarSpeed(numOfLetters: number) {
   return 1 / numOfLetters;
 }
 
+export function setUpGame(words: NodeListOf<Element>) {
+  const object: Record<number, Record<number | string, Element>>[] = [];
+
+  words.forEach((word) => {
+    const letters = word.querySelectorAll(".letter");
+    letters.forEach((letter) => {
+      console.log(letter);
+    });
+  });
+
+  console.log(object);
+}
+
 export const ColorSchemes = [
   {
     body: "#e11d48",
