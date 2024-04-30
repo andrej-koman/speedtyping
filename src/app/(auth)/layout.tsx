@@ -5,30 +5,30 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { CSPostHogProvider } from "~/app/providers";
 
 const inter = Inter({
-    subsets: ["latin"],
-    variable: "--font-sans",
+  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 export const metadata = {
-    title: "hitrostnotipkanje",
-    description: "App for touch typing practice",
-    icons: [{ rel: "icon", url: "/favicon.ico" }],
+  title: "hitrostnotipkanje",
+  description: "App for touch typing practice",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <ClerkProvider>
-            <html lang="en">
-                <CSPostHogProvider>
-                    <body className={`font-sans ${inter.variable} flex flex-col dark`}>
-                        {children}
-                    </body>
-                </CSPostHogProvider>
-            </html>
-        </ClerkProvider>
-    );
+  return (
+    <ClerkProvider>
+      <html lang="en">
+        <CSPostHogProvider>
+          <body className={`font-sans ${inter.variable} dark flex flex-col`}>
+            {children}
+          </body>
+        </CSPostHogProvider>
+      </html>
+    </ClerkProvider>
+  );
 }

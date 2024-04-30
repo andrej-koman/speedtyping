@@ -17,5 +17,8 @@ export async function getRandomQuote() {
   const randomIndex = Math.floor(Math.random() * numQuotes);
   // Get random index
 
-  return db.select().from(quotes).where(eq(quotes.id, randomIndex + 1));
+  return db
+    .select()
+    .from(quotes)
+    .where(eq(quotes.id, randomIndex + 1));
 }

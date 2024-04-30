@@ -26,7 +26,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <CSPostHogProvider>
-          <body className={`font-sans ${inter.variable} flex flex-col dark`}>
+          <body className={`font-sans ${inter.variable} dark flex flex-col`}>
             <Header />
             {children}
           </body>
