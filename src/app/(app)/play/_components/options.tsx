@@ -48,9 +48,6 @@ export default function Options({
                 <DropdownMenuRadioItem value="sm">Small</DropdownMenuRadioItem>
                 <DropdownMenuRadioItem value="md">Medium</DropdownMenuRadioItem>
                 <DropdownMenuRadioItem value="2xl">Large</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="4xl">
-                  Extra Large
-                </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>

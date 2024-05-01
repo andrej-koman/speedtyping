@@ -11,11 +11,12 @@ import Game3DModel from "./game3d";
 import Options from "./options";
 import { useGameSettings } from "~/contexts/GameSettingsContext";
 import { useState } from "react";
+import { setToLocalStorage } from "~/lib/game-settings";
 
 export default function Play({
   quote,
   carSpeed,
-  defaultLayout = [960, 960],
+  defaultLayout = [50, 50],
 }: {
   quote: Quote;
   carSpeed: number;
@@ -28,11 +29,13 @@ export default function Play({
   const handle3DChange = (pressed: boolean) => {
     has3D.current = pressed;
     setShow3D(has3D.current);
+    setToLocalStorage("has3D", has3D.current + "");
   };
 
   const handleTextSizeChange = (value: string) => {
     textSize.current = value;
     setUseTextSize(textSize.current);
+    setToLocalStorage("textSize", textSize.current);
   };
 
   return (
@@ -43,7 +46,7 @@ export default function Play({
           onLayout={(sizes: number[]) => {
             document.cookie = `react-resizable-panels:layout=${JSON.stringify(
               sizes,
-            )}; max-age=${24 * 60 * 60 * 365};`;
+            )}`;
           }}
         >
           <ResizablePanel minSize={30} defaultSize={defaultLayout[0]}>
