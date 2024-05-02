@@ -153,3 +153,7 @@
 .letter {
   margin-left: 0.1em;
 }
+
+.letter.correct {
+  color: green;
+}

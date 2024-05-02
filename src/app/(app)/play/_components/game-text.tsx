@@ -1,9 +1,8 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { type Object3D, Quaternion, Vector3 } from "three";
 import { useGame } from "~/contexts/GameContext";
 import { useGameSettings } from "~/contexts/GameSettingsContext";
-import { setUpGame } from "~/lib/utils";
 
 export default function GameText({
   quote,
@@ -16,40 +15,60 @@ export default function GameText({
 }) {
   const { has3D } = useGameSettings();
   const { carRef, curveRef, textRef, cameraRef } = useGame();
+  const currentWordIndex = useRef(0);
+  const currentLetterIndex = useRef(0);
+  const words = useRef(document.querySelectorAll(".word"));
+
   const targetQuaternion = new Quaternion();
   let t = 0;
 
   useEffect(() => {
-    setUpGame(document.querySelectorAll(".word"));
-
+    words.current = document.querySelectorAll(".word");
     const handleKeyDown = (e: { key: string }) => {
       if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
-      if (carRef.current && curveRef.current && has3D.current) {
-        // update the car's position to create the animation
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        t += carSpeed;
+      const currentWord = words.current[currentWordIndex.current];
+      const letters = currentWord?.querySelectorAll(".letter");
+      const currentLetter = currentWord?.children[currentLetterIndex.current];
 
-        // Make the car stop at the end of the curve
-        t = Math.min(1, t);
-        const point = curveRef.current.getPointAt(t);
-        const tangent = curveRef.current.getTangentAt(t);
-        carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
+      if (!currentLetter || !currentWord || !letters) return;
 
-        // Calculate the target rotation
-        targetQuaternion.setFromAxisAngle(
-          new Vector3(0, 1, 0),
-          -Math.atan2(-tangent.x, tangent.z),
-        );
+      if (e.key === currentLetter.textContent) {
+        currentLetter.classList.add("correct");
+        currentLetterIndex.current++;
 
-        // Gradually rotate the car towards the target rotation
-        carRef.current.quaternion.slerp(targetQuaternion, 0.5);
-      }
+        if (currentLetterIndex.current >= letters.length) {
+          currentWordIndex.current++;
+          currentLetterIndex.current = 0;
+        }
+        // Move the car
 
-      if (textRef.current && cameraRef.current) {
-        (textRef.current as unknown as Object3D).lookAt(
-          cameraRef.current.position,
-        );
+        if (carRef.current && curveRef.current && has3D.current) {
+          // update the car's position to create the animation
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          t += carSpeed;
+
+          // Make the car stop at the end of the curve
+          t = Math.min(1, t);
+          const point = curveRef.current.getPointAt(t);
+          const tangent = curveRef.current.getTangentAt(t);
+          carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
+
+          // Calculate the target rotation
+          targetQuaternion.setFromAxisAngle(
+            new Vector3(0, 1, 0),
+            -Math.atan2(-tangent.x, tangent.z),
+          );
+
+          // Gradually rotate the car towards the target rotation
+          carRef.current.quaternion.slerp(targetQuaternion, 0.5);
+        }
+
+        if (textRef.current && cameraRef.current) {
+          (textRef.current as unknown as Object3D).lookAt(
+            cameraRef.current.position,
+          );
+        }
       }
     };
 

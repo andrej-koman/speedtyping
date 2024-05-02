@@ -9,6 +9,7 @@ import {
 import GameText from "./game-text";
 import Game3DModel from "./game3d";
 import Options from "./options";
+
 import { useGameSettings } from "~/contexts/GameSettingsContext";
 import { useState } from "react";
 import { setToLocalStorage } from "~/lib/game-settings";
@@ -46,7 +47,7 @@ export default function Play({
           onLayout={(sizes: number[]) => {
             document.cookie = `react-resizable-panels:layout=${JSON.stringify(
               sizes,
-            )}`;
+            )}; max-age=${24 * 60 * 60 * 365};`;
           }}
         >
           <ResizablePanel minSize={30} defaultSize={defaultLayout[0]}>
