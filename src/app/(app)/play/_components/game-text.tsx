@@ -22,6 +22,10 @@ export default function GameText({
   const targetQuaternion = new Quaternion();
   let t = 0;
 
+  // TODO
+  // - Dodaj, da se game nekak konča
+  // - Dodaj, da se spaci upoštevajo / ugotovi kako jih upoštevati
+  // - Naredi, da se ob prvem začetku tipkanja skrijejo nepomembne stvari
   useEffect(() => {
     words.current = document.querySelectorAll(".word");
     const handleKeyDown = (e: { key: string }) => {

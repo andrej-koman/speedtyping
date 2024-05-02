@@ -155,5 +155,5 @@
 }
 
 .letter.correct {
-  color: green;
+  color: hsl(var(--primary));
 }
