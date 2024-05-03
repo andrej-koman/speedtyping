@@ -4,7 +4,7 @@ import { type GameSettings } from "types/game";
 import { getSettingsFromLocalStorage } from "~/lib/game-settings";
 
 const settings = getSettingsFromLocalStorage();
-const has3D = settings.get("has3D") ? Boolean(settings.get("has3D")) : true;
+const has3D = settings.get("has3D") ? settings.get("has3D") === "true" : true;
 const textSize = settings.get("textSize") ?? "2xl";
 
 // Create a new context with an undefined initial value

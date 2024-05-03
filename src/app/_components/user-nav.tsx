@@ -34,7 +34,7 @@ export default function UserNav() {
       >
         <Link href="/play" className="text-justify">
           <PlayIcon className="h-5 w-5" />
-          <span className="mb-1 ml-1">Play</span>
+          <span className="ml-1">Play</span>
         </Link>
       </Button>
     );

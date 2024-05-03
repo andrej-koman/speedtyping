@@ -15,6 +15,5 @@ export function getSettingsFromLocalStorage() {
   const settings = new Map<string, string>();
   settings.set("has3D", has3D ?? "false");
   settings.set("textSize", textSize ?? "2xl");
-
   return settings;
 }
