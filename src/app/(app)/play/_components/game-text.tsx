@@ -2,20 +2,19 @@
 import { useEffect, useRef } from "react";
 import { type Object3D, Quaternion, Vector3 } from "three";
 import { useGame } from "~/contexts/GameContext";
-import { useGameSettings } from "~/contexts/GameSettingsContext";
 
 export default function GameText({
   quote,
   carSpeed,
   className,
+  has3D,
 }: {
   quote: Quote;
   carSpeed: number;
   className?: string;
+  has3D: boolean;
 }) {
-  const { has3D } = useGameSettings();
-  const { carRef, curveRef, textRef, cameraRef, hasStartedState } = useGame();
-  const [hasStarted, setHasStarted] = hasStartedState;
+  const { carRef, curveRef, textRef, cameraRef } = useGame();
   const currentWordIndex = useRef(0);
   const currentLetterIndex = useRef(0);
 
@@ -70,7 +69,7 @@ export default function GameText({
   }, []);
 
   const moveCar = () => {
-    if (carRef.current && curveRef.current && has3D.current) {
+    if (carRef.current && curveRef.current && has3D) {
       // update the car's position to create the animation
       // eslint-disable-next-line react-hooks/exhaustive-deps
       t += carSpeed;

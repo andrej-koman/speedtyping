@@ -3,13 +3,14 @@ import { calculateCarSpeed } from "~/lib/utils";
 import { GameProvider } from "~/contexts/GameContext";
 import Play from "./_components/play";
 import { cookies } from "next/headers";
-import { GameSettingsProvider } from "~/contexts/GameSettingsContext";
 
 export const dynamic = "force-dynamic";
 
 export default async function PlayPage() {
   const quote = (await getRandomQuote())[0];
   const layout = cookies().get("react-resizable-panels:layout");
+  const has3D = cookies().get("has3D")?.value === "true" ? true : false;
+  const textSize = cookies().get("textSize")?.value ?? "2xl";
 
   if (!quote) {
     throw new Error("No quotes found. Please add some quotes to the database.");
@@ -22,15 +23,15 @@ export default async function PlayPage() {
 
   return (
     <GameProvider>
-      <GameSettingsProvider>
-        <div className="flex h-[calc(100vh-3.6rem)] w-screen flex-col items-center justify-center p-0">
-          <Play
-            defaultLayout={defaultLayout}
-            quote={quote}
-            carSpeed={carSpeed}
-          />
-        </div>
-      </GameSettingsProvider>
+      <div className="flex h-[calc(100vh-3.6rem)] w-screen flex-col items-center justify-center p-0">
+        <Play
+          textSize={textSize}
+          has3D={has3D}
+          defaultLayout={defaultLayout}
+          quote={quote}
+          carSpeed={carSpeed}
+        />
+      </div>
     </GameProvider>
   );
 }
