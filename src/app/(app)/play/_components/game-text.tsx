@@ -14,10 +14,12 @@ export default function GameText({
   className?: string;
 }) {
   const { has3D } = useGameSettings();
-  const { carRef, curveRef, textRef, cameraRef } = useGame();
+  const { carRef, curveRef, textRef, cameraRef, hasStartedState } = useGame();
+  const [hasStarted, setHasStarted] = hasStartedState;
   const currentWordIndex = useRef(0);
   const currentLetterIndex = useRef(0);
-  const words = useRef(document.querySelectorAll(".word"));
+
+  const words = useRef([] as unknown as NodeListOf<Element>);
 
   const targetQuaternion = new Quaternion();
   let t = 0;
@@ -64,6 +66,7 @@ export default function GameText({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const moveCar = () => {

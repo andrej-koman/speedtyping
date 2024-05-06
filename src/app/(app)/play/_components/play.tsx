@@ -54,6 +54,7 @@ export default function Play({
             <Options
               handle3DChange={handle3DChange}
               handleTextSizeChange={handleTextSizeChange}
+              show3D={show3D}
             />
             <div
               className={`-mt-12 flex h-[100%] items-center justify-center text-${useTextSize}`}
@@ -71,6 +72,7 @@ export default function Play({
           <Options
             handle3DChange={handle3DChange}
             handleTextSizeChange={handleTextSizeChange}
+            show3D={show3D}
           />
           <div
             className={`flex h-[100%] items-center justify-center text-${useTextSize}`}

@@ -157,3 +157,7 @@
 .letter.correct {
   color: hsl(var(--primary));
 }
+
+.text-primary-red {
+  color: hsl(var(--primary)) !important;
+}

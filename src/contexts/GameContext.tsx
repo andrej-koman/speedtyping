@@ -1,5 +1,10 @@
 "use client";
-import { createContext, type MutableRefObject, useContext } from "react";
+import {
+  createContext,
+  type MutableRefObject,
+  useContext,
+  useState,
+} from "react";
 import { Camera } from "three";
 import {
   type Object3DEventMap,
@@ -12,6 +17,7 @@ type GameContextType = {
   curveRef: MutableRefObject<CatmullRomCurve3 | null>;
   textRef: MutableRefObject<Text | null>;
   cameraRef: MutableRefObject<Camera | null>;
+  hasStartedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 };
 
 // Create a new context with an undefined initial value
@@ -28,6 +34,8 @@ export function useGame() {
 
 // Create a provider component
 export function GameProvider({ children }: { children: React.ReactNode }) {
+  const hasStarted = useState(false);
+
   return (
     <GameContext.Provider
       value={{
@@ -35,6 +43,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         curveRef: { current: null },
         textRef: { current: null },
         cameraRef: { current: new Camera() },
+        hasStartedState: hasStarted,
       }}
     >
       {children}

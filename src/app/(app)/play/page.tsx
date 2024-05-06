@@ -3,6 +3,7 @@ import { calculateCarSpeed } from "~/lib/utils";
 import { GameProvider } from "~/contexts/GameContext";
 import Play from "./_components/play";
 import { cookies } from "next/headers";
+import { GameSettingsProvider } from "~/contexts/GameSettingsContext";
 
 export const dynamic = "force-dynamic";
 
@@ -21,9 +22,15 @@ export default async function PlayPage() {
 
   return (
     <GameProvider>
-      <div className="flex h-[calc(100vh-3.6rem)] w-screen flex-col items-center justify-center p-0">
-        <Play defaultLayout={defaultLayout} quote={quote} carSpeed={carSpeed} />
-      </div>
+      <GameSettingsProvider>
+        <div className="flex h-[calc(100vh-3.6rem)] w-screen flex-col items-center justify-center p-0">
+          <Play
+            defaultLayout={defaultLayout}
+            quote={quote}
+            carSpeed={carSpeed}
+          />
+        </div>
+      </GameSettingsProvider>
     </GameProvider>
   );
 }

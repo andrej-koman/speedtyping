@@ -3,8 +3,12 @@ import { TypewriterEffectSmooth } from "~/components/ui/typewriter-effect";
 export default function HeroSection() {
   const words = [
     {
-      text: "hitrostnotipkanje",
+      text: "hitrostno",
     },
+    {
+      text: "tipkanje",
+      className: "dark:text-primary-red text-primary-red"
+    }
   ];
   return (
     <div className="flex h-screen select-none flex-col items-center justify-center">
