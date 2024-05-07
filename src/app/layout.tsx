@@ -22,13 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <CSPostHogProvider>
+      <CSPostHogProvider>
+        <html lang="en">
           <body className={`font-sans ${inter.variable} dark flex flex-col`}>
             {children}
           </body>
-        </CSPostHogProvider>
-      </html>
+        </html>
+      </CSPostHogProvider>
     </ClerkProvider>
   );
 }

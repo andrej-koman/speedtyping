@@ -10,6 +10,10 @@ export async function getQuotes() {
   return quotes;
 }
 
+export async function getQuoteById(id: number) {
+  return db.select().from(quotes).where(eq(quotes.id, id));
+}
+
 export async function getRandomQuote() {
   // Get number of quotes
   const numQuotes = (await db.query.quotes.findMany()).length;
