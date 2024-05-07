@@ -16,26 +16,29 @@ export default function Play({
   quote,
   carSpeed,
   defaultLayout = [50, 50],
-  textSize,
-  has3D,
+  settings,
 }: {
   quote: Quote;
   carSpeed: number;
   defaultLayout?: number[];
-  textSize: string;
-  has3D: boolean;
+  settings: {
+    has3D: boolean;
+    textSize: string;
+  };
 }) {
-  const [show3D, setShow3D] = useState(has3D);
-  const [useTextSize, setUseTextSize] = useState(textSize);
+  const [show3D, setShow3D] = useState(settings.has3D);
+  const [useTextSize, setUseTextSize] = useState(settings.textSize);
 
   const handle3DChange = (pressed: boolean) => {
     setShow3D(pressed);
-    document.cookie = `has3D=${pressed}; max-age=${24 * 60 * 60 * 365};`;
+    settings.has3D = pressed;
+    document.cookie = `gameSettings=${JSON.stringify(settings)}; max-age=${24 * 60 * 60 * 365};`;
   };
 
   const handleTextSizeChange = (value: string) => {
     setUseTextSize(value);
-    document.cookie = `textSize=${value}; max-age=${24 * 60 * 60 * 365};`;
+    settings.textSize = value;
+    document.cookie = `gameSettings=${JSON.stringify(settings)}; max-age=${24 * 60 * 60 * 365};`;
   };
 
   return (

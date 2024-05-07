@@ -29,11 +29,11 @@ export default function UserNav() {
       <Button
         variant="default"
         size="sm"
-        className="text-md flex items-center justify-center"
+        className="text-xs flex items-center justify-center"
         asChild
       >
         <Link href="/play" className="text-justify">
-          <PlayIcon className="h-5 w-5" />
+          <PlayIcon className="h-4 w-4" />
           <span className="ml-1">Play</span>
         </Link>
       </Button>

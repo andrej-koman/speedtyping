@@ -38,6 +38,12 @@ export default function GameText({
 
       if (!currentLetter || !currentWord || !letters) return;
 
+      if (e.key === " ") {
+        moveCar();
+        updateText();
+        return;
+      }
+
       if (e.key === currentLetter.textContent) {
         currentLetter.classList.add("correct");
         currentLetterIndex.current++;

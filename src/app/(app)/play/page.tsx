@@ -6,11 +6,20 @@ import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
+const getSettings = () => {
+  const settings = cookies().get("gameSettings")?.value ?? "";
+
+  if (!settings) {
+    return { has3D: true, textSize: "md" };
+  }
+
+  return JSON.parse(settings) as { has3D: boolean; textSize: string };
+};
+
 export default async function PlayPage() {
   const quote = (await getRandomQuote())[0];
+  const settings = getSettings();
   const layout = cookies().get("react-resizable-panels:layout");
-  const has3D = cookies().get("has3D")?.value === "true" ? true : false;
-  const textSize = cookies().get("textSize")?.value ?? "2xl";
 
   if (!quote) {
     throw new Error("No quotes found. Please add some quotes to the database.");
@@ -25,8 +34,7 @@ export default async function PlayPage() {
     <GameProvider>
       <div className="flex h-[calc(100vh-3.6rem)] w-screen flex-col items-center justify-center p-0">
         <Play
-          textSize={textSize}
-          has3D={has3D}
+          settings={settings}
           defaultLayout={defaultLayout}
           quote={quote}
           carSpeed={carSpeed}

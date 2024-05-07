@@ -39,7 +39,7 @@ export default function Options({
   show3D: boolean;
   textSize: string;
 }) {
-  const { hasStartedState } = useGame();
+  const { hasStartedState, cameraRef } = useGame();
   const [hasStarted] = hasStartedState;
 
   return (
@@ -98,6 +98,7 @@ export default function Options({
                     <SheetDescription>
                       Configure the 3D camera to your liking.
                     </SheetDescription>
+                    {cameraRef.current && <div></div>}
                   </SheetHeader>
                 </SheetContent>
               </Sheet>
