@@ -11,7 +11,18 @@ export async function getQuotes() {
 }
 
 export async function getQuoteById(id: number) {
-  return db.select().from(quotes).where(eq(quotes.id, id));
+  // Check if a quote with that id exists
+  const quote = await db
+    .select()
+    .from(quotes)
+    .where(eq(quotes.id, id))
+    .limit(1);
+
+  if (!quote) {
+    throw new Error("Quote not found");
+  }
+
+  return quote[0];
 }
 
 export async function getRandomQuote() {

@@ -1,4 +1,4 @@
-import { getRandomQuote } from "~/server/queries";
+import { getQuoteById } from "~/server/queries";
 import { calculateCarSpeed } from "~/lib/utils";
 import { GameProvider } from "~/contexts/GameContext";
 import Play from "../_components/play";
@@ -16,8 +16,8 @@ const getSettings = () => {
   return JSON.parse(settings) as { has3D: boolean; textSize: string };
 };
 
-export default async function PlayPage() {
-  const quote = (await getRandomQuote())[0];
+export default async function PlayPage({ params }: { params: { id: number } }) {
+  const quote = await getQuoteById(params.id);
   const settings = getSettings();
   const layout = cookies().get("react-resizable-panels:layout");
 
