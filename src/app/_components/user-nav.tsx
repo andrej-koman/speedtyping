@@ -17,7 +17,6 @@ import { SignOutButton } from "@clerk/nextjs";
 import SignOutIcon from "~/icons/sign-out-icon";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
-import PlayIcon from "~/icons/play-icon";
 import { usePathname } from "next/navigation";
 
 export default function UserNav() {
@@ -26,17 +25,21 @@ export default function UserNav() {
 
   if (pathname === "/") {
     return (
-      <Button
-        variant="default"
-        size="sm"
-        className="text-xs flex items-center justify-center"
-        asChild
-      >
-        <Link href="/play" className="text-justify">
-          <PlayIcon className="h-4 w-4" />
-          <span className="ml-1">Play</span>
-        </Link>
-      </Button>
+      <div className="flex flex-row gap-x-2">
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/sign-in">Login</Link>
+        </Button>
+        <Button
+          variant="default"
+          size="sm"
+          className="flex items-center justify-center text-xs"
+          asChild
+        >
+          <Link href="/play" className="text-justify">
+            Play
+          </Link>
+        </Button>
+      </div>
     );
   }
 

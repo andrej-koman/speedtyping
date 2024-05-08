@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "~/components/ui/table";
+import { Table, TableBody, TableRow } from "~/components/ui/table";
 
 import { useRouter } from "next/navigation";
 
@@ -15,27 +8,24 @@ export default function QuoteTable({ quotes }: { quotes: Quote[] }) {
   const router = useRouter();
 
   return (
-    <Table className="w-[750px]">
-      <TableCaption>Recently added</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead>ID</TableHead>
-          <TableHead className="w-[250px]">Text</TableHead>
-          <TableHead>Created at</TableHead>
-        </TableRow>
-      </TableHeader>
+    <Table className="w-full text-center">
       <TableBody>
         {quotes.map((quote) => (
           <TableRow
             onClick={() => {
-              // Redirect to /play/[id]
               void router.push(`/play/${quote.id}`);
             }}
             key={quote.id}
+            className="cursor-pointer"
           >
-            <td>{quote.id}</td>
-            <td>{quote.text}</td>
-            <td>{quote.created_at.toDateString()}</td>
+            <td className="py-3">
+              <div className="w-[250px] overflow-hidden text-ellipsis text-nowrap text-start">
+                {quote.text}
+              </div>
+            </td>
+            <td>
+              <div className="text-sm text-gray-400">by {quote.author}</div>
+            </td>
           </TableRow>
         ))}
       </TableBody>
