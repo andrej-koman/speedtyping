@@ -15,34 +15,9 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { SignOutButton } from "@clerk/nextjs";
 import SignOutIcon from "~/icons/sign-out-icon";
-import { Button } from "~/components/ui/button";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function UserNav() {
   const { user } = useUser();
-  const pathname = usePathname();
-
-  if (pathname === "/") {
-    return (
-      <div className="flex flex-row gap-x-2">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/sign-in">Login</Link>
-        </Button>
-        <Button
-          variant="default"
-          size="sm"
-          className="flex items-center justify-center text-xs"
-          asChild
-        >
-          <Link href="/play" className="text-justify">
-            Play
-          </Link>
-        </Button>
-      </div>
-    );
-  }
-
   return (
     <>
       <SignedIn>
@@ -68,11 +43,7 @@ export default function UserNav() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <SignOutButton
-                signOutOptions={{
-                  redirectUrl: pathname,
-                }}
-              />
+              <SignOutButton />
               <DropdownMenuShortcut>
                 <SignOutIcon className="h-4 w-4" />
               </DropdownMenuShortcut>

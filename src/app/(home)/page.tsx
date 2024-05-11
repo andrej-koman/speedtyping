@@ -1,6 +1,6 @@
-import HeroSection from "./_components/hero-section";
-import { BackgroundBeams } from "./_components/background-beams";
-import Features from "./_components/features-section";
+import HeroSection from "../(app)/_components/hero-section";
+import { BackgroundBeams } from "../(app)/_components/background-beams";
+import Features from "../(app)/_components/features-section";
 
 export default async function HomePage() {
   return (
