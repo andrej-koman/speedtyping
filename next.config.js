@@ -12,7 +12,20 @@ const config = {
     eslint: {
         ignoreDuringBuilds: true,
     },
-    transpilePackages: ["three"]
+    transpilePackages: ["three"],
+    async rewrites() {
+        return [
+            {
+                source: "/ingest/static/:path*",
+                destination: "https://eu-assets.i.posthog.com/static/:path*",
+            },
+            {
+                source: "/ingest/:path*",
+                destination: "https://eu.i.posthog.com/:path*",
+            },
+        ];
+    },
+    skipTrailingSlashRedirect: true,
 };
 
 export default config;
