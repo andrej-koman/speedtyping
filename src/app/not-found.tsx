@@ -1,18 +1,33 @@
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import BackIcon from "~/icons/back-icon";
-import Illustration404 from "~/illustrations/404-illustration";
+import "./not-found.css";
+import { Separator } from "~/components/ui/separator";
+
+function NotFoundLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link className="hover:text-primary hover:underline underline-offset-4" href={href}>
+      {children}
+    </Link>
+  );
+}
 
 export default function NotFound() {
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-8">
-      <Illustration404 />
-      <Button asChild type="button" variant="default">
-        <Link href="/">
-          <BackIcon className="mr-2 h-4 w-4" />
-          Back to home
-        </Link>
-      </Button>
+    <div className="not-found grid h-screen w-screen grid-cols-3 grid-rows-4">
+      <div className="col-start-1 row-span-2 row-start-2 ms-auto flex flex-col justify-start">
+        <h1 className="text-[150px]">404</h1>
+        <h1 className="text-5xl font-bold">Page not found</h1>
+        <div className="mt-12 flex flex-row items-center justify-start space-x-4">
+          <NotFoundLink href="/">Home</NotFoundLink>
+          <Separator orientation="vertical" />
+          <NotFoundLink href="/play">Play</NotFoundLink>
+        </div>
+      </div>
     </div>
   );
 }
