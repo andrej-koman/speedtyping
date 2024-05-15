@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { type FC } from "react";
 import { buttonVariants } from "~/components/ui/button";
 import ClockIcon from "~/icons/clock-icon";
 import HeartIcon from "~/icons/heart-icon";
@@ -9,72 +10,56 @@ import StarIcon from "~/icons/star-icon";
 
 import { cn } from "~/lib/utils";
 
+function NavItem({
+  href,
+  children,
+  Icon,
+}: {
+  href: string;
+  children: React.ReactNode;
+  Icon: FC<{ className: string }>;
+}) {
+  const pathname = usePathname();
+
+  return (
+    <Link
+      href={href}
+      className={cn(
+        buttonVariants({ variant: "ghost", size: "sm" }),
+        pathname === href ? "bg-muted hover:bg-muted" : "",
+        "justify-start text-[0.8rem]",
+      )}
+    >
+      <Icon className="mr-2 h-5 w-5" />
+      {children}
+    </Link>
+  );
+}
+
 export default function SidebarNav({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
-  const pathname = usePathname();
-
   return (
     <nav
       className={cn(
-        "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 w-[350px] bg-secondary h-full p-6",
+        "flex h-full w-[250px] space-x-2 border-e-[1px] p-6 lg:flex-col lg:space-x-0 lg:space-y-1",
         className,
       )}
       {...props}
     >
-      <Link
-        href="/play"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          pathname === "/play"
-            ? "bg-primary hover:bg-muted"
-            : "hover:bg-primary",
-          "justify-start",
-        )}
-      >
-        <SearchIcon className="mr-2 h-5 w-5" />
+      <NavItem href="/play" Icon={SearchIcon}>
         Search
-      </Link>
-      <Link
-        href="/featured"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          pathname === "/featured"
-            ? "bg-primary hover:bg-muted"
-            : "hover:bg-primary",
-          "justify-start",
-        )}
-      >
-        <StarIcon className="mr-2 h-5 w-5" />
+      </NavItem>
+      <NavItem href="/featured" Icon={StarIcon}>
         Featured
-      </Link>
-      <Link
-        href="/favorites"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          pathname === "/favorites"
-            ? "bg-primary hover:bg-muted"
-            : "hover:bg-primary",
-          "justify-start",
-        )}
-      >
-        <HeartIcon className="mr-2 h-5 w-5" />
+      </NavItem>
+      <NavItem href="/favorites" Icon={HeartIcon}>
         Favorites
-      </Link>
-      <Link
-        href="/recently-played"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          pathname === "/recently-played"
-            ? "bg-primary hover:bg-muted"
-            : "hover:bg-primary",
-          "justify-start",
-        )}
-      >
-        <ClockIcon className="mr-2 h-5 w-5" />
+      </NavItem>
+      <NavItem href="/recent" Icon={ClockIcon}>
         Recently played
-      </Link>
+      </NavItem>
     </nav>
   );
 }
