@@ -11,8 +11,9 @@ export default function Logo({
   className?: string;
 }) {
   return (
-    <Link className="flex select-none items-center space-x-1" href={href}>
+    <Link className="flex select-none items-center space-x-2" href={href}>
       <img src="/logo.png" alt="logo" className={cn("h-8", className)} />
+      <span className="text-sm font-bold">hitrostnotipkanje</span>
     </Link>
   );
 }
