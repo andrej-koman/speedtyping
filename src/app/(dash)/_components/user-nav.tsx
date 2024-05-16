@@ -1,7 +1,7 @@
 "use client";
 import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 
-import SignInButton from "~/components/ui/sign-in-button";
+import LoginButton from "~/components/ui/login-button";
 
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import {
@@ -43,7 +43,7 @@ export default function UserNav() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <SignOutButton redirectUrl="/play" />
+              <SignOutButton redirectUrl="/search" />
               <DropdownMenuShortcut>
                 <SignOutIcon className="h-4 w-4" />
               </DropdownMenuShortcut>
@@ -52,7 +52,7 @@ export default function UserNav() {
         </DropdownMenu>
       </SignedIn>
       <SignedOut>
-        <SignInButton />
+        <LoginButton />
       </SignedOut>
     </>
   );

@@ -1,4 +1,4 @@
-import Header from "./_components/header";
+import Header from "../_components/app-header";
 import SidebarNav from "./_components/sidebar-nav";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

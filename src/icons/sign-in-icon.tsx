@@ -1,27 +1,18 @@
 export default function SignInIcon({ className }: { className?: string }) {
   return (
     <svg
-      className={className}
-      strokeWidth="1.5"
-      viewBox="0 0 24 24"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      color="#000000"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className={className}
     >
       <path
-        d="M19 12H12M12 12L15 15M12 12L15 9"
-        stroke="white"
-        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-      ></path>
-      <path
-        d="M19 6V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V18"
-        stroke="white"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      ></path>
+        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+      />
     </svg>
   );
 }

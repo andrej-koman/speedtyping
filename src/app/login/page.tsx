@@ -16,33 +16,35 @@ import {
 } from "~/components/ui/tooltip";
 import { useRouter } from "next/navigation";
 
-export default function SignInPage() {
+export default function LoginPage() {
   const { signIn } = useSignIn();
   const { isSignedIn, isLoaded } = useSession();
   const router = useRouter();
+  const redirectUrlComplete = "/search";
+  const redirectUrl = "/sso-callback";
 
   if (!isLoaded) {
     return <Loader />;
   }
 
   if (isSignedIn) {
-    router.push("/play");
+    router.push("/search");
     return <Loader />;
   }
 
   const signInWithGoogle = () => {
     return signIn?.authenticateWithRedirect({
       strategy: "oauth_google",
-      redirectUrl: "/sso-callback",
-      redirectUrlComplete: "/play",
+      redirectUrl,
+      redirectUrlComplete,
     });
   };
 
   const signInWithGitHub = () => {
     return signIn?.authenticateWithRedirect({
       strategy: "oauth_github",
-      redirectUrl: "/sso-callback",
-      redirectUrlComplete: "/play",
+      redirectUrl,
+      redirectUrlComplete,
     });
   };
 

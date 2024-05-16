@@ -48,7 +48,7 @@ export default function SidebarNav({
       )}
       {...props}
     >
-      <NavItem href="/play" Icon={SearchIcon}>
+      <NavItem href="/search" Icon={SearchIcon}>
         Search
       </NavItem>
       <NavItem href="/featured" Icon={StarIcon}>
