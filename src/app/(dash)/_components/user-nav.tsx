@@ -14,7 +14,8 @@ import {
   DropdownMenuShortcut,
 } from "~/components/ui/dropdown-menu";
 import { SignOutButton } from "@clerk/nextjs";
-import SignOutIcon from "~/icons/sign-out-icon";
+
+import { LogOut } from "lucide-react";
 
 export default function UserNav() {
   const { user } = useUser();
@@ -45,7 +46,7 @@ export default function UserNav() {
             <DropdownMenuItem>
               <SignOutButton redirectUrl="/search" />
               <DropdownMenuShortcut>
-                <SignOutIcon className="h-4 w-4" />
+                <LogOut className="h-4 w-4" />
               </DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuContent>

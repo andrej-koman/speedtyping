@@ -1,12 +1,8 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type FC } from "react";
 import { buttonVariants } from "~/components/ui/button";
-import ClockIcon from "~/icons/clock-icon";
-import HeartIcon from "~/icons/heart-icon";
-import SearchIcon from "~/icons/search-icon";
-import StarIcon from "~/icons/star-icon";
+import { Clock, Heart, type LucideProps, Search, Star } from "lucide-react";
 
 import { cn } from "~/lib/utils";
 
@@ -17,7 +13,9 @@ function NavItem({
 }: {
   href: string;
   children: React.ReactNode;
-  Icon: FC<{ className: string }>;
+  Icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
 }) {
   const pathname = usePathname();
 
@@ -48,16 +46,16 @@ export default function SidebarNav({
       )}
       {...props}
     >
-      <NavItem href="/search" Icon={SearchIcon}>
+      <NavItem href="/search" Icon={Search}>
         Search
       </NavItem>
-      <NavItem href="/featured" Icon={StarIcon}>
+      <NavItem href="/featured" Icon={Star}>
         Featured
       </NavItem>
-      <NavItem href="/favorites" Icon={HeartIcon}>
+      <NavItem href="/favorites" Icon={Heart}>
         Favorites
       </NavItem>
-      <NavItem href="/recent" Icon={ClockIcon}>
+      <NavItem href="/recent" Icon={Clock}>
         Recently played
       </NavItem>
     </nav>

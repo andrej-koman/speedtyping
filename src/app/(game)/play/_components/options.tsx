@@ -1,6 +1,5 @@
 "use client";
-import Icon3D from "~/icons/3d-icon";
-import TextIcon from "~/icons/text-icon";
+import { Box, SlidersHorizontal, Type } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Toggle } from "~/components/ui/toggle";
@@ -17,8 +16,7 @@ import {
 
 import { useGame } from "~/contexts/GameContext";
 import { textSizeMapping } from "~/lib/utils";
-import { HAdjustmentsIcon } from "~/icons/h-adjustments-icon";
-import ResetIcon from "~/icons/reset-icon";
+
 import {
   Sheet,
   SheetContent,
@@ -51,7 +49,7 @@ export default function Options({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="sm" variant="outline">
-                  <TextIcon className="mr-2 h-4 w-4" />
+                  <Type className="mr-2 h-4 w-4" />
                   {textSizeMapping[textSize]}
                 </Button>
               </DropdownMenuTrigger>
@@ -81,14 +79,14 @@ export default function Options({
               variant="outline"
               className="text-xs"
             >
-              <Icon3D className="mr-2 h-4 w-4" />
+              <Box className="mr-2 h-4 w-4" />
               3D
             </Toggle>
             {show3D && (
               <Sheet>
                 <SheetTrigger asChild>
                   <Toggle size="sm" variant="outline" className="text-xs">
-                    <HAdjustmentsIcon className="mr-2 h-4 w-4" />
+                    <SlidersHorizontal className="mr-2 h-4 w-4" />
                     Camera
                   </Toggle>
                 </SheetTrigger>
@@ -107,7 +105,6 @@ export default function Options({
           <div className="flex">
             {hasStarted && (
               <Button size="sm" variant="default" className="text-xs">
-                <ResetIcon className="mr-2 h-4 w-4" />
                 Reset
               </Button>
             )}

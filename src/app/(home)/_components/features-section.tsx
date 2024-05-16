@@ -1,10 +1,12 @@
 import { CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import FlagIcon from "~/icons/flag-icon";
-import { PaintBrushIcon } from "~/icons/paint-brush-icon";
-import QueueListIcon from "~/icons/queue-list-icon";
 import CarSection from "./car-section";
-import CursorArrowIcon from "~/icons/cursor-arrow-icon";
+import {
+  MousePointerClick,
+  FlagTriangleLeft,
+  Paintbrush,
+  AlignJustify,
+} from "lucide-react";
 
 function Feature({
   title,
@@ -34,25 +36,25 @@ export default function FeaturesSection() {
       <div className="col-span-1 flex flex-col items-center justify-center">
         <Feature
           title="Typing Practice"
-          icon={<FlagIcon className="h-6 w-6" />}
+          icon={<FlagTriangleLeft className="h-6 w-6" />}
           description="Practice your typing skills with our interactive typing game. Improve your typing speed and accuracy."
         />
         <Separator />
         <Feature
           title="Customization"
-          icon={<PaintBrushIcon className="h-6 w-6" />}
+          icon={<Paintbrush className="h-6 w-6" />}
           description="Customize the app's appearance with a variety of customization options. Choose and color your car, find the best track for you and more."
         />
         <Separator />
         <Feature
           title="Leaderboards"
-          icon={<QueueListIcon className="h-6 w-6" />}
+          icon={<AlignJustify className="h-6 w-6" />}
           description="Compete against other racers and climb to the top of the leaderboards. Can you beat the fastest typists in the world?"
         />
       </div>
       <div className="relative col-span-2 h-[100%] w-[100%]">
         <CarSection />
-        <CursorArrowIcon className="absolute right-5 top-5 h-6 w-6" />
+        <MousePointerClick className="absolute right-5 top-5 h-6 w-6" />
       </div>
     </div>
   );

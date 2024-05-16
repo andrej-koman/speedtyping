@@ -10,7 +10,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <aside className="flex w-max flex-row space-x-8">
             <SidebarNav />
           </aside>
-          <div className="w-full flex-1 lg:max-w-2xl">{children}</div>
+          {children}
         </div>
       </div>
     </>

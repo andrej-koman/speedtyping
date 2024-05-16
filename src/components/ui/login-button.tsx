@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Button } from "./button";
-import SignInIcon from "~/icons/sign-in-icon";
+import { LogIn } from "lucide-react";
 
 export default function LoginButton() {
   return (
     <Button asChild variant="ghost" size="icon">
       <Link href="/login">
-        <SignInIcon className="h-6 w-6" />
+        <LogIn className="h-4 w-4" />
       </Link>
     </Button>
   );
