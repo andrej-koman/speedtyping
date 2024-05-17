@@ -17,7 +17,7 @@
   left: 396px;
   bottom: 595px;
   background-color: red;
-  animation: traffic-light 6s steps(1);
+  animation: traffic-light 2s steps(1);
   animation-fill-mode: forwards;
 }
 
