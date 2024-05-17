@@ -14,8 +14,8 @@
   border-radius: 50%;
   width: 145px;
   height: 145px;
-  left: 396;
-  bottom: 595;
+  left: 396px;
+  bottom: 595px;
   background-color: red;
   animation: traffic-light 6s steps(1);
   animation-fill-mode: forwards;
@@ -24,18 +24,18 @@
 @keyframes traffic-light {
   0% {
     background-color: green;
-    left: 396;
-    bottom: 77;
+    left: 396px;
+    bottom: 77px;
   }
   33% {
     background-color: orange;
-    left: 396;
-    bottom: 336;
+    left: 396px;
+    bottom: 336px;
   }
   66% {
     background-color: red;
-    left: 396;
-    bottom: 595;
+    left: 396px;
+    bottom: 595px;
   }
 }
 
