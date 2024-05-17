@@ -1,5 +1,14 @@
 import { sql } from "drizzle-orm";
-import { pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  pgEnum,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
+
+const difficultyEnum = pgEnum("difficulty", ["easy", "medium", "hard"]);
 
 export const quotes = pgTable("quotes", {
   id: serial("id").primaryKey(),
@@ -13,4 +22,5 @@ export const quotes = pgTable("quotes", {
   updated_at: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
+  difficulty: difficultyEnum("difficulty").default("easy").notNull(),
 });

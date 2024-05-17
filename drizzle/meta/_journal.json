@@ -8,6 +8,20 @@
       "when": 1715966005939,
       "tag": "0000_serious_scrambler",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1715968557146,
+      "tag": "0001_low_lucky_pierre",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1715968996833,
+      "tag": "0002_curious_the_twelve",
+      "breakpoints": true
     }
   ]
 }
