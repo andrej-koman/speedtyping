@@ -9,11 +9,44 @@
   animation-fill-mode: forwards;
 }
 
+.traffic-light-bulb {
+  position: absolute;
+  border-radius: 50%;
+  width: 145px;
+  height: 145px;
+  left: 396;
+  bottom: 595;
+  background-color: red;
+  animation: traffic-light 6s steps(1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes traffic-light {
+  0% {
+    background-color: green;
+    left: 396;
+    bottom: 77;
+  }
+  33% {
+    background-color: orange;
+    left: 396;
+    bottom: 336;
+  }
+  66% {
+    background-color: red;
+    left: 396;
+    bottom: 595;
+  }
+}
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
   }
   100% {
     background-position: 100% 50%;
+  }
+  0% {
+    background-position: 0% 50%;
   }
 }
