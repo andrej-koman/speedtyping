@@ -1,4 +1,4 @@
-declare module 'tailwindcss/lib/util/flattenColorPalette'
+declare module "tailwindcss/lib/util/flattenColorPalette";
 
 /**
  * This object is created and should only be used in the Game component. It represents the state of the game.
@@ -26,4 +26,5 @@ declare interface Quote {
   author: string;
   created_at: Date;
   updated_at: Date;
+  lengthWord: "short" | "medium" | "long" | "very_long";
 }

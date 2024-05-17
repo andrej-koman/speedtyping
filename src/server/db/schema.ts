@@ -8,7 +8,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-const difficultyEnum = pgEnum("difficulty", ["easy", "medium", "hard"]);
+const lengthEnum = pgEnum("length", ["short", "medium", "long", "very_long"]);
 
 export const quotes = pgTable("quotes", {
   id: serial("id").primaryKey(),
@@ -22,5 +22,5 @@ export const quotes = pgTable("quotes", {
   updated_at: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  difficulty: difficultyEnum("difficulty").default("easy").notNull(),
+  lengthWord: lengthEnum("lengthWord").default("short").notNull(),
 });
