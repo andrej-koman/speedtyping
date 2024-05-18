@@ -23,13 +23,15 @@ export default function QuoteSearch() {
 
   const handleSearch = (value: string) => {
     const params = new URLSearchParams(searchParams);
-    if (value) {
-      params.set("query", value);
-      params.set("searchBy", searchBy);
-    } else {
+    if (value === "" || !value) {
       params.delete("query");
       params.delete("searchBy");
+      replace(`${pathname}?${params.toString()}`);
+      return;
     }
+
+    params.set("query", value);
+    params.set("searchBy", searchBy);
 
     replace(`${pathname}?${params.toString()}`);
   };

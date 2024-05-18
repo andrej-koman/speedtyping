@@ -1,4 +1,4 @@
-import { eq, like, sql } from "drizzle-orm";
+import { eq, sql, or } from "drizzle-orm";
 import { db } from "./db";
 import { quotes } from "./db/schema";
 
@@ -31,11 +31,12 @@ export async function getFilteredQuotes(
       break;
   }
 
+  page;
+
   const allQuotes = await db
     .select()
     .from(quotes)
-    .where(sql`${equals} LIKE ${`%${query}%`}`);
-
+    .where(sql`LOWER(${equals}) LIKE LOWER(${`%${query}%`})`);
   return allQuotes;
 }
 
