@@ -1,5 +1,5 @@
 "use client";
-import { ScrollArea } from "~/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { cn } from "~/lib/utils";
 import { useRouter } from "next/navigation";
 import { Badge } from "~/components/ui/badge";
@@ -8,7 +8,8 @@ export default function QuoteList({ quotes }: { quotes: Quote[] }) {
   const router = useRouter();
 
   return (
-    <ScrollArea className="h-full px-3">
+    <ScrollArea className="h-full pe-3">
+      <ScrollBar forceMount={true} />
       <div className="flex flex-col space-y-4">
         {quotes.length > 0 ? (
           <>

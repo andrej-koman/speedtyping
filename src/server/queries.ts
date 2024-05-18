@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, like, sql } from "drizzle-orm";
 import { db } from "./db";
 import { quotes } from "./db/schema";
 
@@ -8,6 +8,35 @@ export async function getQuotes() {
   });
 
   return quotes;
+}
+
+export async function getFilteredQuotes(
+  query: string,
+  searchBy: SearchBy,
+  page: number,
+) {
+  let equals = null;
+  switch (searchBy) {
+    case "Text":
+      equals = quotes.text;
+      break;
+    case "Author":
+      equals = quotes.author;
+      break;
+    case "Source":
+      equals = quotes.source;
+      break;
+    default:
+      equals = quotes.text;
+      break;
+  }
+
+  const allQuotes = await db
+    .select()
+    .from(quotes)
+    .where(sql`${equals} LIKE ${`%${query}%`}`);
+
+  return allQuotes;
 }
 
 export async function getQuoteById(id: number) {
