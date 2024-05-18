@@ -13,11 +13,6 @@ export default function QuoteList({ quotes }: { quotes: Quote[] }) {
       <div className="flex flex-col space-y-4">
         {quotes.length > 0 ? (
           <>
-            <div className="flex w-full justify-end">
-              <small className="text-muted-foreground">
-                {quotes.length} found
-              </small>
-            </div>
             {quotes.map((quote) => (
               <button
                 key={quote.id}
