@@ -1,5 +1,5 @@
 "use client";
-import { Box, SlidersHorizontal, Type } from "lucide-react";
+import { Box, SlidersHorizontal, Type, Star } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Toggle } from "~/components/ui/toggle";
@@ -25,6 +25,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
+import { toast } from "sonner";
 
 export default function Options({
   handle3DChange,
@@ -102,7 +103,14 @@ export default function Options({
               </Sheet>
             )}
           </div>
-          <div className="flex">
+          <div className="flex items-center">
+            <button
+              onClick={() => {
+                toast.success("Quote has been added to your favorites");
+              }}
+            >
+              <Star className="h-4 w-4 cursor-pointer" />
+            </button>
             {hasStarted && (
               <Button size="sm" variant="default" className="text-xs">
                 Reset

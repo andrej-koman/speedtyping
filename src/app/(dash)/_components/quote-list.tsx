@@ -3,6 +3,8 @@ import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { cn } from "~/lib/utils";
 import { useRouter } from "next/navigation";
 import { Badge } from "~/components/ui/badge";
+import { Star } from "lucide-react";
+import { Button } from "~/components/ui/button";
 
 export default function QuoteList({ quotes }: { quotes: Quote[] }) {
   const router = useRouter();
@@ -34,8 +36,11 @@ export default function QuoteList({ quotes }: { quotes: Quote[] }) {
             */
               >
                 <div className="flex w-full flex-col gap-1">
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-between">
                     <div className="font-semibold">{quote.source}</div>
+                    <Button variant="ghost" className="p-0">
+                      <Star className="h-4 w-4" />
+                    </Button>
                   </div>
                   <div className="text-xs font-medium">{quote.author}</div>
                 </div>

@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import {
+  integer,
   pgEnum,
   pgTable,
   serial,
@@ -23,4 +24,15 @@ export const quotes = pgTable("quotes", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   lengthWord: lengthEnum("lengthWord").default("short").notNull(),
+});
+
+export const favorites = pgTable("favorites", {
+  id: serial("id").primaryKey(),
+  quote_id: integer("quote_id")
+    .references(() => quotes.id)
+    .notNull(),
+  user_id: varchar("user_id").notNull(),
+  created_at: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 });

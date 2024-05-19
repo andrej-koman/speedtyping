@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "~/components/ui/button";
-import { Clock, Heart, type LucideProps, Search, Star } from "lucide-react";
+import { Clock, Heart, type LucideProps, Search } from "lucide-react";
 
 import { cn } from "~/lib/utils";
 
@@ -48,9 +48,6 @@ export default function SidebarNav({
     >
       <NavItem href="/search" Icon={Search}>
         Search
-      </NavItem>
-      <NavItem href="/featured" Icon={Star}>
-        Featured
       </NavItem>
       <NavItem href="/favorites" Icon={Heart}>
         Favorites

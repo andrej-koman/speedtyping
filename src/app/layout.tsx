@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { CSPostHogProvider } from "~/app/providers";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
         <html lang="en">
           <body className={`font-sans ${inter.variable} dark flex flex-col`}>
             {children}
+            <Toaster richColors />
           </body>
         </html>
       </CSPostHogProvider>
