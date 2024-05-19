@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { quotes } from "~/server/db/schema";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -63,4 +64,17 @@ export const ColorSchemes = [
 
 export const DefaultGameSettings = {
   has3D: true,
+};
+
+export const convertSearchBy = (searchBy: string) => {
+  switch (searchBy) {
+    case "Text":
+      return quotes.text;
+    case "Author":
+      return quotes.author;
+    case "Source":
+      return quotes.source;
+    default:
+      return quotes.text;
+  }
 };

@@ -8,7 +8,7 @@ export default function QuoteList({ quotes }: { quotes: Quote[] }) {
   const router = useRouter();
 
   return (
-    <ScrollArea className="h-full pe-3">
+    <ScrollArea className="h-full">
       <ScrollBar forceMount={true} />
       <div className="flex flex-col space-y-4">
         {quotes.length > 0 ? (

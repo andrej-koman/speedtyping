@@ -1,4 +1,4 @@
-import { getFilteredQuotes } from "~/server/queries";
+import { getFilteredQuotes, countFilteredQuotes } from "~/server/queries";
 import QuoteList from "../_components/quote-list";
 import { Separator } from "~/components/ui/separator";
 import QuoteSearch from "../_components/quote-search";
@@ -12,12 +12,17 @@ export default async function SearchPage({
   };
 }) {
   let quotes: Quote[] = [];
+  let quoteCount = 0;
   if (searchParams) {
     if (searchParams.query && searchParams.searchBy) {
       quotes = await getFilteredQuotes(
         searchParams.query,
         searchParams.searchBy as SearchBy,
         1,
+      );
+      quoteCount = await countFilteredQuotes(
+        searchParams.query,
+        searchParams.searchBy as SearchBy,
       );
     }
   }
@@ -27,7 +32,7 @@ export default async function SearchPage({
         <QuoteSearch />
         <Separator orientation="horizontal" />
         <div className="flex w-full justify-end">
-          <small className="text-muted-foreground">{quotes.length} found</small>
+          <small className="text-muted-foreground">{quotes.length} out of {quoteCount} shown</small>
         </div>
         <QuoteList quotes={quotes} />
       </div>

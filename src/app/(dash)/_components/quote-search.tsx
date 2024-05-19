@@ -7,6 +7,8 @@ import SearchFilters from "./search-filters";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { isSearchBy } from "~/lib/types";
 
+import { useDebouncedCallback } from "use-debounce";
+
 export default function QuoteSearch() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -21,7 +23,7 @@ export default function QuoteSearch() {
     setSearchBy(value as SearchBy);
   };
 
-  const handleSearch = (value: string) => {
+  const handleSearch = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
     if (value === "" || !value) {
       params.delete("query");
@@ -34,7 +36,7 @@ export default function QuoteSearch() {
     params.set("searchBy", searchBy);
 
     replace(`${pathname}?${params.toString()}`);
-  };
+  }, 300);
 
   return (
     <>
