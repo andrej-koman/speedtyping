@@ -9,6 +9,3 @@ Aplikacija za vajo in za tekmovanja v tipkanju.
 - [ ] Naredi subdomene (#zajebano je)
     - [ ] https://dev.to/iskurbanov/step-by-step-multi-tenant-app-with-nextjs-2mbc
 - [ ] Hostaj vse statične file na UploadThing in ga integriraj v aplikacijo
-- [ ] Prenova play paga - naj je bolj kot prav v kakšni igri :D
-- [ ] 404 stran
-    - [ ] Dodaj 3D sliko ali model rdeče luči na semaforu

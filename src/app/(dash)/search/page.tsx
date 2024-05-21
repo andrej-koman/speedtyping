@@ -32,7 +32,9 @@ export default async function SearchPage({
         <QuoteSearch />
         <Separator orientation="horizontal" />
         <div className="flex w-full justify-end">
-          <small className="text-muted-foreground">{quotes.length} out of {quoteCount} shown</small>
+          <small className="text-muted-foreground">
+            {quotes.length} out of {quoteCount} shown
+          </small>
         </div>
         <QuoteList quotes={quotes} />
       </div>
