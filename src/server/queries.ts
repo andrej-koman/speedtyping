@@ -1,7 +1,8 @@
-import { eq, sql, count } from "drizzle-orm";
+import { eq, sql, count, and } from "drizzle-orm";
 import { db } from "./db";
-import { quotes } from "./db/schema";
+import { favorites, quotes } from "./db/schema";
 import { convertSearchBy } from "~/lib/utils";
+import { currentUser } from "@clerk/nextjs/server";
 
 /**
  * Get all the quotes from the db
@@ -87,6 +88,31 @@ export async function getQuoteById(id: number): Promise<Quote> {
 }
 
 /**
+ * Check if quote is favorited by a user
+ * @param quoteId
+ * @param userId
+ * @returns {Promise<boolean>}
+ */
+export async function isQuoteFavoritedByUser(
+  quoteId: number,
+): Promise<boolean> {
+  const user = await currentUser();
+  const userId = user?.id;
+
+  if (!userId || !quoteId) {
+    return false;
+  }
+
+  const favorite = await db
+    .select()
+    .from(favorites)
+    .where(and(eq(favorites.quote_id, quoteId), eq(favorites.user_id, userId)))
+    .limit(1);
+
+  return favorite[0] !== undefined;
+}
+
+/**
  * Get a random quote
  * @returns {Promise<Quote[]>}
  */
@@ -102,3 +128,13 @@ export async function getRandomQuote(): Promise<Quote[]> {
     .from(quotes)
     .where(eq(quotes.id, randomIndex + 1));
 }
+
+/**
+ * Add a quote to favorites
+ * @param quoteId
+ * @returns {Promise<{
+ *  success: boolean,
+ *  text: string
+ * }>}
+ */
+

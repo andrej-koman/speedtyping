@@ -1,4 +1,4 @@
-import { getQuoteById } from "~/server/queries";
+import { getQuoteById, isQuoteFavoritedByUser } from "~/server/queries";
 import { calculateCarSpeed } from "~/lib/utils";
 import { GameProvider } from "~/contexts/GameContext";
 import Play from "../_components/play";
@@ -6,19 +6,33 @@ import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
-const getSettings = () => {
+const getSettings = async (quoteId: number) => {
   const settings = cookies().get("gameSettings")?.value ?? "";
+  const isFavorite = await isQuoteFavoritedByUser(quoteId);
+  const defaultSettings = {
+    has3D: false,
+    textSize: "md",
+    isFavorite,
+  };
 
   if (!settings) {
-    return { has3D: true, textSize: "md" };
+    return defaultSettings;
   }
 
-  return JSON.parse(settings) as { has3D: boolean; textSize: string };
+  const settingsParsed = JSON.parse(settings) as {
+    has3D: boolean;
+    textSize: string;
+  };
+
+  return {
+    ...settingsParsed,
+    isFavorite,
+  };
 };
 
 export default async function PlayPage({ params }: { params: { id: number } }) {
   const quote = await getQuoteById(params.id);
-  const settings = getSettings();
+  const settings = await getSettings(params.id);
   const layout = cookies().get("react-resizable-panels:layout");
 
   if (!quote) {

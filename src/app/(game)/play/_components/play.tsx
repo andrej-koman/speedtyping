@@ -24,6 +24,7 @@ export default function Play({
   settings: {
     has3D: boolean;
     textSize: string;
+    isFavorite: boolean;
   };
 }) {
   const [show3D, setShow3D] = useState(settings.has3D);

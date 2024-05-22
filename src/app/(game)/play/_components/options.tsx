@@ -4,6 +4,8 @@ import { Box, SlidersHorizontal, Type, Star } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Toggle } from "~/components/ui/toggle";
 
+import { addQuoteToFavorites } from "~/app/actions";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
