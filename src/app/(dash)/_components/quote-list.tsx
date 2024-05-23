@@ -27,7 +27,10 @@ export default function QuoteList({ quotes }: { quotes: Quote[] }) {
                 <div className="flex w-full flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <div className="font-semibold">{quote.source}</div>
-                    <Star className="h-4 w-4" />
+                    <Star
+                      fill={quote.isFavorite ? "currentColor" : "none"}
+                      className="h-4 w-4"
+                    />
                   </div>
                   <div className="text-xs font-medium">{quote.author}</div>
                 </div>

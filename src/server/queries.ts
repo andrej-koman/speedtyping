@@ -28,6 +28,14 @@ export async function getFilteredQuotes(
 
   const offset = (page - 1) * pageSize;
 
+  const user = await currentUser();
+  let userId = user?.id;
+
+  if (!userId) {
+    // This is a hack, it wont find nothing if the user is not logged in
+    userId = "nothing";
+  }
+
   const allQuotes = await db
     .select()
     .from(quotes)

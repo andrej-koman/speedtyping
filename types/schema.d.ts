@@ -29,3 +29,14 @@ declare interface Quote {
   lengthWord: "short" | "medium" | "long" | "very_long";
   isFavorite?: boolean;
 }
+
+/**
+ * This represents a single favorite object
+ */
+
+declare interface Favorite {
+  id: number;
+  quote_id: number;
+  user_id: string;
+  created_at: Date;
+}

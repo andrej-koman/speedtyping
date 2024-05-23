@@ -20,6 +20,19 @@ export default async function SearchPage({
         searchParams.searchBy as SearchBy,
         1,
       );
+
+      // TODO - Nekak to zrihtaj, načeloma se tak nerabi na tem pagu prikazovat
+      // Načeloma bom si debug shit pripravo, do te pa pustim tak kot je
+      /*
+      quotes = result.map((res) => {
+        const isFavorite = res.favorites !== undefined;
+        const quote = res.quotes;
+        quote.isFavorite = isFavorite;
+        debugger;
+        return quote;
+      });
+      */
+
       quoteCount = await countFilteredQuotes(
         searchParams.query,
         searchParams.searchBy as SearchBy,
