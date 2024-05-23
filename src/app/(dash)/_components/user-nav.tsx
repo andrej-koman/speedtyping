@@ -44,7 +44,7 @@ export default function UserNav() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <SignOutButton redirectUrl="/search" />
+              <SignOutButton redirectUrl="/" />
               <DropdownMenuShortcut>
                 <LogOut className="h-4 w-4" />
               </DropdownMenuShortcut>
