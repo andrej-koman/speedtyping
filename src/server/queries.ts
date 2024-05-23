@@ -6,7 +6,6 @@ import { currentUser } from "@clerk/nextjs/server";
 
 /**
  * Get all the quotes from the db
- * @returns {Promise<Quote[]>} - An array of quotes
  */
 export async function getQuotes(): Promise<Quote[]> {
   const quotes = await db.query.quotes.findMany({
@@ -18,10 +17,6 @@ export async function getQuotes(): Promise<Quote[]> {
 
 /**
  * Filter quotes by a query and a searchBy parameter and return them.
- * @param query
- * @param searchBy
- * @param page
- * @returns {Promise<Quote[]>}
  */
 export async function getFilteredQuotes(
   query: string,
@@ -45,9 +40,6 @@ export async function getFilteredQuotes(
 
 /**
  * Count quotes by a query and a searchBy parameter and return the count.
- * @param query
- * @param searchBy
- * @returns {Promise<number>}
  */
 export async function countFilteredQuotes(
   query: string,
@@ -69,8 +61,6 @@ export async function countFilteredQuotes(
 
 /**
  *  Get a quote by its id
- * @param id
- * @returns  {Promise<Quote>}
  */
 export async function getQuoteById(id: number): Promise<Quote> {
   // Check if a quote with that id exists
@@ -89,9 +79,6 @@ export async function getQuoteById(id: number): Promise<Quote> {
 
 /**
  * Check if quote is favorited by a user
- * @param quoteId
- * @param userId
- * @returns {Promise<boolean>}
  */
 export async function isQuoteFavoritedByUser(
   quoteId: number,
@@ -114,7 +101,6 @@ export async function isQuoteFavoritedByUser(
 
 /**
  * Get a random quote
- * @returns {Promise<Quote[]>}
  */
 export async function getRandomQuote(): Promise<Quote[]> {
   // Get number of quotes
@@ -128,13 +114,3 @@ export async function getRandomQuote(): Promise<Quote[]> {
     .from(quotes)
     .where(eq(quotes.id, randomIndex + 1));
 }
-
-/**
- * Add a quote to favorites
- * @param quoteId
- * @returns {Promise<{
- *  success: boolean,
- *  text: string
- * }>}
- */
-

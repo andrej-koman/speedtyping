@@ -1,10 +1,11 @@
 "use client";
+import { useState } from "react";
+
+import { type OptionsProps } from "types/game";
 import { Box, SlidersHorizontal, Type, Star } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Toggle } from "~/components/ui/toggle";
-
-import { addQuoteToFavorites } from "~/app/actions";
 
 import {
   DropdownMenu,
@@ -17,6 +18,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 
 import { useGame } from "~/contexts/GameContext";
+import { useUser } from "@clerk/nextjs";
 import { textSizeMapping } from "~/lib/utils";
 
 import {
@@ -27,6 +29,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
+
+import { addQuoteToFavorites, removeQuoteFromFavorites } from "~/app/actions";
 import { toast } from "sonner";
 
 export default function Options({
@@ -34,18 +38,59 @@ export default function Options({
   handleTextSizeChange,
   show3D,
   textSize,
-}: {
-  handle3DChange: (pressed: boolean) => void;
-  handleTextSizeChange: (value: string) => void;
-  show3D: boolean;
-  textSize: string;
-}) {
+  quote,
+}: OptionsProps) {
   const { hasStartedState, cameraRef } = useGame();
   const [hasStarted] = hasStartedState;
+  const { user } = useUser();
+  const [isFavorite, setIsFavorite] = useState<boolean>(
+    quote?.isFavorite ?? false,
+  );
+
+  const handleFavorite = async () => {
+    if (!quote || !user) {
+      throw new Error("Invalid state while adding to favorites");
+    }
+
+    if (isFavorite) {
+      // Remove from favorites
+      await removeQuoteFromFavorites(quote.id, user.id).then((res) => {
+        if (!res) {
+          throw new Error("Something is wrong");
+        }
+
+        switch (res.status) {
+          case "error":
+            toast.error(res.message);
+            break;
+          case "success":
+            toast.info(res.message);
+            setIsFavorite(false);
+            break;
+        }
+      });
+    } else {
+      // Add to favorites
+      await addQuoteToFavorites(quote.id, user.id).then((res) => {
+        if (!res) {
+          throw new Error("Something is wrong");
+        }
+        switch (res.status) {
+          case "error":
+            toast.error(res.message);
+            break;
+          case "success":
+            toast.success(res.message);
+            setIsFavorite(true);
+            break;
+        }
+      });
+    }
+  };
 
   return (
     <div className="sticky top-0 z-50 flex w-full justify-center">
-      <div className="flex flex-col justify-center xl:w-[75rem]">
+      <div className="flex flex-col justify-center xl:w-[60rem]">
         <div className="flex flex-row justify-between space-x-1 p-4">
           <div></div>
           <div className="flex flex-row justify-center space-x-1">
@@ -106,12 +151,11 @@ export default function Options({
             )}
           </div>
           <div className="flex items-center">
-            <button
-              onClick={() => {
-                toast.success("Quote has been added to your favorites");
-              }}
-            >
-              <Star className="h-4 w-4 cursor-pointer" />
+            <button type="submit" onClick={handleFavorite}>
+              <Star
+                fill={isFavorite ? "currentColor" : "none"}
+                className="h-4 w-4 cursor-pointer"
+              />
             </button>
             {hasStarted && (
               <Button size="sm" variant="default" className="text-xs">

@@ -27,4 +27,5 @@ declare interface Quote {
   created_at: Date;
   updated_at: Date;
   lengthWord: "short" | "medium" | "long" | "very_long";
+  isFavorite?: boolean;
 }

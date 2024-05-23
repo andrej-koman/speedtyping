@@ -29,6 +29,7 @@ export default function Play({
 }) {
   const [show3D, setShow3D] = useState(settings.has3D);
   const [useTextSize, setUseTextSize] = useState(settings.textSize);
+  quote.isFavorite = settings.isFavorite;
 
   const handle3DChange = (pressed: boolean) => {
     setShow3D(pressed);
@@ -59,6 +60,7 @@ export default function Play({
               handleTextSizeChange={handleTextSizeChange}
               show3D={show3D}
               textSize={useTextSize}
+              quote={quote}
             />
             <div
               className={`-mt-12 flex h-[100%] items-center justify-center text-${useTextSize}`}
@@ -78,6 +80,7 @@ export default function Play({
             handleTextSizeChange={handleTextSizeChange}
             show3D={show3D}
             textSize={useTextSize}
+            quote={quote}
           />
           <div
             className={`flex h-[100%] items-center justify-center text-${useTextSize}`}
