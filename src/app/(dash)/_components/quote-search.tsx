@@ -39,7 +39,7 @@ export default function QuoteSearch() {
   }, 300);
 
   return (
-    <>
+    <div className="space-y-2">
       <SearchFilters
         searchBy={searchBy}
         handleSearchByChange={handleSearchByChange}
@@ -55,6 +55,6 @@ export default function QuoteSearch() {
           defaultValue={searchParams.get("query")?.toString()}
         />
       </div>
-    </>
+    </div>
   );
 }

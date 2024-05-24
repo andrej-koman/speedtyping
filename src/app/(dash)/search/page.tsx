@@ -1,6 +1,5 @@
 import { getFilteredQuotes, countFilteredQuotes } from "~/server/queries";
 import QuoteList from "../_components/quote-list";
-import { Separator } from "~/components/ui/separator";
 import QuoteSearch from "../_components/quote-search";
 
 export default async function SearchPage({
@@ -23,12 +22,13 @@ export default async function SearchPage({
 
       // TODO - Nekak to zrihtaj, načeloma se tak nerabi na tem pagu prikazovat
       // Načeloma bom si debug shit pripravo, do te pa pustim tak kot je
+      // nvim-dap
       /*
       quotes = result.map((res) => {
         const isFavorite = res.favorites !== undefined;
         const quote = res.quotes;
         quote.isFavorite = isFavorite;
-        debugger;
+        debugger;
         return quote;
       });
       */
@@ -41,15 +41,9 @@ export default async function SearchPage({
   }
   return (
     <div className="flex h-full w-full justify-center">
-      <div className="flex h-[calc(100vh-3.6rem)] flex-col space-y-3 p-5 lg:w-full xl:w-[40vw]">
+      <div className="flex h-[calc(100vh-3.6rem)] flex-col space-y-6 p-5 lg:w-full xl:w-[40vw]">
         <QuoteSearch />
-        <Separator orientation="horizontal" />
-        <div className="flex w-full justify-end">
-          <small className="text-muted-foreground">
-            {quotes.length} out of {quoteCount} shown
-          </small>
-        </div>
-        <QuoteList quotes={quotes} />
+        <QuoteList quotes={quotes} quoteCount={quoteCount} />
       </div>
     </div>
   );
