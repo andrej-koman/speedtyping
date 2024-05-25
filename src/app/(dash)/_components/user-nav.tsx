@@ -13,24 +13,23 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuShortcut,
 } from "~/components/ui/dropdown-menu";
 
-import { SignOutButton } from "@clerk/nextjs";
+import { useClerk } from "@clerk/nextjs";
 import { LogOut } from "lucide-react";
+import { Button } from "~/components/ui/button";
 
 export default function UserNav() {
   const { user } = useUser();
   const [progress, setProgress] = useState<number>(0);
-  // TODO
-  // - Add a level component
+  const { signOut } = useClerk();
   return (
     <SignedIn>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="cursor-pointer">
           <div className="flex flex-row items-center space-x-2">
-            <div className="mb-2 flex min-w-[8rem] flex-col items-end justify-center">
-              <div className="flex w-full justify-between">
+            <div className="flex min-w-[8rem] flex-col items-end justify-center">
+              <div className="flex w-full items-center justify-between">
                 <span className="text-md font-bold">{25}</span>
                 <span className="ms-5 text-sm font-bold">{user?.username}</span>
               </div>
@@ -57,10 +56,15 @@ export default function UserNav() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <SignOutButton redirectUrl="/" />
-            <DropdownMenuShortcut>
+            <button
+              onClick={() => {
+                signOut();
+              }}
+              className="flex w-full items-center justify-between"
+            >
+              Sign out
               <LogOut className="h-4 w-4" />
-            </DropdownMenuShortcut>
+            </button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

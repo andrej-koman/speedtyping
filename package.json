@@ -38,6 +38,7 @@
     "aws-sdk": "^2.1627.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cmdk": "^1.0.0",
     "cors": "^2.8.5",
     "drizzle-orm": "^0.29.4",
     "framer-motion": "^11.1.7",

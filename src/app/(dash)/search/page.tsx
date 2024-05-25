@@ -31,7 +31,7 @@ export default async function SearchPage({
   }
   return (
     <div className="flex h-full w-full">
-      <div className="flex w-full flex-col space-y-6">
+      <div className="flex w-full flex-col space-y-4">
         <QuoteSearch showClearDefault={showClear} />
         <QuoteList quotes={quotes} quoteCount={quoteCount} />
       </div>

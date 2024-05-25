@@ -27,14 +27,14 @@ export default function QuoteList({
       </div>
       <ScrollArea className="h-full">
         <ScrollBar forceMount={true} />
-        <div className="flex flex-col space-y-4">
+        <div className="grid grid-cols-4 gap-4">
           {quotes.length > 0 ? (
             <>
               {quotes.map((quote) => (
                 <button
                   key={quote.id}
                   className={cn(
-                    "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+                    "flex h-full w-full flex-col items-start justify-between gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                   )}
                   onClick={() => {
                     router.push(`/play/${quote.id}`);

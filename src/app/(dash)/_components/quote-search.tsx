@@ -18,6 +18,9 @@ export default function QuoteSearch({ showClearDefault = false }) {
   const [searchBy, setSearchBy] = useState<SearchBy>(
     searchByDefault && isSearchBy(searchByDefault) ? searchByDefault : "Text",
   );
+  const [searchQuery, setSearchQuery] = useState<string>(
+    searchParams.get("query")?.toString() ?? "",
+  );
 
   const [showClear, setShowClear] = useState<boolean>(showClearDefault);
 
@@ -51,10 +54,7 @@ export default function QuoteSearch({ showClearDefault = false }) {
 
   const handleClearSearch = () => {
     setShowClear(false);
-    // TODO
-    // Add the search query to a variable, so u can clear it here
-    // Think of a way to save recently searched
-    //
+    setSearchQuery("");
     replace(`${pathname}`);
   };
 
@@ -70,11 +70,12 @@ export default function QuoteSearch({ showClearDefault = false }) {
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             onChange={(e) => {
+              setSearchQuery(e.target.value);
               handleSearch(e.target.value);
             }}
-            placeholder="Search for a quote"
+            value={searchQuery}
+            placeholder="Search"
             className="pl-8"
-            defaultValue={searchParams.get("query")?.toString()}
           />
           {showClear && (
             <button

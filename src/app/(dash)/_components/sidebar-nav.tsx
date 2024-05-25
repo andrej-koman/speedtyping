@@ -5,6 +5,7 @@ import { buttonVariants } from "~/components/ui/button";
 import { Clock, Heart, type LucideProps, Search } from "lucide-react";
 
 import { cn } from "~/lib/utils";
+import SidebarFooter from "./sidebar-footer";
 
 function NavItem({
   href,
@@ -39,22 +40,25 @@ export default function SidebarNav({
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
   return (
-    <nav
-      className={cn(
-        "flex h-max w-full space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
-        className,
-      )}
-      {...props}
-    >
-      <NavItem href="/search" Icon={Search}>
-        Search
-      </NavItem>
-      <NavItem href="/favorites" Icon={Heart}>
-        Favorites
-      </NavItem>
-      <NavItem href="/recent" Icon={Clock}>
-        Recently played
-      </NavItem>
-    </nav>
+    <div className="flex h-full w-full flex-col justify-between">
+      <nav
+        className={cn(
+          "flex h-max w-full space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
+          className,
+        )}
+        {...props}
+      >
+        <NavItem href="/search" Icon={Search}>
+          Search
+        </NavItem>
+        <NavItem href="/favorites" Icon={Heart}>
+          Favorites
+        </NavItem>
+        <NavItem href="/recent" Icon={Clock}>
+          Recently played
+        </NavItem>
+      </nav>
+      <SidebarFooter />
+    </div>
   );
 }
