@@ -6,8 +6,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <>
       <div className="flex h-screen w-screen flex-col">
         <Header />
-        <div className="flex h-full w-full flex-col space-y-8 lg:flex-row lg:space-y-0">
-          <aside className="flex w-[40%] flex-row justify-center space-x-8">
+        <div className="flex h-full w-full flex-col space-x-4 space-y-8 p-5 lg:flex-row lg:space-y-0">
+          <aside className="flex w-[20%] flex-row justify-center space-x-8">
             <SidebarNav />
           </aside>
           {children}

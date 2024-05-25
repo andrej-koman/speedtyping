@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+
 import { SignedIn, useUser } from "@clerk/nextjs";
 
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
@@ -13,10 +15,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuShortcut,
 } from "~/components/ui/dropdown-menu";
+
 import { SignOutButton } from "@clerk/nextjs";
 import { LogOut } from "lucide-react";
-import { useState } from "react";
-import { Badge } from "~/components/ui/badge";
 
 export default function UserNav() {
   const { user } = useUser();
@@ -27,20 +28,13 @@ export default function UserNav() {
     <SignedIn>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="cursor-pointer">
-          <div className="flex flex-row items-center space-x-3">
-            <div className="flex flex-row items-center justify-center space-x-2">
-              <Badge
-                variant="secondary"
-                className="px-2 py-0.5 text-center text-sm"
-              >
-                {25}
-              </Badge>
-              <div className="mb-2 flex min-w-[8rem] flex-col items-end justify-center">
-                <span className="text-sm font-bold uppercase">
-                  {user?.username}
-                </span>
-                <Progress value={progress} />
+          <div className="flex flex-row items-center space-x-2">
+            <div className="mb-2 flex min-w-[8rem] flex-col items-end justify-center">
+              <div className="flex w-full justify-between">
+                <span className="text-md font-bold">{25}</span>
+                <span className="ms-5 text-sm font-bold">{user?.username}</span>
               </div>
+              <Progress value={progress} />
             </div>
             <Avatar className="h-8 w-8 cursor-pointer">
               <AvatarImage

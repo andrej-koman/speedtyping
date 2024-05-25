@@ -150,11 +150,11 @@ export default function Options({
               </Sheet>
             )}
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center justify-center">
             <button type="submit" onClick={handleFavorite}>
               <Star
                 fill={isFavorite ? "currentColor" : "none"}
-                className="h-4 w-4 cursor-pointer"
+                className="h-5 w-5 cursor-pointer"
               />
             </button>
             {hasStarted && (

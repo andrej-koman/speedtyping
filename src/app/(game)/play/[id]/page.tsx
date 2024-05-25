@@ -46,7 +46,7 @@ export default async function PlayPage({ params }: { params: { id: number } }) {
 
   return (
     <GameProvider>
-      <div className="flex h-[calc(100vh-3.6rem)] w-screen flex-col items-center justify-center p-0">
+      <div className="flex h-[calc(100vh-5rem)] w-screen flex-col items-center justify-center p-0">
         <Play
           settings={settings}
           defaultLayout={defaultLayout}
