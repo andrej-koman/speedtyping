@@ -23,13 +23,13 @@ function NavItem({
     <Link
       href={href}
       className={cn(
-        buttonVariants({ variant: "ghost", size: "sm" }),
+        buttonVariants({ variant: "link" }),
         pathname === href ? "bg-muted hover:bg-muted" : "",
-        "justify-start text-[0.8rem]",
+        "h-12 justify-between text-2xl text-foreground",
       )}
     >
-      <Icon className="mr-2 h-5 w-5" />
       {children}
+      <Icon className="h-5 w-5" />
     </Link>
   );
 }
@@ -41,7 +41,7 @@ export default function SidebarNav({
   return (
     <nav
       className={cn(
-        "flex h-full w-[250px] space-x-2 border-e-[1px] p-6 lg:flex-col lg:space-x-0 lg:space-y-1",
+        "flex h-max w-[20rem] space-x-2 p-6 lg:flex-col lg:space-x-0 lg:space-y-1",
         className,
       )}
       {...props}

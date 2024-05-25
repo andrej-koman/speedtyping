@@ -1,3 +1,3 @@
 export default function FavoritesPage() {
-  return <div>Im here</div>;
+  return <div className="h-full w-full">Im here</div>;
 }

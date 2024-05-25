@@ -39,21 +39,24 @@ export default function QuoteSearch() {
   }, 300);
 
   return (
-    <div className="space-y-2">
-      <SearchFilters
-        searchBy={searchBy}
-        handleSearchByChange={handleSearchByChange}
-      />
-      <div className="relative">
-        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          onChange={(e) => {
-            handleSearch(e.target.value);
-          }}
-          placeholder="Search for a quote"
-          className="pl-8"
-          defaultValue={searchParams.get("query")?.toString()}
+    <div className="flex flex-row justify-between">
+      <div></div>
+      <div className="flex w-[40%] flex-row space-x-2">
+        <SearchFilters
+          searchBy={searchBy}
+          handleSearchByChange={handleSearchByChange}
         />
+        <div className="relative w-full">
+          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            onChange={(e) => {
+              handleSearch(e.target.value);
+            }}
+            placeholder="Search for a quote"
+            className="pl-8"
+            defaultValue={searchParams.get("query")?.toString()}
+          />
+        </div>
       </div>
     </div>
   );

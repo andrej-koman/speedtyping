@@ -19,10 +19,10 @@ export default function SearchFilters({
   handleSearchByChange: (value: string) => void;
 }) {
   return (
-    <div className="flex w-full space-x-4">
+    <div className="flex space-x-4">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline">
+          <Button variant="outline">
             <TextSearch className="mr-2 h-5 w-5" />
             {searchBy}
           </Button>

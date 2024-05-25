@@ -20,19 +20,6 @@ export default async function SearchPage({
         1,
       );
 
-      // TODO - Nekak to zrihtaj, načeloma se tak nerabi na tem pagu prikazovat
-      // Načeloma bom si debug shit pripravo, do te pa pustim tak kot je
-      // nvim-dap
-      /*
-      quotes = result.map((res) => {
-        const isFavorite = res.favorites !== undefined;
-        const quote = res.quotes;
-        quote.isFavorite = isFavorite;
-        debugger;
-        return quote;
-      });
-      */
-
       quoteCount = await countFilteredQuotes(
         searchParams.query,
         searchParams.searchBy as SearchBy,
@@ -40,8 +27,8 @@ export default async function SearchPage({
     }
   }
   return (
-    <div className="flex h-full w-full justify-center">
-      <div className="flex h-[calc(100vh-3.6rem)] flex-col space-y-6 p-5 lg:w-full xl:w-[40vw]">
+    <div className="flex h-full w-full">
+      <div className="flex w-full flex-col space-y-6 p-5">
         <QuoteSearch />
         <QuoteList quotes={quotes} quoteCount={quoteCount} />
       </div>
