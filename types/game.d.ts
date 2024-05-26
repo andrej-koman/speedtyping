@@ -18,4 +18,5 @@ declare interface OptionsProps {
   show3D: boolean;
   textSize: string;
   quote?: Quote;
+  hasStarted: boolean;
 }

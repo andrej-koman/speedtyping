@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 import { type OptionsProps } from "types/game";
-import { Box, SlidersHorizontal, Type, Star } from "lucide-react";
+import { Box, SlidersHorizontal, Type, Star, RotateCcw } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Toggle } from "~/components/ui/toggle";
@@ -39,9 +39,9 @@ export default function Options({
   show3D,
   textSize,
   quote,
+  hasStarted,
 }: OptionsProps) {
-  const { hasStartedState, cameraRef } = useGame();
-  const [hasStarted, setHasStarted] = hasStartedState;
+  const { cameraRef } = useGame();
   const { user } = useUser();
   const [isFavorite, setIsFavorite] = useState<boolean>(
     quote?.isFavorite ?? false,
@@ -90,8 +90,21 @@ export default function Options({
 
   return (
     <div className="sticky top-0 z-50 flex w-full justify-center">
-      <div className="flex flex-col justify-center xl:w-[60rem]">
-        <div className="flex flex-row justify-between space-x-1 p-4">
+      {hasStarted ? (
+        <div className="flex items-center justify-center">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              // Restart the game
+              // TODO - finish this
+            }}
+          >
+            <RotateCcw className="h-4 w-4" />
+          </Button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-3 grid-rows-1 space-x-1 xl:w-[60rem]">
           <div></div>
           <div className="flex flex-row justify-center space-x-1">
             <DropdownMenu>
@@ -150,28 +163,16 @@ export default function Options({
               </Sheet>
             )}
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-end">
             <button type="submit" onClick={handleFavorite}>
               <Star
                 fill={isFavorite ? "currentColor" : "none"}
                 className="h-5 w-5 cursor-pointer"
               />
             </button>
-            {hasStarted && (
-              <Button
-                size="sm"
-                variant="default"
-                className="text-xs"
-                onClick={() => {
-                  setHasStarted(false);
-                }}
-              >
-                Reset
-              </Button>
-            )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

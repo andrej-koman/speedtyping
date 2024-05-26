@@ -13,6 +13,9 @@ import Options from "./options";
 import { useState } from "react";
 import { useGame } from "~/contexts/GameContext";
 
+import { RotateCcw } from "lucide-react";
+import { Button } from "~/components/ui/button";
+
 export default function Play({
   quote,
   carSpeed,
@@ -65,6 +68,7 @@ export default function Play({
               show3D={show3D}
               textSize={useTextSize}
               quote={quote}
+              hasStarted={hasStarted}
             />
             <div
               className={`-mt-12 flex h-[100%] items-center justify-center text-${useTextSize}`}
@@ -72,7 +76,7 @@ export default function Play({
               <GameText carSpeed={carSpeed} quote={quote} has3D={show3D} />
             </div>
           </ResizablePanel>
-          <ResizableHandle withHandle={!hasStarted} className={"w-[100%]"} />
+          <ResizableHandle withHandle className={hasStarted ? "hidden" : ""} />
           <ResizablePanel minSize={40} defaultSize={defaultLayout[1]}>
             <Game3DModel carSpeed={carSpeed} />
           </ResizablePanel>
@@ -85,6 +89,7 @@ export default function Play({
             show3D={show3D}
             textSize={useTextSize}
             quote={quote}
+            hasStarted={hasStarted}
           />
           <div
             className={`flex h-[100%] items-center justify-center text-${useTextSize}`}
