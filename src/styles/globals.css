@@ -25,6 +25,7 @@
     --ring: 346.8 77.2% 49.8%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 20 14.3% 4.1%;
     --foreground: 0 0% 95%;
@@ -52,6 +53,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -70,74 +72,92 @@
     spinner_GWy6 1.2s linear infinite,
     spinner_BNNO 1.2s linear infinite;
 }
+
 .spinner_yOMU {
   animation:
     spinner_GWy6 1.2s linear infinite,
     spinner_pVqn 1.2s linear infinite;
   animation-delay: 0.15s;
 }
+
 .spinner_KS4S {
   animation:
     spinner_GWy6 1.2s linear infinite,
     spinner_6uKB 1.2s linear infinite;
   animation-delay: 0.3s;
 }
+
 .spinner_zVee {
   animation:
     spinner_GWy6 1.2s linear infinite,
     spinner_Qw4x 1.2s linear infinite;
   animation-delay: 0.45s;
 }
+
 @keyframes spinner_GWy6 {
+
   0%,
   50% {
     width: 9px;
     height: 9px;
   }
+
   10% {
     width: 11px;
     height: 11px;
   }
 }
+
 @keyframes spinner_BNNO {
+
   0%,
   50% {
     x: 1.5px;
     y: 1.5px;
   }
+
   10% {
     x: 0.5px;
     y: 0.5px;
   }
 }
+
 @keyframes spinner_pVqn {
+
   0%,
   50% {
     x: 13.5px;
     y: 1.5px;
   }
+
   10% {
     x: 12.5px;
     y: 0.5px;
   }
 }
+
 @keyframes spinner_6uKB {
+
   0%,
   50% {
     x: 13.5px;
     y: 13.5px;
   }
+
   10% {
     x: 12.5px;
     y: 12.5px;
   }
 }
+
 @keyframes spinner_Qw4x {
+
   0%,
   50% {
     x: 1.5px;
     y: 13.5px;
   }
+
   10% {
     x: 0.5px;
     y: 12.5px;
@@ -162,11 +182,15 @@
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
 }

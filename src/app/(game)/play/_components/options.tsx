@@ -41,7 +41,7 @@ export default function Options({
   quote,
 }: OptionsProps) {
   const { hasStartedState, cameraRef } = useGame();
-  const [hasStarted] = hasStartedState;
+  const [hasStarted, setHasStarted] = hasStartedState;
   const { user } = useUser();
   const [isFavorite, setIsFavorite] = useState<boolean>(
     quote?.isFavorite ?? false,
@@ -158,7 +158,14 @@ export default function Options({
               />
             </button>
             {hasStarted && (
-              <Button size="sm" variant="default" className="text-xs">
+              <Button
+                size="sm"
+                variant="default"
+                className="text-xs"
+                onClick={() => {
+                  setHasStarted(false);
+                }}
+              >
                 Reset
               </Button>
             )}

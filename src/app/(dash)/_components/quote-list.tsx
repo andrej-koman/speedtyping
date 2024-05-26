@@ -25,7 +25,7 @@ export default function QuoteList({
           {quotes.length} out of {quoteCount} shown
         </small>
       </div>
-      <ScrollArea className="h-full">
+      <ScrollArea className="m-3 h-full">
         <ScrollBar forceMount={true} />
         <div className="grid grid-cols-4 gap-4">
           {quotes.length > 0 ? (
@@ -58,7 +58,7 @@ export default function QuoteList({
               ))}
             </>
           ) : (
-            <div className="flex w-full justify-center">
+            <div className="col-span-full flex w-full justify-center">
               <small className="text-muted-foreground">No quotes found</small>
             </div>
           )}

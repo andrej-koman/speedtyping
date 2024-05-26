@@ -11,6 +11,7 @@ import Game3DModel from "./game3d";
 import Options from "./options";
 
 import { useState } from "react";
+import { useGame } from "~/contexts/GameContext";
 
 export default function Play({
   quote,
@@ -30,6 +31,9 @@ export default function Play({
   const [show3D, setShow3D] = useState(settings.has3D);
   const [useTextSize, setUseTextSize] = useState(settings.textSize);
   quote.isFavorite = settings.isFavorite;
+
+  const { hasStartedState } = useGame();
+  const [hasStarted] = hasStartedState;
 
   const handle3DChange = (pressed: boolean) => {
     setShow3D(pressed);
@@ -68,7 +72,7 @@ export default function Play({
               <GameText carSpeed={carSpeed} quote={quote} has3D={show3D} />
             </div>
           </ResizablePanel>
-          <ResizableHandle withHandle className={"w-[100%]"} />
+          <ResizableHandle withHandle={!hasStarted} className={"w-[100%]"} />
           <ResizablePanel minSize={40} defaultSize={defaultLayout[1]}>
             <Game3DModel carSpeed={carSpeed} />
           </ResizablePanel>

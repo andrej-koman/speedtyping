@@ -14,7 +14,8 @@ export default function GameText({
   className?: string;
   has3D: boolean;
 }) {
-  const { carRef, curveRef, textRef, cameraRef } = useGame();
+  const { carRef, curveRef, textRef, cameraRef, hasStartedState } = useGame();
+  const [hasStarted, setHasStarted] = hasStartedState;
   const currentWordIndex = useRef(0);
   const currentLetterIndex = useRef(0);
 
@@ -37,6 +38,10 @@ export default function GameText({
       const currentLetter = currentWord?.children[currentLetterIndex.current];
 
       if (!currentLetter || !currentWord || !letters) return;
+
+      if (!hasStarted) {
+        setHasStarted(true);
+      }
 
       if (e.key === " ") {
         moveCar();
@@ -107,7 +112,7 @@ export default function GameText({
 
   return (
     <div
-      className={`flex w-[60rem] flex-row flex-wrap justify-center ${className ?? ""}`}
+      className={`noselect flex w-[60rem] flex-row flex-wrap justify-center ${className ?? ""}`}
     >
       {quote.text.split(" ").map((word, index) => (
         <span key={`${index} ${word}`} className="word">
