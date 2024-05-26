@@ -59,13 +59,8 @@ export default function QuoteSearch({ showClearDefault = false }) {
   };
 
   return (
-    <div className="flex flex-row justify-between">
-      <div></div>
+    <div className="flex flex-row justify-center ps-1">
       <div className="flex w-[40%] flex-row space-x-2">
-        <SearchFilters
-          searchBy={searchBy}
-          handleSearchByChange={handleSearchByChange}
-        />
         <div className="relative w-full">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -86,6 +81,10 @@ export default function QuoteSearch({ showClearDefault = false }) {
             </button>
           )}
         </div>
+        <SearchFilters
+          searchBy={searchBy}
+          handleSearchByChange={handleSearchByChange}
+        />
       </div>
     </div>
   );
