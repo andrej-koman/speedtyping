@@ -17,9 +17,7 @@ export default function SidebarFooter() {
       <div className="flex flex-row items-center justify-between space-x-1 pb-5">
         <div className="flex flex-row items-center">
           <Copyright className="h-3 w-3" />
-          <span className="ms-1 text-xs font-bold italic">
-            2024, Andrej Koman
-          </span>
+          <span className="ms-1 text-xs font-bold">2024, Andrej Koman</span>
         </div>
         <div className="flex flex-row items-center">
           <Tooltip>

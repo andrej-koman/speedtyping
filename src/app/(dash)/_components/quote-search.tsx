@@ -23,6 +23,7 @@ export default function QuoteSearch({ showClearDefault = false }) {
   );
 
   const [showClear, setShowClear] = useState<boolean>(showClearDefault);
+  const [showCommand, setShowCommand] = useState<boolean>(false);
 
   const handleSearchByChange = (value: string) => {
     setSearchBy(value as SearchBy);
@@ -70,7 +71,13 @@ export default function QuoteSearch({ showClearDefault = false }) {
             }}
             value={searchQuery}
             placeholder="Search"
-            className="pl-8"
+            className="pl-8 focus:rounded-b-none focus:outline-none"
+            onFocus={() => {
+              setShowCommand(true);
+            }}
+            onBlur={() => {
+              setShowCommand(false);
+            }}
           />
           {showClear && (
             <button
@@ -79,6 +86,10 @@ export default function QuoteSearch({ showClearDefault = false }) {
             >
               <X className="h-4 w-4 text-muted-foreground" />
             </button>
+          )}
+
+          {showCommand && (
+            <div className="command-list absolute z-50 mt-1 h-56 w-full rounded-b-sm border bg-black"></div>
           )}
         </div>
         <SearchFilters

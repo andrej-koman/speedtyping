@@ -194,3 +194,7 @@
   /* Internet Explorer/Edge */
   user-select: none;
 }
+
+.command-list {
+  background-color: hsl(var(--background));
+}
