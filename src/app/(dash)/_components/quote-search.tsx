@@ -8,11 +8,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { isSearchBy } from "~/lib/types";
 
 import { useDebouncedCallback } from "use-debounce";
+import { cn } from "~/lib/utils";
 
 export default function QuoteSearch({ showClearDefault = false }) {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
   const searchByDefault = searchParams.get("searchBy");
 
   const [searchBy, setSearchBy] = useState<SearchBy>(
@@ -21,9 +20,17 @@ export default function QuoteSearch({ showClearDefault = false }) {
   const [searchQuery, setSearchQuery] = useState<string>(
     searchParams.get("query")?.toString() ?? "",
   );
-
   const [showClear, setShowClear] = useState<boolean>(showClearDefault);
   const [showCommand, setShowCommand] = useState<boolean>(false);
+  /*
+  const recentSearches: string[] = JSON.parse(
+    localStorage.getItem("recentSearches") ?? "[]",
+  ) as unknown as string[];
+*/
+  const recentSearches = ["france pre", "bojh", "testiram ta funkcuiona"];
+
+  const { replace } = useRouter();
+  const pathname = usePathname();
 
   const handleSearchByChange = (value: string) => {
     setSearchBy(value as SearchBy);
@@ -88,9 +95,26 @@ export default function QuoteSearch({ showClearDefault = false }) {
             </button>
           )}
 
-          {showCommand && (
-            <div className="command-list absolute z-50 mt-1 h-56 w-full rounded-b-sm border bg-black"></div>
-          )}
+          <div
+            className={cn(
+              "command-list absolute z-50 w-full space-y-2 rounded-b-sm border border-t-0 p-2 text-sm transition-opacity",
+              showCommand ? "" : "opacity-0",
+            )}
+          >
+            <span className="text-muted-foreground">Recent searches</span>
+            {recentSearches.map((element, index) => {
+              return (
+                <div className="flex w-full justify-between" key={index}>
+                  <button>
+                    <span>{element}</span>
+                  </button>
+                  <button>
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
         <SearchFilters
           searchBy={searchBy}

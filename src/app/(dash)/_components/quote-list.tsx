@@ -16,16 +16,14 @@ export default function QuoteList({
   const router = useRouter();
 
   return (
-    <div className="space-y-2">
-      <div
-        className={cn("flex w-full items-center justify-between", className)}
-      >
+    <div className={cn("m-2 space-y-2", className)}>
+      <div className="flex w-full items-center justify-between">
         <div></div>
         <small className="text-muted-foreground">
           {quotes.length} out of {quoteCount} shown
         </small>
       </div>
-      <ScrollArea className="m-3 h-full">
+      <ScrollArea className="h-full">
         <ScrollBar forceMount={true} />
         <div className="grid grid-cols-4 gap-4">
           {quotes.length > 0 ? (
