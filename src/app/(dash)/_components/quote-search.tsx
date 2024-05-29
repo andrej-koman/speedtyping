@@ -1,70 +1,82 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, X } from "lucide-react";
 import { Input } from "~/components/ui/input";
 import SearchFilters from "./search-filters";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { isSearchBy } from "~/lib/types";
 
 import { useDebouncedCallback } from "use-debounce";
-import { cn } from "~/lib/utils";
+import { cn, updateRecentSearches } from "~/lib/utils";
 
-export default function QuoteSearch({ showClearDefault = false }) {
+export default function QuoteSearch({
+  showClearDefault = false,
+  queryDefault = "",
+  searchByDefault = "",
+}) {
   const searchParams = useSearchParams();
-  const searchByDefault = searchParams.get("searchBy");
 
-  const [searchBy, setSearchBy] = useState<SearchBy>(
-    searchByDefault && isSearchBy(searchByDefault) ? searchByDefault : "Text",
-  );
-  const [searchQuery, setSearchQuery] = useState<string>(
-    searchParams.get("query")?.toString() ?? "",
-  );
   const [showClear, setShowClear] = useState<boolean>(showClearDefault);
   const [showCommand, setShowCommand] = useState<boolean>(false);
-  /*
-  const recentSearches: string[] = JSON.parse(
-    localStorage.getItem("recentSearches") ?? "[]",
-  ) as unknown as string[];
-*/
-  const recentSearches = ["france pre", "bojh", "testiram ta funkcuiona"];
 
-  const { replace } = useRouter();
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+
+  const { replace, refresh } = useRouter();
   const pathname = usePathname();
 
   const handleSearchByChange = (value: string) => {
-    setSearchBy(value as SearchBy);
-    // Get the query from the searchParams
-    const query = searchParams.get("query");
-
-    if (query) {
-      handleSearch(query);
-    }
+    search(null, value as SearchBy);
   };
 
-  const handleSearch = useDebouncedCallback((value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (value === "" || !value) {
-      params.delete("query");
-      params.delete("searchBy");
-      replace(`${pathname}?${params.toString()}`);
+  const handleSearchChange = useDebouncedCallback((value: string) => {
+    // Hide set show clear
+    if (value === "") {
       setShowClear(false);
-      return;
     }
 
-    params.set("query", value);
-    params.set("searchBy", searchBy);
+    search(value, null);
+  }, 300);
 
-    setShowClear(true);
+  const search = (query: string | null, searchBy: SearchBy | null) => {
+    const params = new URLSearchParams(searchParams);
+    if (query === null && searchBy === null) {
+      throw new Error("This should not happen...");
+    }
+
+    if (query === null && searchBy !== null) {
+      // Update the searchBy and refresh
+      params.set("searchBy", searchBy);
+    } else if (searchBy === null && query !== null) {
+      if (query === "" || !query) {
+        params.delete("query");
+        params.delete("searchBy");
+      } else {
+        params.set("query", query);
+        setShowClear(true);
+      }
+    }
+
+    if (query !== null && query !== "") {
+      const updatedSearches = updateRecentSearches(recentSearches, query);
+      localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
+    }
 
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+    refresh();
+  };
 
   const handleClearSearch = () => {
     setShowClear(false);
-    setSearchQuery("");
     replace(`${pathname}`);
+    refresh();
   };
+
+  useEffect(() => {
+    // Get the recent searches from local storage
+    setRecentSearches(
+      JSON.parse(localStorage.getItem("recentSearches") ?? "[]") as string[],
+    );
+  }, [searchParams]);
 
   return (
     <div className="flex flex-row justify-center ps-1">
@@ -73,10 +85,9 @@ export default function QuoteSearch({ showClearDefault = false }) {
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             onChange={(e) => {
-              setSearchQuery(e.target.value);
-              handleSearch(e.target.value);
+              handleSearchChange(e.target.value);
             }}
-            value={searchQuery}
+            defaultValue={queryDefault}
             placeholder="Search"
             className="pl-8 focus:rounded-b-none focus:outline-none"
             onFocus={() => {
@@ -102,22 +113,28 @@ export default function QuoteSearch({ showClearDefault = false }) {
             )}
           >
             <span className="text-muted-foreground">Recent searches</span>
-            {recentSearches.map((element, index) => {
+
+            {recentSearches.map((element: string, index: number) => {
               return (
-                <div className="flex w-full justify-between" key={index}>
-                  <button>
-                    <span>{element}</span>
-                  </button>
-                  <button>
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
+                <button
+                  className="flex w-full justify-between truncate rounded p-1 hover:bg-secondary"
+                  key={index}
+                  onClick={() => {
+                    const params = new URLSearchParams(searchParams);
+                    params.set("query", element);
+
+                    replace(`${pathname}?${params.toString()}`);
+                    refresh();
+                  }}
+                >
+                  <span>{element}</span>
+                </button>
               );
             })}
           </div>
         </div>
         <SearchFilters
-          searchBy={searchBy}
+          searchBy={searchByDefault as SearchBy}
           handleSearchByChange={handleSearchByChange}
         />
       </div>
