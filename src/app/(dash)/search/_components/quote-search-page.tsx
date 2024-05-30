@@ -1,7 +1,8 @@
 import { getFilteredQuotes, countFilteredQuotes } from "~/server/queries";
+import QuoteSearch from "../../_components/quote-search";
 import QuoteList from "../../_components/quote-list";
-import QuoteSearchBar from "../../_components/quote-search";
 
+// Custom hook to fetch quotes
 export default async function QuoteSearchPage({
   searchParams,
 }: {
@@ -12,7 +13,6 @@ export default async function QuoteSearchPage({
 }) {
   let quotes: Quote[] = [];
   let quoteCount = 0;
-  let showClear = false;
   if (searchParams) {
     if (searchParams.query && searchParams.searchBy) {
       quotes = await getFilteredQuotes(
@@ -25,17 +25,15 @@ export default async function QuoteSearchPage({
         searchParams.query,
         searchParams.searchBy as SearchBy,
       );
-
-      showClear = true;
     }
   }
+
   return (
     <div className="flex h-full w-full">
       <div className="flex w-full flex-col space-y-4">
-        <QuoteSearchBar
+        <QuoteSearch
           queryDefault={searchParams?.query ?? ""}
-          searchByDefault={searchParams?.searchBy ?? "Text"}
-          showClearDefault={showClear}
+          searchByDefault={(searchParams?.searchBy ?? "Text") as SearchBy}
         />
         <QuoteList quotes={quotes} quoteCount={quoteCount} />
       </div>

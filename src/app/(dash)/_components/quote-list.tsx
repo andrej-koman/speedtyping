@@ -1,8 +1,8 @@
 "use client";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { cn } from "~/lib/utils";
-import { useRouter } from "next/navigation";
 import { Badge } from "~/components/ui/badge";
+import { useRouter } from "next/navigation";
 
 export default function QuoteList({
   quotes,
@@ -35,7 +35,7 @@ export default function QuoteList({
                     "flex h-full w-full flex-col items-start justify-between gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                   )}
                   onClick={() => {
-                    router.push(`/play/${quote.id}`);
+                    router.replace("/play/" + quote.id);
                   }}
                 >
                   <div className="flex w-full flex-col gap-1">

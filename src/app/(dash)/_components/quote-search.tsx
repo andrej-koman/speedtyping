@@ -7,68 +7,73 @@ import SearchFilters from "./search-filters";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { useDebouncedCallback } from "use-debounce";
-import { cn, updateRecentSearches } from "~/lib/utils";
+import { updateRecentSearches } from "~/lib/utils";
 
 export default function QuoteSearch({
-  showClearDefault = false,
   queryDefault = "",
-  searchByDefault = "",
+  searchByDefault = "Text",
+}: {
+  queryDefault: string;
+  searchByDefault: SearchBy;
 }) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
-  const [showClear, setShowClear] = useState<boolean>(showClearDefault);
+  const [showClear, setShowClear] = useState<boolean>(queryDefault !== "");
   const [showCommand, setShowCommand] = useState<boolean>(false);
+
+  const [query, setQuery] = useState<string>(queryDefault);
+  const [searchBy, setSearchBy] = useState<SearchBy>(searchByDefault);
 
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
-  const { replace, refresh } = useRouter();
-  const pathname = usePathname();
+  const { replace } = useRouter();
 
   const handleSearchByChange = (value: string) => {
-    search(null, value as SearchBy);
+    setSearchBy(value as SearchBy);
+    search();
   };
 
-  const handleSearchChange = useDebouncedCallback((value: string) => {
+  // Lowkey probaj tu not stvari spreminjat
+  const handleSearchChange = (value: string) => {
     // Hide set show clear
     if (value === "") {
       setShowClear(false);
     }
 
-    search(value, null);
-  }, 300);
+    setQuery(value);
+    search();
+  };
 
-  const search = (query: string | null, searchBy: SearchBy | null) => {
+  const search = useDebouncedCallback(() => {
     const params = new URLSearchParams(searchParams);
     if (query === null && searchBy === null) {
       throw new Error("This should not happen...");
     }
 
-    if (query === null && searchBy !== null) {
-      // Update the searchBy and refresh
-      params.set("searchBy", searchBy);
-    } else if (searchBy === null && query !== null) {
-      if (query === "" || !query) {
-        params.delete("query");
-        params.delete("searchBy");
-      } else {
-        params.set("query", query);
-        setShowClear(true);
-      }
+    if (query === "" || !query) {
+      params.delete("query");
+      setShowClear(false);
+    } else {
+      params.set("query", query);
+      setShowClear(true);
     }
+
+    params.set("searchBy", searchBy);
 
     if (query !== null && query !== "") {
       const updatedSearches = updateRecentSearches(recentSearches, query);
       localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
+      setRecentSearches(updatedSearches);
     }
 
     replace(`${pathname}?${params.toString()}`);
-    refresh();
-  };
+  }, 500);
 
   const handleClearSearch = () => {
     setShowClear(false);
-    replace(`${pathname}`);
-    refresh();
+    setQuery("");
+    search();
   };
 
   useEffect(() => {
@@ -87,14 +92,16 @@ export default function QuoteSearch({
             onChange={(e) => {
               handleSearchChange(e.target.value);
             }}
-            defaultValue={queryDefault}
+            value={query}
             placeholder="Search"
             className="pl-8 focus:rounded-b-none focus:outline-none"
             onFocus={() => {
               setShowCommand(true);
             }}
             onBlur={() => {
-              setShowCommand(false);
+              setTimeout(() => {
+                setShowCommand(false);
+              }, 100);
             }}
           />
           {showClear && (
@@ -106,35 +113,27 @@ export default function QuoteSearch({
             </button>
           )}
 
-          <div
-            className={cn(
-              "command-list absolute z-50 w-full space-y-2 rounded-b-sm border border-t-0 p-2 text-sm transition-opacity",
-              showCommand ? "" : "opacity-0",
-            )}
-          >
-            <span className="text-muted-foreground">Recent searches</span>
-
-            {recentSearches.map((element: string, index: number) => {
-              return (
-                <button
-                  className="flex w-full justify-between truncate rounded p-1 hover:bg-secondary"
-                  key={index}
-                  onClick={() => {
-                    const params = new URLSearchParams(searchParams);
-                    params.set("query", element);
-
-                    replace(`${pathname}?${params.toString()}`);
-                    refresh();
-                  }}
-                >
-                  <span>{element}</span>
-                </button>
-              );
-            })}
-          </div>
+          {showCommand && (
+            <div className="command-list transition-display absolute z-50 w-full space-y-2 rounded-b-sm border border-t-0 p-2 text-sm">
+              <span className="text-muted-foreground">Recent searches</span>
+              {recentSearches.map((element: string, index: number) => {
+                return (
+                  <button
+                    className="flex w-full justify-between truncate rounded p-1 hover:bg-secondary"
+                    key={index}
+                    onClick={() => {
+                      handleSearchChange(element);
+                    }}
+                  >
+                    <span>{element}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
         <SearchFilters
-          searchBy={searchByDefault as SearchBy}
+          searchBy={searchBy}
           handleSearchByChange={handleSearchByChange}
         />
       </div>
