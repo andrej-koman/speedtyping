@@ -21,7 +21,7 @@ export default function Header() {
               className="flex items-center justify-center text-xs"
               asChild
             >
-              <Link href="/search" className="text-justify">
+              <Link href="/play" className="text-justify">
                 <MonitorPlay className="mr-2 h-5 w-5" />
                 Play
               </Link>

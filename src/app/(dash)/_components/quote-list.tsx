@@ -15,6 +15,10 @@ export default function QuoteList({
 }) {
   const router = useRouter();
 
+  if (!quotes) {
+    return <div>Loading</div>;
+  }
+
   return (
     <div className={cn("m-2 space-y-2", className)}>
       <div className="flex w-full items-center justify-between">

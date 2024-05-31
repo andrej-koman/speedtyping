@@ -68,7 +68,7 @@ export default function QuoteSearch({
     }
 
     replace(`${pathname}?${params.toString()}`);
-  }, 500);
+  }, 100);
 
   const handleClearSearch = () => {
     setShowClear(false);
