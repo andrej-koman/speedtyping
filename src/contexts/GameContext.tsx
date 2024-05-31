@@ -4,8 +4,10 @@ import {
   type MutableRefObject,
   useContext,
   useState,
+  useRef,
+  useMemo,
 } from "react";
-import { Camera } from "three";
+import { type Camera } from "three";
 import {
   type Object3DEventMap,
   type Group,
@@ -35,14 +37,25 @@ export function useGame() {
 // Create a provider component
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const hasStarted = useState(false);
+  const carRef = useRef(null);
+  const curveRef = useRef(null);
+  const textRef = useRef(null);
+  const cameraRef = useRef(null);
+
+  const contextValue = useMemo(
+    () => ({
+      carRef,
+      curveRef,
+      textRef,
+      cameraRef,
+    }),
+    [],
+  );
 
   return (
     <GameContext.Provider
       value={{
-        carRef: { current: null },
-        curveRef: { current: null },
-        textRef: { current: null },
-        cameraRef: { current: new Camera() },
+        ...contextValue,
         hasStartedState: hasStarted,
       }}
     >

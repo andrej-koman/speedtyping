@@ -91,13 +91,12 @@ export default function Options({
   return (
     <div className="sticky top-0 z-50 flex w-full justify-center">
       {hasStarted ? (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center p-4">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => {
               // Restart the game
-              // TODO - finish this
             }}
           >
             <RotateCcw className="h-4 w-4" />

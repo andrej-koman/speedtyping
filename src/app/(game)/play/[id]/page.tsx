@@ -4,8 +4,6 @@ import { GameProvider } from "~/contexts/GameContext";
 import Play from "../_components/play";
 import { cookies } from "next/headers";
 
-export const dynamic = "force-dynamic";
-
 const getSettings = async (quoteId: number) => {
   const settings = cookies().get("gameSettings")?.value ?? "";
   const isFavorite = await isQuoteFavoritedByUser(quoteId);

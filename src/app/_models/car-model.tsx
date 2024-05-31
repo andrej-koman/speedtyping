@@ -26,7 +26,7 @@ export default function CarModel({
   const { nodes, materials } = useGLTF("/models/car.glb");
 
   const { carRef, curveRef, textRef, cameraRef } = useGame();
-  const colors = ColorSchemes[0];
+  const colors = ColorSchemes[1];
   const { camera } = useThree();
 
   useEffect(() => {
@@ -37,16 +37,19 @@ export default function CarModel({
         const points = curve.getSpacedPoints(50);
         const smoothCurve = new CatmullRomCurve3(points);
         curveRef.current = smoothCurve;
+        console.log("Curve set: ", smoothCurve);
       }
     });
   }, [curveRef]);
 
   useEffect(() => {
     cameraRef.current = camera;
-  }, [camera, cameraRef]);
+    console.log("Cameara set: ", camera);
+  }, []);
 
   if (colors === undefined) throw new Error("Color scheme is undefined");
 
+  console.log("CarModel rendered");
   return (
     <group
       ref={carRef}

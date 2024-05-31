@@ -1,5 +1,4 @@
 "use client";
-
 import {
   ResizableHandle,
   ResizablePanel,
@@ -12,9 +11,6 @@ import Options from "./options";
 
 import { useState } from "react";
 import { useGame } from "~/contexts/GameContext";
-
-import { RotateCcw } from "lucide-react";
-import { Button } from "~/components/ui/button";
 
 export default function Play({
   quote,
