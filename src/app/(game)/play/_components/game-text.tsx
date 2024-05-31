@@ -30,7 +30,7 @@ export default function GameText({
   // - Naredi, da se ob prvem začetku tipkanja skrijejo nepomembne stvari
   useEffect(() => {
     words.current = document.querySelectorAll(".word");
-    const handleKeyDown = (e: { key: string }) => {
+    const handleKeyDown = (e: { key: string; ctrlKey: boolean }) => {
       if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
       const currentWord = words.current[currentWordIndex.current];

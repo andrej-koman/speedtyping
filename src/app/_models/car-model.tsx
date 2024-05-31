@@ -45,7 +45,7 @@ export default function CarModel({
   useEffect(() => {
     cameraRef.current = camera;
     console.log("Cameara set: ", camera);
-  }, []);
+  }, [cameraRef, camera]);
 
   if (colors === undefined) throw new Error("Color scheme is undefined");
 

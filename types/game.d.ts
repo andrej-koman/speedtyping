@@ -15,6 +15,7 @@ declare interface GameSettings {
 declare interface OptionsProps {
   handle3DChange: (pressed: boolean) => void;
   handleTextSizeChange: (value: string) => void;
+  handleRestartGame: () => void;
   show3D: boolean;
   textSize: string;
   quote?: Quote;

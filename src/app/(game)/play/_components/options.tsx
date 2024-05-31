@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { type OptionsProps } from "types/game";
 import { Box, SlidersHorizontal, Type, Star, RotateCcw } from "lucide-react";
@@ -29,6 +29,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
+import {
+  TooltipContent,
+  Tooltip,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 import { addQuoteToFavorites, removeQuoteFromFavorites } from "~/app/actions";
 import { toast } from "sonner";
@@ -36,6 +41,7 @@ import { toast } from "sonner";
 export default function Options({
   handle3DChange,
   handleTextSizeChange,
+  handleRestartGame,
   show3D,
   textSize,
   quote,
@@ -89,18 +95,23 @@ export default function Options({
   };
 
   return (
-    <div className="sticky top-0 z-50 flex w-full justify-center">
+    <div className="sticky top-0 z-50 flex h-12 w-full justify-center">
       {hasStarted ? (
-        <div className="flex items-center justify-center p-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => {
-              // Restart the game
-            }}
-          >
-            <RotateCcw className="h-4 w-4" />
-          </Button>
+        <div className="flex items-center justify-center">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  handleRestartGame();
+                }}
+              >
+                <RotateCcw className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Restart - Ctrl + Q</TooltipContent>
+          </Tooltip>
         </div>
       ) : (
         <div className="grid grid-cols-3 grid-rows-1 space-x-1 xl:w-[60rem]">
