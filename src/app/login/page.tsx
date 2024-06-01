@@ -17,6 +17,10 @@ import {
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  // TODO
+  // - Add a custom user flow, where the user has to set a username
+  // https://clerk.com/docs/custom-flows/oauth-connections#o-auth-account-transfer-flows
+  //
   const { signIn } = useSignIn();
   const { isSignedIn, isLoaded } = useSession();
   const router = useRouter();

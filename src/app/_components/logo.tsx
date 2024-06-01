@@ -6,7 +6,7 @@ import { cn } from "~/lib/utils";
 const sizeMap = {
   sm: {
     logoSize: "h-10",
-    fontSize: "text-sm",
+    fontSize: "text-lg",
   },
   md: {
     logoSize: "h-12",
@@ -20,23 +20,20 @@ const sizeMap = {
 
 export default function Logo({
   href = "/",
-  size,
+  size = "sm",
 }: {
   href?: string;
   size?: "sm" | "md" | "lg";
 }) {
-  let logoSize = "h-10";
-  let fontSize = "text-sm";
-
+  let fontSize = "";
   if (size) {
-    logoSize = sizeMap[size].logoSize;
     fontSize = sizeMap[size].fontSize;
   }
 
   return (
-    <Link className="flex select-none items-center space-x-2" href={href}>
-      <img src="/logo.png" alt="logo" className={cn(logoSize, "")} />
-      <span className={cn(fontSize, "font-bold")}>hitrostnotipkanje</span>
+    <Link className="flex select-none items-center gap-1" href={href}>
+      <span className={cn(fontSize, "font-bold")}>hitrostno</span>
+      <span className={cn(fontSize, "font-bold text-primary")}>tipkanje</span>
     </Link>
   );
 }

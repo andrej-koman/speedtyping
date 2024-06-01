@@ -1,8 +1,7 @@
 import { getFilteredQuotes, countFilteredQuotes } from "~/server/queries";
 import QuoteSearch from "../_components/quote-search";
 import QuoteList from "../_components/quote-list";
-import { Suspense } from "react";
-import Loading from "~/app/loading";
+import { QuoteListLoadingProvider } from "~/contexts/QuoteListLoadingContext";
 
 export default async function Page({
   searchParams,
@@ -33,13 +32,13 @@ export default async function Page({
     <div className="flex w-full flex-row justify-center ps-1">
       <div className="flex h-full w-full">
         <div className="flex w-full flex-col space-y-4">
-          <QuoteSearch
-            queryDefault={searchParams?.query ?? ""}
-            searchByDefault={(searchParams?.searchBy ?? "Text") as SearchBy}
-          />
-          <Suspense fallback={<Loading />}>
+          <QuoteListLoadingProvider>
+            <QuoteSearch
+              queryDefault={searchParams?.query ?? ""}
+              searchByDefault={(searchParams?.searchBy ?? "Text") as SearchBy}
+            />
             <QuoteList quotes={quotes} quoteCount={quoteCount} />
-          </Suspense>
+          </QuoteListLoadingProvider>
         </div>
       </div>
     </div>

@@ -35,7 +35,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 
-import { addQuoteToFavorites, removeQuoteFromFavorites } from "~/app/actions";
+import { addQuoteToFavorites, removeQuoteFromFavorites } from "../[id]/actions";
 import { toast } from "sonner";
 import CameraSheet from "./camera-sheet";
 

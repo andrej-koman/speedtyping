@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Search, X } from "lucide-react";
 import { Input } from "~/components/ui/input";
 import SearchFilters from "./search-filters";
@@ -8,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { useDebouncedCallback } from "use-debounce";
 import { updateRecentSearches } from "~/lib/utils";
+import { useQuoteListLoading } from "~/contexts/QuoteListLoadingContext";
 
 export default function QuoteSearch({
   queryDefault = "",
@@ -21,10 +22,17 @@ export default function QuoteSearch({
 
   const [showClear, setShowClear] = useState<boolean>(queryDefault !== "");
   const [showCommand, setShowCommand] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useQuoteListLoading();
 
   const [query, setQuery] = useState<string>(queryDefault);
-  const [searchBy, setSearchBy] = useState<SearchBy>(searchByDefault);
+  const customSetQuery = (newQuery: string) => {
+    setQuery(() => {
+      setIsLoading(true);
+      return newQuery;
+    });
+  };
 
+  const [searchBy, setSearchBy] = useState<SearchBy>(searchByDefault);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   const { replace } = useRouter();
@@ -41,7 +49,7 @@ export default function QuoteSearch({
       setShowClear(false);
     }
 
-    setQuery(value);
+    customSetQuery(value);
     search();
   };
 
@@ -68,11 +76,15 @@ export default function QuoteSearch({
     }
 
     replace(`${pathname}?${params.toString()}`);
-  }, 100);
+
+    if (isLoading) {
+      setIsLoading(false);
+    }
+  }, 500);
 
   const handleClearSearch = () => {
     setShowClear(false);
-    setQuery("");
+    customSetQuery("");
     search();
   };
 

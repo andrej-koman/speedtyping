@@ -1,6 +1,13 @@
-export default function Loader() {
+import { cn } from "~/lib/utils";
+
+export default function Loader({ isList = false }: { isList: boolean }) {
   return (
-    <div className="absolute left-0 top-0 flex h-screen w-screen items-center justify-center text-white">
+    <div
+      className={cn(
+        "absolute left-0 top-0 flex w-full items-center justify-center text-white",
+        isList ? "h-[calc(100vh-5rem)]" : "h-full",
+      )}
+    >
       <svg
         width="64"
         height="64"

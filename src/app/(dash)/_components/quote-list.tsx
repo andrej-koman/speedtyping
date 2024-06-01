@@ -3,6 +3,8 @@ import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { cn } from "~/lib/utils";
 import { Badge } from "~/components/ui/badge";
 import { useRouter } from "next/navigation";
+import { useQuoteListLoading } from "~/contexts/QuoteListLoadingContext";
+import Loader from "~/app/_components/loader";
 
 export default function QuoteList({
   quotes,
@@ -14,9 +16,10 @@ export default function QuoteList({
   className?: string;
 }) {
   const router = useRouter();
+  const [isLoading] = useQuoteListLoading();
 
-  if (!quotes) {
-    return <div>Loading</div>;
+  if (isLoading) {
+    return <Loader isList />;
   }
 
   return (
