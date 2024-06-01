@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { type OptionsProps } from "types/game";
 import { Box, SlidersHorizontal, Type, Star, RotateCcw } from "lucide-react";
@@ -37,6 +37,7 @@ import {
 
 import { addQuoteToFavorites, removeQuoteFromFavorites } from "~/app/actions";
 import { toast } from "sonner";
+import CameraSheet from "./camera-sheet";
 
 export default function Options({
   handle3DChange,
@@ -167,7 +168,7 @@ export default function Options({
                     <SheetDescription>
                       Configure the 3D camera to your liking.
                     </SheetDescription>
-                    {cameraRef.current && <div></div>}
+                    {cameraRef.current && <CameraSheet />}
                   </SheetHeader>
                 </SheetContent>
               </Sheet>

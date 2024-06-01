@@ -1,20 +1,6 @@
 declare module "tailwindcss/lib/util/flattenColorPalette";
 
 /**
- * This object is created and should only be used in the Game component. It represents the state of the game.
- */
-declare interface GameProps {
-  text: string;
-  words: string[];
-  currentWord: string;
-  typing: string;
-  hasStarted: boolean;
-  hasEnded?: boolean;
-  time: number;
-  wpm: number;
-}
-
-/**
  *  This represents a single quote object.
  */
 

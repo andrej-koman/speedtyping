@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { SignedIn, useUser } from "@clerk/nextjs";
+import { SignedIn, useUser, useClerk } from "@clerk/nextjs";
 
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Progress } from "~/components/ui/progress";
@@ -15,9 +15,7 @@ import {
   DropdownMenuLabel,
 } from "~/components/ui/dropdown-menu";
 
-import { useClerk } from "@clerk/nextjs";
 import { LogOut } from "lucide-react";
-import { Button } from "~/components/ui/button";
 
 export default function UserNav() {
   const { user } = useUser();

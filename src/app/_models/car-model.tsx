@@ -1,4 +1,5 @@
 "use client";
+// THREE js
 import { useGLTF, Text } from "@react-three/drei";
 import {
   CatmullRomCurve3,
@@ -9,25 +10,24 @@ import {
   type Vector3,
   MeshStandardMaterial,
 } from "three";
-import { useEffect, useRef, useState } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+
+// Hooks
+import { memo, useEffect, useRef, useState } from "react";
+import { useFrame } from "@react-three/fiber";
+import { useGame } from "~/contexts/GameContext";
+import { useUser } from "@clerk/nextjs";
+
+// 3D model imports
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { loadModelAndCreateCurve } from "~/server/3d";
 import { ColorSchemes } from "~/lib/utils";
-import { useGame } from "~/contexts/GameContext";
 
-export default function CarModel({
-  name,
-}: {
-  name?: string;
-  textPointAt: Vector3;
-  carSpeed: number;
-}) {
+const CarModel = memo(function CarModel() {
   const { nodes, materials } = useGLTF("/models/car.glb");
+  const { user } = useUser();
 
-  const { carRef, curveRef, textRef, cameraRef } = useGame();
+  const { carRef, curveRef, textRef } = useGame();
   const colors = ColorSchemes[1];
-  const { camera } = useThree();
 
   useEffect(() => {
     const loader = new OBJLoader();
@@ -37,19 +37,12 @@ export default function CarModel({
         const points = curve.getSpacedPoints(50);
         const smoothCurve = new CatmullRomCurve3(points);
         curveRef.current = smoothCurve;
-        console.log("Curve set: ", smoothCurve);
       }
     });
   }, [curveRef]);
 
-  useEffect(() => {
-    cameraRef.current = camera;
-    console.log("Cameara set: ", camera);
-  }, [cameraRef, camera]);
-
   if (colors === undefined) throw new Error("Color scheme is undefined");
 
-  console.log("CarModel rendered");
   return (
     <group
       ref={carRef}
@@ -64,7 +57,7 @@ export default function CarModel({
         font="/fonts/Inter-Regular.woff"
         color="white"
       >
-        {name}
+        {user?.username ?? ""}
       </Text>
       <mesh
         castShadow
@@ -116,7 +109,7 @@ export default function CarModel({
       />
     </group>
   );
-}
+});
 
 export function HomeCarModel({
   position,
@@ -220,3 +213,5 @@ export function HomeCarModel({
 }
 
 useGLTF.preload("/models/car.glb");
+
+export default CarModel;

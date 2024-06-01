@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { useGLTF } from "@react-three/drei";
 import { type Mesh } from "three";
 
-export default function FinishLineModel() {
+const FinishLineModel = memo(function FinishLineModel() {
   const { nodes, materials } = useGLTF("/models/finish-line.glb");
   return (
     <group dispose={null} rotation={[0, 7.9, 0]}>
@@ -44,6 +44,8 @@ export default function FinishLineModel() {
       />
     </group>
   );
-}
+});
 
 useGLTF.preload("/models/finish-line.glb");
+
+export default FinishLineModel;

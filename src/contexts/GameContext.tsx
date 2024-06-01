@@ -1,29 +1,9 @@
 "use client";
-import {
-  createContext,
-  type MutableRefObject,
-  useContext,
-  useState,
-  useRef,
-  useMemo,
-} from "react";
-import { type Camera } from "three";
-import {
-  type Object3DEventMap,
-  type Group,
-  type CatmullRomCurve3,
-} from "three";
-
-type GameContextType = {
-  carRef: MutableRefObject<Group<Object3DEventMap> | null>;
-  curveRef: MutableRefObject<CatmullRomCurve3 | null>;
-  textRef: MutableRefObject<Text | null>;
-  cameraRef: MutableRefObject<Camera | null>;
-  hasStartedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-};
+import { createContext, useContext, useState, useRef, useMemo } from "react";
+import { type Game } from "types/game";
 
 // Create a new context with an undefined initial value
-const GameContext = createContext<GameContextType>({} as GameContextType);
+const GameContext = createContext<Game>({} as Game);
 
 // Create a custom hook to use the context
 export function useGame() {

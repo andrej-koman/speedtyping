@@ -1,4 +1,10 @@
 import { type MutableRefObject } from "react";
+import { type PerspectiveCamera, type Camera } from "three";
+import {
+  type Object3DEventMap,
+  type Group,
+  type CatmullRomCurve3,
+} from "three";
 
 /**
  * Game settings
@@ -20,4 +26,16 @@ declare interface OptionsProps {
   textSize: string;
   quote?: Quote;
   hasStarted: boolean;
+}
+
+/**
+ * Game type
+ *
+ */
+declare interface Game {
+  carRef: MutableRefObject<Group<Object3DEventMap> | null>;
+  curveRef: MutableRefObject<CatmullRomCurve3 | null>;
+  textRef: MutableRefObject<Text | null>;
+  cameraRef: MutableRefObject<PerspectiveCamera | null>;
+  hasStartedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }

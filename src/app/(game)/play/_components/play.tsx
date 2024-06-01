@@ -12,6 +12,7 @@ import Options from "./options";
 import { useState, useEffect } from "react";
 import { useGame } from "~/contexts/GameContext";
 import { TooltipProvider } from "~/components/ui/tooltip";
+import { useUser } from "@clerk/nextjs";
 
 export default function Play({
   quote,
@@ -28,6 +29,7 @@ export default function Play({
     isFavorite: boolean;
   };
 }) {
+  const { user } = useUser();
   const [show3D, setShow3D] = useState(settings.has3D);
   const [useTextSize, setUseTextSize] = useState(settings.textSize);
   quote.isFavorite = settings.isFavorite;
@@ -48,12 +50,15 @@ export default function Play({
   };
 
   const handleRestartGame = () => {
-    const correctLetters = document.getElementsByClassName("correct");
+    const correctLetters = document.querySelectorAll(".letter.correct");
 
     // For some reason, this is how you have to do it
     Array.prototype.forEach.call(correctLetters, (letter: Element) => {
       letter.classList.remove("correct");
     });
+
+    // TODO
+    // Move the car back aswell
 
     setHasStarted(false);
   };
@@ -61,7 +66,6 @@ export default function Play({
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
       if (e.ctrlKey) {
-        console.log(e.key);
         if (e.key.toLowerCase() === "q") {
           handleRestartGame();
         }
@@ -106,7 +110,7 @@ export default function Play({
             className={hasStarted ? "opacity-0" : ""}
           />
           <ResizablePanel minSize={40} defaultSize={defaultLayout[1]}>
-            <Game3DModel carSpeed={carSpeed} />
+            <Game3DModel username={user?.username ?? ""} carSpeed={carSpeed} />
           </ResizablePanel>
         </ResizablePanelGroup>
       ) : (
