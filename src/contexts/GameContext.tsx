@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useRef, useMemo } from "react";
+import { Euler, Vector3 } from "three";
 import { type Game } from "types/game";
 
 // Create a new context with an undefined initial value
@@ -18,6 +19,8 @@ export function useGame() {
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const hasStarted = useState(false);
   const carRef = useRef(null);
+  const carStartPositionRef = useRef<Vector3>(new Vector3(0, 0, 0));
+  const carStartRotationRef = useRef<Euler>(new Euler(0, 0, 0));
   const curveRef = useRef(null);
   const textRef = useRef(null);
   const cameraRef = useRef(null);
@@ -26,6 +29,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const contextValue = useMemo(
     () => ({
       carRef,
+      carStartPositionRef,
+      carStartRotationRef,
       curveRef,
       textRef,
       cameraRef,

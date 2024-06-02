@@ -20,9 +20,8 @@ export default function GameText({
   const currentLetterIndex = useRef(0);
 
   const words = useRef([] as unknown as NodeListOf<Element>);
-
-  const targetQuaternion = new Quaternion();
-  let t = 0;
+  const targetQuaternion = useRef<Quaternion>(new Quaternion());
+  const t = useRef(0);
 
   // TODO
   // - Dodaj, da se game nekak konča
@@ -30,7 +29,7 @@ export default function GameText({
   // - Naredi, da se ob prvem začetku tipkanja skrijejo nepomembne stvari
   useEffect(() => {
     words.current = document.querySelectorAll(".word");
-    const handleKeyDown = (e: { key: string; ctrlKey: boolean }) => {
+    const handleKeyDown = (e: { key: string }) => {
       if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
       const currentWord = words.current[currentWordIndex.current];
@@ -83,22 +82,22 @@ export default function GameText({
     if (carRef.current && curveRef.current && has3D) {
       // update the car's position to create the animation
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      t += carSpeed;
+      t.current += carSpeed;
 
       // Make the car stop at the end of the curve
-      t = Math.min(1, t);
-      const point = curveRef.current.getPointAt(t);
-      const tangent = curveRef.current.getTangentAt(t);
+      t.current = Math.min(1, t.current);
+      const point = curveRef.current.getPointAt(t.current);
+      const tangent = curveRef.current.getTangentAt(t.current);
       carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
 
       // Calculate the target rotation
-      targetQuaternion.setFromAxisAngle(
+      targetQuaternion.current.setFromAxisAngle(
         new Vector3(0, 1, 0),
         -Math.atan2(-tangent.x, tangent.z),
       );
 
       // Gradually rotate the car towards the target rotation
-      carRef.current.quaternion.slerp(targetQuaternion, 0.5);
+      carRef.current.quaternion.slerp(targetQuaternion.current, 0.5);
     }
   };
 

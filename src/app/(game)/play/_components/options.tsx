@@ -117,7 +117,7 @@ export default function Options({
       ) : (
         <div className="grid grid-cols-3 grid-rows-1 space-x-1 xl:w-[60rem]">
           <div></div>
-          <div className="flex flex-row justify-center space-x-1">
+          <div className="flex flex-row items-center justify-center space-x-1">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="sm" variant="outline">

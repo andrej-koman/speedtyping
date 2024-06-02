@@ -1,5 +1,5 @@
 import { type MutableRefObject } from "react";
-import { type PerspectiveCamera, type Camera } from "three";
+import { type PerspectiveCamera, type Vector3, type Euler } from "three";
 import {
   type Object3DEventMap,
   type Group,
@@ -34,6 +34,8 @@ declare interface OptionsProps {
  */
 declare interface Game {
   carRef: MutableRefObject<Group<Object3DEventMap> | null>;
+  carStartPositionRef: MutableRefObject<Vector3 | null>;
+  carStartRotationRef: MutableRefObject<Euler | null>;
   curveRef: MutableRefObject<CatmullRomCurve3 | null>;
   textRef: MutableRefObject<Text | null>;
   cameraRef: MutableRefObject<PerspectiveCamera | null>;

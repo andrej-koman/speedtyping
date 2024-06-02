@@ -12,7 +12,6 @@ import Options from "./options";
 import { useState, useEffect } from "react";
 import { useGame } from "~/contexts/GameContext";
 import { TooltipProvider } from "~/components/ui/tooltip";
-import { useUser } from "@clerk/nextjs";
 
 export default function Play({
   quote,
@@ -29,12 +28,12 @@ export default function Play({
     isFavorite: boolean;
   };
 }) {
-  const { user } = useUser();
   const [show3D, setShow3D] = useState(settings.has3D);
   const [useTextSize, setUseTextSize] = useState(settings.textSize);
   quote.isFavorite = settings.isFavorite;
 
-  const { hasStartedState } = useGame();
+  const { hasStartedState, carStartRotationRef, carStartPositionRef, carRef } =
+    useGame();
   const [hasStarted, setHasStarted] = hasStartedState;
 
   const handle3DChange = (pressed: boolean) => {
@@ -58,7 +57,19 @@ export default function Play({
     });
 
     // TODO
-    // Move the car back aswell
+    // Move the car back aswell - Something is not right, the car's position does not get reset
+    if (
+      carRef.current &&
+      carStartRotationRef.current &&
+      carStartPositionRef.current
+    ) {
+      carRef.current.setRotationFromEuler(carStartRotationRef.current);
+      carRef.current.position.set(
+        carStartPositionRef.current.x,
+        carStartPositionRef.current.y,
+        carStartPositionRef.current.z,
+      );
+    }
 
     setHasStarted(false);
   };
@@ -66,7 +77,8 @@ export default function Play({
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
       if (e.ctrlKey) {
-        if (e.key.toLowerCase() === "q") {
+        if (e.key.toLowerCase() === "r") {
+          e.preventDefault();
           handleRestartGame();
         }
       }
@@ -110,21 +122,16 @@ export default function Play({
             className={hasStarted ? "opacity-0" : ""}
           />
           <ResizablePanel minSize={40} defaultSize={defaultLayout[1]}>
-            <Game3DModel username={user?.username ?? ""} carSpeed={carSpeed} />
+            <Game3DModel />
           </ResizablePanel>
         </ResizablePanelGroup>
       ) : (
         <>
           {OptionsMounted}
           <div
-            className={`flex h-[100%] items-center justify-center text-${useTextSize}`}
+            className={`mb-32 flex h-[100%] items-center justify-center text-${useTextSize}`}
           >
-            <GameText
-              className="mb-24"
-              carSpeed={carSpeed}
-              quote={quote}
-              has3D={show3D}
-            />
+            <GameText carSpeed={carSpeed} quote={quote} has3D={show3D} />
           </div>
         </>
       )}

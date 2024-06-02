@@ -3,11 +3,11 @@
 import { useGLTF, Text } from "@react-three/drei";
 import {
   CatmullRomCurve3,
-  type Euler,
+  Euler,
   type Group,
   type Mesh,
   type Object3DEventMap,
-  type Vector3,
+  Vector3,
   MeshStandardMaterial,
 } from "three";
 
@@ -26,7 +26,13 @@ const CarModel = memo(function CarModel() {
   const { nodes, materials } = useGLTF("/models/car.glb");
   const { user } = useUser();
 
-  const { carRef, curveRef, textRef } = useGame();
+  const {
+    carRef,
+    curveRef,
+    textRef,
+    carStartPositionRef,
+    carStartRotationRef,
+  } = useGame();
   const colors = ColorSchemes[1];
 
   useEffect(() => {
@@ -43,11 +49,14 @@ const CarModel = memo(function CarModel() {
 
   if (colors === undefined) throw new Error("Color scheme is undefined");
 
+  carStartPositionRef.current = new Vector3(0, -0.5, 0);
+  carStartRotationRef.current = new Euler(0, -2, 0);
+
   return (
     <group
       ref={carRef}
-      position={[0, -0.5, 0]}
-      rotation={[0, -2, 0]}
+      position={carStartPositionRef.current}
+      rotation={carStartRotationRef.current}
       dispose={null}
     >
       <Text
