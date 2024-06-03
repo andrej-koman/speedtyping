@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { type OptionsProps } from "types/game";
 import { Box, SlidersHorizontal, Type, Star, RotateCcw } from "lucide-react";
@@ -38,21 +38,65 @@ import {
 import { addQuoteToFavorites, removeQuoteFromFavorites } from "../[id]/actions";
 import { toast } from "sonner";
 import CameraSheet from "./camera-sheet";
+import { Quaternion } from "three";
 
 export default function Options({
   handle3DChange,
   handleTextSizeChange,
-  handleRestartGame,
+  setHasStarted,
   show3D,
   textSize,
   quote,
   hasStarted,
 }: OptionsProps) {
-  const { cameraRef } = useGame();
+  const {
+    cameraRef,
+    carStartRotationRef,
+    carStartPositionRef,
+    currentLetterIndexRef,
+    currentWordIndexRef,
+    targetQuaternionRef,
+    tRef,
+    carRef,
+  } = useGame();
   const { user } = useUser();
   const [isFavorite, setIsFavorite] = useState<boolean>(
     quote?.isFavorite ?? false,
   );
+
+  const handleRestartGame = () => {
+    const correctLetters = document.querySelectorAll(".letter.correct");
+
+    // For some reason, this is how you have to do it
+    Array.prototype.forEach.call(correctLetters, (letter: Element) => {
+      letter.classList.remove("correct");
+    });
+
+    // This resets the car position
+    if (
+      carRef.current &&
+      carStartRotationRef.current &&
+      carStartPositionRef.current
+    ) {
+      carRef.current.setRotationFromEuler(carStartRotationRef.current);
+      carRef.current.position.set(
+        carStartPositionRef.current.x,
+        carStartPositionRef.current.y,
+        carStartPositionRef.current.z,
+      );
+    }
+
+    // This resets the word and letter indexes
+    // No need for checks, since the refs are always set
+    currentWordIndexRef.current = 0;
+    currentLetterIndexRef.current = 0;
+
+    // Reset the quaternion and t
+    targetQuaternionRef.current = new Quaternion();
+    tRef.current = 0;
+
+    setHasStarted(false);
+  };
 
   const handleFavorite = async () => {
     if (!quote || !user) {
@@ -94,6 +138,16 @@ export default function Options({
       });
     }
   };
+
+  useEffect(() => {
+    window.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.key.toLowerCase() === "r") {
+        e.preventDefault();
+        handleRestartGame();
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="sticky top-0 z-50 flex h-12 w-full justify-center">

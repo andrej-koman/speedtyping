@@ -14,14 +14,20 @@ export default function GameText({
   className?: string;
   has3D: boolean;
 }) {
-  const { carRef, curveRef, textRef, cameraRef, hasStartedState } = useGame();
+  const {
+    carRef,
+    curveRef,
+    textRef,
+    cameraRef,
+    currentWordIndexRef,
+    currentLetterIndexRef,
+    targetQuaternionRef,
+    tRef,
+    hasStartedState,
+  } = useGame();
   const [hasStarted, setHasStarted] = hasStartedState;
-  const currentWordIndex = useRef(0);
-  const currentLetterIndex = useRef(0);
 
   const words = useRef([] as unknown as NodeListOf<Element>);
-  const targetQuaternion = useRef<Quaternion>(new Quaternion());
-  const t = useRef(0);
 
   // TODO
   // - Dodaj, da se game nekak konča
@@ -32,15 +38,12 @@ export default function GameText({
     const handleKeyDown = (e: { key: string }) => {
       if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
-      const currentWord = words.current[currentWordIndex.current];
+      const currentWord = words.current[currentWordIndexRef.current];
       const letters = currentWord?.querySelectorAll(".letter");
-      const currentLetter = currentWord?.children[currentLetterIndex.current];
+      const currentLetter =
+        currentWord?.children[currentLetterIndexRef.current];
 
       if (!currentLetter || !currentWord || !letters) return;
-
-      if (!hasStarted) {
-        setHasStarted(true);
-      }
 
       if (e.key === " ") {
         moveCar();
@@ -49,13 +52,17 @@ export default function GameText({
       }
 
       if (e.key === currentLetter.textContent) {
+        if (!hasStarted) {
+          setHasStarted(true);
+        }
+
         currentLetter.classList.add("correct");
-        currentLetterIndex.current++;
+        currentLetterIndexRef.current++;
 
         // Check if the word is completed
-        if (currentLetterIndex.current >= letters.length) {
-          currentWordIndex.current++;
-          currentLetterIndex.current = 0;
+        if (currentLetterIndexRef.current >= letters.length) {
+          currentWordIndexRef.current++;
+          currentLetterIndexRef.current = 0;
         }
 
         // Move the car
@@ -64,7 +71,7 @@ export default function GameText({
         updateText();
 
         // Check if the game is finished
-        if (currentWordIndex.current >= words.current.length) {
+        if (currentWordIndexRef.current >= words.current.length) {
           console.log("Game finished");
         }
       }
@@ -82,22 +89,22 @@ export default function GameText({
     if (carRef.current && curveRef.current && has3D) {
       // update the car's position to create the animation
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      t.current += carSpeed;
+      tRef.current += carSpeed;
 
       // Make the car stop at the end of the curve
-      t.current = Math.min(1, t.current);
-      const point = curveRef.current.getPointAt(t.current);
-      const tangent = curveRef.current.getTangentAt(t.current);
+      tRef.current = Math.min(1, tRef.current);
+      const point = curveRef.current.getPointAt(tRef.current);
+      const tangent = curveRef.current.getTangentAt(tRef.current);
       carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
 
       // Calculate the target rotation
-      targetQuaternion.current.setFromAxisAngle(
+      targetQuaternionRef.current.setFromAxisAngle(
         new Vector3(0, 1, 0),
         -Math.atan2(-tangent.x, tangent.z),
       );
 
       // Gradually rotate the car towards the target rotation
-      carRef.current.quaternion.slerp(targetQuaternion.current, 0.5);
+      carRef.current.quaternion.slerp(targetQuaternionRef.current, 0.5);
     }
   };
 

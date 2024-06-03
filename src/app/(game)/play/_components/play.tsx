@@ -9,7 +9,7 @@ import GameText from "./game-text";
 import Game3DModel from "./game3d";
 import Options from "./options";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useGame } from "~/contexts/GameContext";
 import { TooltipProvider } from "~/components/ui/tooltip";
 
@@ -32,8 +32,7 @@ export default function Play({
   const [useTextSize, setUseTextSize] = useState(settings.textSize);
   quote.isFavorite = settings.isFavorite;
 
-  const { hasStartedState, carStartRotationRef, carStartPositionRef, carRef } =
-    useGame();
+  const { hasStartedState } = useGame();
   const [hasStarted, setHasStarted] = hasStartedState;
 
   const handle3DChange = (pressed: boolean) => {
@@ -48,53 +47,15 @@ export default function Play({
     document.cookie = `gameSettings=${JSON.stringify(settings)}; max-age=${24 * 60 * 60 * 365};`;
   };
 
-  const handleRestartGame = () => {
-    const correctLetters = document.querySelectorAll(".letter.correct");
-
-    // For some reason, this is how you have to do it
-    Array.prototype.forEach.call(correctLetters, (letter: Element) => {
-      letter.classList.remove("correct");
-    });
-
-    // TODO
-    // Move the car back aswell - Something is not right, the car's position does not get reset
-    if (
-      carRef.current &&
-      carStartRotationRef.current &&
-      carStartPositionRef.current
-    ) {
-      carRef.current.setRotationFromEuler(carStartRotationRef.current);
-      carRef.current.position.set(
-        carStartPositionRef.current.x,
-        carStartPositionRef.current.y,
-        carStartPositionRef.current.z,
-      );
-    }
-
-    setHasStarted(false);
-  };
-
-  useEffect(() => {
-    window.addEventListener("keydown", (e) => {
-      if (e.ctrlKey) {
-        if (e.key.toLowerCase() === "r") {
-          e.preventDefault();
-          handleRestartGame();
-        }
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const OptionsMounted = (
     <Options
       handle3DChange={handle3DChange}
       handleTextSizeChange={handleTextSizeChange}
-      handleRestartGame={handleRestartGame}
       show3D={show3D}
       textSize={useTextSize}
       quote={quote}
       hasStarted={hasStarted}
+      setHasStarted={setHasStarted}
     />
   );
 

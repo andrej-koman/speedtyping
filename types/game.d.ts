@@ -21,7 +21,7 @@ declare interface GameSettings {
 declare interface OptionsProps {
   handle3DChange: (pressed: boolean) => void;
   handleTextSizeChange: (value: string) => void;
-  handleRestartGame: () => void;
+  setHasStarted: React.Dispatch<React.SetStateAction<boolean>>;
   show3D: boolean;
   textSize: string;
   quote?: Quote;
@@ -36,6 +36,10 @@ declare interface Game {
   carRef: MutableRefObject<Group<Object3DEventMap> | null>;
   carStartPositionRef: MutableRefObject<Vector3 | null>;
   carStartRotationRef: MutableRefObject<Euler | null>;
+  currentWordIndexRef: MutableRefObject<number>;
+  currentLetterIndexRef: MutableRefObject<number>;
+  targetQuaternionRef: MutableRefObject<Quaternion>;
+  tRef: MutableRefObject<number>;
   curveRef: MutableRefObject<CatmullRomCurve3 | null>;
   textRef: MutableRefObject<Text | null>;
   cameraRef: MutableRefObject<PerspectiveCamera | null>;
