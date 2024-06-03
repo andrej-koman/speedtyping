@@ -27,7 +27,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const currentLetterIndexRef = useRef(0);
   const curveRef = useRef(null);
   const textRef = useRef(null);
-  const cameraRef = useRef(null);
 
   // This gets cached, so that is does not get reset on every render
   const contextValue = useMemo(
@@ -41,7 +40,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       tRef,
       curveRef,
       textRef,
-      cameraRef,
     }),
     [],
   );

@@ -1,5 +1,5 @@
 import { type MutableRefObject } from "react";
-import { type PerspectiveCamera, type Vector3, type Euler } from "three";
+import { type Vector3, type Euler } from "three";
 import {
   type Object3DEventMap,
   type Group,
@@ -42,6 +42,5 @@ declare interface Game {
   tRef: MutableRefObject<number>;
   curveRef: MutableRefObject<CatmullRomCurve3 | null>;
   textRef: MutableRefObject<Text | null>;
-  cameraRef: MutableRefObject<PerspectiveCamera | null>;
   hasStartedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }

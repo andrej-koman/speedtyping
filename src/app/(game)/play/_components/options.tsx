@@ -50,7 +50,6 @@ export default function Options({
   hasStarted,
 }: OptionsProps) {
   const {
-    cameraRef,
     carStartRotationRef,
     carStartPositionRef,
     currentLetterIndexRef,
@@ -222,7 +221,7 @@ export default function Options({
                     <SheetDescription>
                       Configure the 3D camera to your liking.
                     </SheetDescription>
-                    {cameraRef.current && <CameraSheet />}
+                    <CameraSheet />
                   </SheetHeader>
                 </SheetContent>
               </Sheet>

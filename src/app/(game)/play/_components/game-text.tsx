@@ -18,7 +18,6 @@ export default function GameText({
     carRef,
     curveRef,
     textRef,
-    cameraRef,
     currentWordIndexRef,
     currentLetterIndexRef,
     targetQuaternionRef,
@@ -98,21 +97,27 @@ export default function GameText({
       carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
 
       // Calculate the target rotation
-      targetQuaternionRef.current.setFromAxisAngle(
-        new Vector3(0, 1, 0),
-        -Math.atan2(-tangent.x, tangent.z),
-      );
+      if (targetQuaternionRef && targetQuaternionRef.current !== undefined) {
+        targetQuaternionRef.current.setFromAxisAngle(
+          new Vector3(0, 1, 0),
+          -Math.atan2(-tangent.x, tangent.z),
+        );
 
-      // Gradually rotate the car towards the target rotation
-      carRef.current.quaternion.slerp(targetQuaternionRef.current, 0.5);
+        // Gradually rotate the car towards the target rotation
+        carRef.current.quaternion.slerp(targetQuaternionRef.current, 0.5);
+      }
     }
   };
 
   const updateText = () => {
-    if (textRef.current && cameraRef.current) {
+    if (textRef.current) {
+      // TODO
+      // - Implement basic camera settings, which will be saved in local storage
+      // - Implement the camera settings in the game
+      /*
       (textRef.current as unknown as Object3D).lookAt(
-        cameraRef.current.position,
       );
+      */
     }
   };
 
