@@ -185,6 +185,7 @@ body {
 
 .letter {
   margin-left: 0.1em;
+  color: hsl(var(--secondary));
 }
 
 .letter.correct {

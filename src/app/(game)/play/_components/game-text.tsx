@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { type Object3D, Quaternion, Vector3 } from "three";
+import { type Quaternion, Vector3 } from "three";
 import { useGame } from "~/contexts/GameContext";
 
 export default function GameText({
@@ -26,7 +26,9 @@ export default function GameText({
   } = useGame();
   const [hasStarted, setHasStarted] = hasStartedState;
 
-  const words = useRef([] as unknown as NodeListOf<Element>);
+  const words = useRef<NodeListOf<Element>>(
+    [] as unknown as NodeListOf<Element>,
+  );
 
   // TODO
   // - Dodaj, da se game nekak konča
@@ -97,14 +99,17 @@ export default function GameText({
       carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
 
       // Calculate the target rotation
-      if (targetQuaternionRef && targetQuaternionRef.current !== undefined) {
-        targetQuaternionRef.current.setFromAxisAngle(
+      if (targetQuaternionRef) {
+        (targetQuaternionRef.current as Quaternion).setFromAxisAngle(
           new Vector3(0, 1, 0),
           -Math.atan2(-tangent.x, tangent.z),
         );
 
         // Gradually rotate the car towards the target rotation
-        carRef.current.quaternion.slerp(targetQuaternionRef.current, 0.5);
+        carRef.current.quaternion.slerp(
+          targetQuaternionRef.current as Quaternion,
+          0.5,
+        );
       }
     }
   };

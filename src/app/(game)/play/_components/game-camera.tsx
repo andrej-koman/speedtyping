@@ -7,7 +7,7 @@ export default function GameCamera() {
 
   return (
     <PerspectiveCamera position={cameraPosition} makeDefault>
-      <OrbitControls enableDamping={false} target={center} />
+      <OrbitControls enableDamping={false} enablePan={false} enableZoom={false} enableRotate={false} target={center} />
     </PerspectiveCamera>
   );
 }
