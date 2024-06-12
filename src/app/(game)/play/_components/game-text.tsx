@@ -73,7 +73,20 @@ export default function GameText({
 
         // Check if the game is finished
         if (currentWordIndexRef.current >= words.current.length) {
+          currentLetter.classList.remove("cursor");
           console.log("Game finished");
+        }
+
+        // Move the cursor to the next letter
+        if (currentWordIndexRef.current < words.current.length) {
+          // Remove the cursor from the current letter
+          currentLetter.classList.remove("cursor");
+
+          const nextWord = words.current[currentWordIndexRef.current];
+          if (!nextWord) return;
+          const nextLetter = nextWord.children[currentLetterIndexRef.current];
+          if (!nextLetter) return;
+          nextLetter.classList.add("cursor");
         }
       }
     };

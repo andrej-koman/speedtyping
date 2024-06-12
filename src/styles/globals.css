@@ -179,17 +179,22 @@ body {
 }
 
 /** CURSOR **/
-.cursor {
-  text-decoration: underline;
+.cursor::before {
+  content: "|";
+  opacity: 1;
+  font-size: 1.5rem;
+  width: 0.1em;
+  right: 1px;
+  color: hsl(var(--primary));
 }
 
 .letter {
   margin-left: 0.1em;
-  color: hsl(var(--secondary));
+  color: #84a2ae;
 }
 
 .letter.correct {
-  color: hsl(var(--primary));
+  color: #ffffff;
 }
 
 .text-primary-red {
