@@ -36,3 +36,15 @@ export const favorites = pgTable("favorites", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
 });
+
+export const stats = pgTable("stats", {
+  id: serial("id").primaryKey(),
+  user_id: varchar("user_id").notNull(),
+  xp: integer("xp").default(0).notNull(),
+  level: integer("level").default(1).notNull(),
+  total_started: integer("total_games").default(0).notNull(),
+  total_finished: integer("total_finished").default(0).notNull(),
+  created_at: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
