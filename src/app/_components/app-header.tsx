@@ -1,4 +1,4 @@
-import UserNav from "../(dash)/_components/user-nav";
+import UserNav from "./user-nav";
 import Logo from "./logo";
 
 export default function Header() {

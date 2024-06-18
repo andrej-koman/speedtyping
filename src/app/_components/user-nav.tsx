@@ -20,6 +20,7 @@ import { LogOut } from "lucide-react";
 export default function UserNav() {
   const { user } = useUser();
   const [progress, setProgress] = useState<number>(0);
+  const [level, setLevel] = useState<number>(1);
   const { signOut } = useClerk();
   return (
     <SignedIn>
@@ -28,7 +29,7 @@ export default function UserNav() {
           <div className="flex flex-row items-center space-x-2">
             <div className="flex min-w-[8rem] flex-col items-end justify-center">
               <div className="flex w-full items-center justify-between">
-                <span className="text-md font-bold">{25}</span>
+                <span className="text-md font-bold">{level}</span>
                 <span className="ms-5 text-sm font-bold">{user?.username}</span>
               </div>
               <Progress value={progress} />
@@ -55,8 +56,8 @@ export default function UserNav() {
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <button
-              onClick={() => {
-                signOut();
+              onClick={async () => {
+                await signOut();
               }}
               className="flex w-full items-center justify-between"
             >

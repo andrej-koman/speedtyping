@@ -1,15 +1,12 @@
 import { sql } from "drizzle-orm";
 import {
   integer,
-  pgEnum,
   pgTable,
   serial,
   text,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
-
-const lengthEnum = pgEnum("length", ["short", "medium", "long", "very_long"]);
 
 export const quotes = pgTable("quotes", {
   id: serial("id").primaryKey(),
@@ -23,7 +20,7 @@ export const quotes = pgTable("quotes", {
   updated_at: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  lengthWord: lengthEnum("lengthWord").default("short").notNull(),
+  lengthWord: varchar("lengthWord").default("short").notNull(),
 });
 
 export const favorites = pgTable("favorites", {
