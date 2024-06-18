@@ -2,8 +2,9 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { Toaster } from "sonner";
-import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,14 +17,17 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang={locale}>
         <head>
           <script
             src="https://analytics.andrej.tech/js/script.js"
@@ -32,8 +36,10 @@ export default function RootLayout({
           />
         </head>
         <body className={`font-sans ${inter.variable} dark flex flex-col`}>
-          {children}
-          <Toaster richColors />
+          <NextIntlClientProvider messages={messages}>
+            {children}
+            <Toaster richColors />
+          </NextIntlClientProvider>
         </body>
       </html>
     </ClerkProvider>

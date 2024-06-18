@@ -1,0 +1,14 @@
+{
+  "Project": {
+    "name": "hitrostno tipkanje",
+    "moto": "Pospeši svoje tipkanje"
+  },
+  "Features": {
+    "typingPractice": "Vaja tipkanja",
+    "typingPracticeDescription": "Vadite svoje veščine tipkanja z našo interaktivno igro tipkanja. Izboljšajte hitrost in natančnost tipkanja.",
+    "customization": "Prilagajanje",
+    "customizationDescription": "Prilagodite videz aplikacije z različnimi možnostmi prilagajanja. Izberite in pobarvajte svoj avto, poiščite najboljšo progo zase in še več.",
+    "leaderboards": "Lestvice",
+    "leaderboardsDescription": "Tekmujte z drugimi dirkači in se povzpnite na vrh lestvice najboljših. Ali lahko premagate najhitrejše tipkarje na svetu?"
+  }
+}

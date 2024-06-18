@@ -1,5 +1,4 @@
 import HeroSection from "./_components/hero-section";
-import { BackgroundBeams } from "./_components/background-beams";
 import Features from "./_components/features-section";
 
 export default async function HomePage() {
@@ -7,7 +6,6 @@ export default async function HomePage() {
     <div className="flex flex-col items-center justify-center">
       <HeroSection />
       <Features />
-      <BackgroundBeams />
     </div>
   );
 }

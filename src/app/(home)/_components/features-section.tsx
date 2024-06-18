@@ -8,6 +8,8 @@ import {
   AlignJustify,
 } from "lucide-react";
 
+import { useTranslations } from "next-intl";
+
 function Feature({
   title,
   icon,
@@ -31,25 +33,26 @@ function Feature({
 }
 
 export default function FeaturesSection() {
+  const t = useTranslations("Features");
   return (
     <div className="grid grid-cols-3 grid-rows-1 items-start justify-center gap-6 rounded-lg p-8 xl:w-[75rem]">
       <div className="col-span-1 flex flex-col items-center justify-center">
         <Feature
-          title="Typing Practice"
+          title={t("typingPractice")}
           icon={<FlagTriangleLeft className="h-6 w-6" />}
-          description="Practice your typing skills with our interactive typing game. Improve your typing speed and accuracy."
+          description={t("typingPracticeDescription")}
         />
         <Separator />
         <Feature
-          title="Customization"
+          title={t("customization")}
           icon={<Paintbrush className="h-6 w-6" />}
-          description="Customize the app's appearance with a variety of customization options. Choose and color your car, find the best track for you and more."
+          description={t("customizationDescription")}
         />
         <Separator />
         <Feature
-          title="Leaderboards"
+          title={t("leaderboards")}
           icon={<AlignJustify className="h-6 w-6" />}
-          description="Compete against other racers and climb to the top of the leaderboards. Can you beat the fastest typists in the world?"
+          description={t("leaderboardsDescription")}
         />
       </div>
       <div className="relative col-span-2 h-[100%] w-[100%]">
