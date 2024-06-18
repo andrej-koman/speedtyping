@@ -24,11 +24,13 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <Script
-          src="https://analytics.andrej.tech/js/script.js"
-          data-domain="speedtyping.org"
-          defer
-        />
+        <head>
+          <script
+            src="https://analytics.andrej.tech/js/script.js"
+            data-domain="speedtyping.org"
+            defer
+          />
+        </head>
         <body className={`font-sans ${inter.variable} dark flex flex-col`}>
           {children}
           <Toaster richColors />
