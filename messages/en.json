@@ -1,7 +1,9 @@
 {
   "Project": {
     "name": "speed typing",
-    "moto": "Accelerate your typing skills"
+    "moto": "Accelerate your typing skills",
+    "description": "Improve your typing speed and accuracy while racing in immersive 3D environments!",
+    "moveTheCar": "Move the car by dragging it!"
   },
   "Features": {
     "typingPractice": "Typing Practice",
@@ -25,6 +27,6 @@
   },
   "Lang": {
     "en": "English",
-    "sl": "Slovene"
+    "sl": "Slovenian"
   }
 }

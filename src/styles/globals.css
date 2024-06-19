@@ -204,3 +204,21 @@ body {
 .command-list {
   background-color: hsl(var(--background));
 }
+
+.hero {
+  background: linear-gradient(90deg,
+      rgba(73, 26, 35, 1) 0%,
+      rgba(112, 32, 48, 1) 30%,
+      rgba(225, 29, 72, 1) 63%,
+      rgba(255, 109, 141, 1) 100%);
+}
+
+.hero h1 {
+  color: hsl(var(--primary-foreground));
+  font-size: 3rem;
+}
+
+.hero h2 {
+  font-size: 1.75rem;
+  max-width: 30rem;
+}

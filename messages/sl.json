@@ -1,7 +1,9 @@
 {
   "Project": {
     "name": "hitrostno tipkanje",
-    "moto": "Pospeši svoje tipkanje"
+    "moto": "Pospeši svoje tipkanje",
+    "description": "Izboljšajte hitrost in natančnost tipkanja med dirkanjem v poglobljenih 3D okoljih!",
+    "moveTheCar": "Premaknite avto tako, da ga povlečete!"
   },
   "Features": {
     "typingPractice": "Vaja tipkanja",

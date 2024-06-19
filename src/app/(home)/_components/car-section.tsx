@@ -6,7 +6,7 @@ import { HomeCarModel } from "~/app/_models/car-model";
 import { Euler, Vector3 } from "three";
 
 export default function CarSection() {
-  const cameraPosition = new Vector3(0, 0, 14);
+  const cameraPosition = new Vector3(0, 2, 10);
 
   return (
     <Canvas>
@@ -19,9 +19,8 @@ export default function CarSection() {
         />
       </PerspectiveCamera>
       <HomeCarModel
-        position={new Vector3(0, 0, 4)}
-        rotation={new Euler(0.3, -0.5, 0)}
-        color={"#A020F0"}
+        position={new Vector3(0, -0.4, 4)}
+        rotation={new Euler(0.3, -0.7, 0)}
       />
     </Canvas>
   );

@@ -126,12 +126,10 @@ export function HomeCarModel({
 }: {
   position?: Vector3;
   rotation?: Euler;
-  color: number | string;
 }) {
   const { nodes, materials } = useGLTF("/models/car.glb");
   const carRef = useRef<Group<Object3DEventMap>>(null);
 
-  const [isInteracting, setIsInteracting] = useState(false);
   const [currentTheme, setCurrentTheme] = useState(0);
   const [colors, setColors] = useState(ColorSchemes[currentTheme]);
 
@@ -147,28 +145,10 @@ export function HomeCarModel({
     };
   }, [currentTheme]);
 
-  useFrame(() => {
-    // Rotate the car model
-    if (carRef.current && !isInteracting) {
-      carRef.current.rotation.y += 0.01; // Change this to adjust the rotation speed
-    }
-  });
-
   if (colors === undefined) throw new Error("Color scheme is undefined");
 
   return (
-    <group
-      onPointerEnter={() => {
-        setIsInteracting(true);
-      }}
-      onPointerLeave={() => {
-        setIsInteracting(false);
-      }}
-      ref={carRef}
-      dispose={null}
-      position={position}
-      rotation={rotation}
-    >
+    <group ref={carRef} dispose={null} position={position} rotation={rotation}>
       <mesh
         castShadow
         receiveShadow

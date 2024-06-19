@@ -1,27 +1,35 @@
-import { TypewriterEffectSmooth } from "~/components/ui/typewriter-effect";
+"use client";
 import { useTranslations } from "next-intl";
+import CarSection from "./car-section";
+import { Grab } from "lucide-react";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from "~/components/ui/tooltip";
 
 export default function HeroSection() {
   const t = useTranslations("Project");
-
-  const name = t("name").split(" ");
-  const words = [
-    {
-      text: name[0],
-    },
-    {
-      text: name[1],
-      className: "dark:text-primary-red text-primary-red",
-    },
-  ];
   return (
-    <div className="flex h-screen select-none flex-col items-center justify-center">
-      <div className="mb-32">
-        <p className="text-xs text-neutral-600 dark:text-neutral-200 sm:text-base">
-          {t("moto")}
-        </p>
-        <TypewriterEffectSmooth words={words} cursorClassName="bg-primary" />
-      </div>
+    <div className="hero m-8 grid w-full grid-cols-2 grid-rows-1 rounded-lg px-8 py-12 xl:w-[75rem]">
+      <TooltipProvider delayDuration={0}>
+        <div>
+          <h1 className="font-bold">{t("name")}</h1>
+          <h2>{t("description")}</h2>
+        </div>
+        <div className="relative">
+          <CarSection />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Grab className="absolute right-10 top-5 h-6 w-6" />
+            </TooltipTrigger>
+            <TooltipContent className="bg-black text-sm">
+              <p>{t("moveTheCar")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </TooltipProvider>
     </div>
   );
 }
