@@ -1,6 +1,6 @@
 import { cn } from "~/lib/utils";
 
-export default function Loader({ isList = false }: { isList: boolean }) {
+export default function Loader({ isList = false }: { isList?: boolean }) {
   return (
     <div
       className={cn(

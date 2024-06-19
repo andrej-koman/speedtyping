@@ -57,7 +57,7 @@ export default function LoginPage() {
       <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <div className="hidden h-full flex-col bg-muted bg-zinc-900 p-10 pb-40 text-white dark:border-r lg:flex">
           <div className="relative z-20 flex h-full flex-col justify-center text-lg font-medium">
-            <Logo />
+            <Logo size="lg" />
             <div className="m-auto mt-auto w-3/4">
               <SignInIllustration />
             </div>

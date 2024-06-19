@@ -6,16 +6,13 @@ import { useTranslations } from "next-intl";
 
 const sizeMap = {
   sm: {
-    logoSize: "h-10",
     fontSize: "text-lg",
   },
   md: {
-    logoSize: "h-12",
     fontSize: "text-md",
   },
   lg: {
-    logoSize: "h-16",
-    fontSize: "text-lg",
+    fontSize: "text-logo",
   },
 };
 
@@ -34,8 +31,8 @@ export default function Logo({
   const name = t("name").split(" ");
   return (
     <Link className="flex select-none items-center gap-1" href={href}>
-      <span className={cn(fontSize, "font-bold")}>{name[0]}</span>
-      <span className={cn(fontSize, "font-bold text-primary")}>{name[1]}</span>
+      <span className={`font-bold ${fontSize}`}>{name[0]}</span>
+      <span className={`font-bold text-primary ${fontSize}`}>{name[1]}</span>
     </Link>
   );
 }
