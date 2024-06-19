@@ -10,5 +10,21 @@
     "customizationDescription": "Customize the app's appearance with a variety of customization options. Choose and color your car, find the best track for you and more.",
     "leaderboards": "Leaderboards",
     "leaderboardsDescription": "Compete against other racers and climb to the top of the leaderboards. Can you beat the fastest typists in the world?"
+  },
+  "Header": {
+    "login": "Login",
+    "play": "Play"
+  },
+  "Auth": {
+    "signInText": "Sign in to your account",
+    "selectOne": "Select one of the following options to sign in.",
+    "and": "and",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "agreeToOur": "By selecting a option, u are agreeing to our"
+  },
+  "Lang": {
+    "en": "English",
+    "sl": "Slovene"
   }
 }

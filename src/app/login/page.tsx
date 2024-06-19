@@ -6,6 +6,7 @@ import Loader from "~/app/_components/loader";
 import GitHubIcon from "~/icons/github-icon";
 import GoogleIcon from "~/icons/google-icon";
 import SignInIllustration from "~/illustrations/sign-in-illustration";
+import { useTranslations } from "next-intl";
 
 import { useSignIn, useSession } from "@clerk/nextjs";
 import {
@@ -21,6 +22,7 @@ export default function LoginPage() {
   // - Add a custom user flow, where the user has to set a username
   // https://clerk.com/docs/custom-flows/oauth-connections#o-auth-account-transfer-flows
   //
+  const t = useTranslations("Auth");
   const { signIn } = useSignIn();
   const { isSignedIn, isLoaded } = useSession();
   const router = useRouter();
@@ -67,11 +69,9 @@ export default function LoginPage() {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Sign in to your account
+                {t("signInText")}
               </h1>
-              <p className="text-sm text-muted-foreground">
-                Select one of the following options to sign in.
-              </p>
+              <p className="text-sm text-muted-foreground">{t("selectOne")}</p>
             </div>
             <div className="flex flex-row items-center justify-center space-x-3">
               <Tooltip>
@@ -104,19 +104,19 @@ export default function LoginPage() {
               </Tooltip>
             </div>
             <p className="px-8 text-center text-sm text-muted-foreground">
-              By selecting a option, u are agreeing to our{" "}
+              {t("agreeToOur") + " "}
               <Link
                 href="/terms"
                 className="underline underline-offset-4 hover:text-primary"
               >
-                Terms of Service
+                {t("termsOfService")}
               </Link>{" "}
-              and{" "}
+              {t("and") + " "}
               <Link
                 href="/privacy"
                 className="underline underline-offset-4 hover:text-primary"
               >
-                Privacy Policy
+                {t("privacyPolicy")}
               </Link>
               .
             </p>

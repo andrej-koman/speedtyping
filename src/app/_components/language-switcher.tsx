@@ -11,11 +11,13 @@ import { GlobeIcon, CheckIcon } from "lucide-react";
 
 import { setLocale } from "~/app/actions";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function LanguageSwitcher({ locale }: { locale: string }) {
+  const t = useTranslations("Lang");
   const languages = {
-    en: "English",
-    sl: "Slovenian",
+    en: t("en"),
+    sl: t("sl"),
   };
 
   const pathname = usePathname();
@@ -35,7 +37,9 @@ export default function LanguageSwitcher({ locale }: { locale: string }) {
               key={key}
               onClick={() => setLocale(key, pathname)}
               className={
-                key === locale ? "flex items-center justify-between" : ""
+                key === locale
+                  ? "flex cursor-pointer items-center justify-between"
+                  : "cursor-pointer "
               }
             >
               <span>{value}</span>
