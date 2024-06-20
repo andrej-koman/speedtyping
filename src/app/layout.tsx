@@ -12,7 +12,6 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "hitrostnotipkanje",
   description: "App for touch typing practice",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

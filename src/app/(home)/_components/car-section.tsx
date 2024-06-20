@@ -20,7 +20,7 @@ export default function CarSection() {
       </PerspectiveCamera>
       <HomeCarModel
         position={new Vector3(0, -0.4, 4)}
-        rotation={new Euler(0.3, -0.7, 0)}
+        rotation={new Euler(0.0, -0.6, 0)}
       />
     </Canvas>
   );
