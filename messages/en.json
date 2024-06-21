@@ -4,6 +4,11 @@
   "description": "Improve your typing speed and accuracy while racing in immersive 3D environments!",
   "moveTheCar": "Move the car by dragging it!",
   "play": "Play",
+  "home": "Home",
+  "search": "Search",
+  "favorites": "Favorites",
+  "leaderboards": "Leaderboards",
+  "customize": "Customize",
   "Features": {
     "typingPractice": "Typing Practice",
     "typingPracticeDescription": "Practice your typing skills with our interactive typing game. Improve your typing speed and accuracy.",

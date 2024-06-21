@@ -13,7 +13,13 @@ import { setLocale } from "~/app/actions";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-export default function LanguageSwitcher({ locale }: { locale: string }) {
+export default function LanguageSwitcher({
+  locale,
+  variant = "ghost",
+}: {
+  locale: string;
+  variant?: "ghost" | "outline";
+}) {
   const t = useTranslations("Lang");
   const languages = {
     en: t("en"),
@@ -26,7 +32,7 @@ export default function LanguageSwitcher({ locale }: { locale: string }) {
     <div className="hidden sm:block">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="flex items-center gap-2">
+          <Button variant={variant} className="flex items-center gap-2">
             <GlobeIcon className="h-5 w-5" />
             <span className="uppercase">{locale}</span>
           </Button>

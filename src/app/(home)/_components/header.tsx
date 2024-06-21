@@ -22,7 +22,7 @@ export default async function Header() {
           </SignedOut>
           <SignedIn>
             <Button variant="default" asChild>
-              <Link href="/play">
+              <Link href="/home">
                 <MonitorPlay className="mr-2 h-5 w-5" />
                 {t("play")}
               </Link>

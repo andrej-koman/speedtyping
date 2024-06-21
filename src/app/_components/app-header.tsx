@@ -8,9 +8,9 @@ export default async function Header() {
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur">
       <div className="flex items-center justify-between p-5">
-        <Logo href="/play" size="lg" />
+        <Logo href="/home" size="lg" />
         <div className="flex items-center space-x-6">
-          <LanguageSwitcher locale={locale} />
+          <LanguageSwitcher variant="outline" locale={locale} />
           <UserNav />
         </div>
       </div>
