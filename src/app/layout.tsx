@@ -3,7 +3,7 @@ import "~/styles/globals.css";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { Toaster } from "sonner";
 
 const inter = Inter({
@@ -11,10 +11,21 @@ const inter = Inter({
   variable: "--font-sans",
 });
 
-export const metadata = {
+const metadata = {
   description: "App for touch typing practice",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
+
+export async function generateMetadata() {
+  const t = await getTranslations();
+  return {
+    title: {
+      default: t("name"),
+      template: "%s | " + t("name"),
+    },
+    ...metadata,
+  };
+}
 
 export default async function RootLayout({
   children,

@@ -10,7 +10,7 @@ import {
 } from "~/components/ui/tooltip";
 
 export default function HeroSection() {
-  const t = useTranslations("Project");
+  const t = useTranslations();
   return (
     <div className="hero m-8 grid w-full grid-cols-2 grid-rows-1 rounded-lg px-8 py-12 xl:w-[75rem]">
       <TooltipProvider delayDuration={0}>

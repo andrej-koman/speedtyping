@@ -1,10 +1,9 @@
 {
-  "Project": {
-    "name": "speed typing",
-    "moto": "Accelerate your typing skills",
-    "description": "Improve your typing speed and accuracy while racing in immersive 3D environments!",
-    "moveTheCar": "Move the car by dragging it!"
-  },
+  "name": "speed typing",
+  "moto": "Accelerate your typing skills",
+  "description": "Improve your typing speed and accuracy while racing in immersive 3D environments!",
+  "moveTheCar": "Move the car by dragging it!",
+  "play": "Play",
   "Features": {
     "typingPractice": "Typing Practice",
     "typingPracticeDescription": "Practice your typing skills with our interactive typing game. Improve your typing speed and accuracy.",

@@ -2,6 +2,15 @@ import { getFilteredQuotes, countFilteredQuotes } from "~/server/queries";
 import QuoteSearch from "../_components/quote-search";
 import QuoteList from "../_components/quote-list";
 import { QuoteListLoadingProvider } from "~/contexts/QuoteListLoadingContext";
+import { getTranslations } from "next-intl/server";
+
+export const generateMetadata = async () => {
+  const t = await getTranslations();
+  return {
+    title: t("play"),
+    description: "The home page",
+  };
+};
 
 export default async function Page({
   searchParams,
