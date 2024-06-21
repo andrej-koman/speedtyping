@@ -12,7 +12,6 @@ const inter = Inter({
 });
 
 const metadata = {
-  description: "App for touch typing practice",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -23,6 +22,7 @@ export async function generateMetadata() {
       default: t("name"),
       template: "%s | " + t("name"),
     },
+    description: t("description"),
     ...metadata,
   };
 }

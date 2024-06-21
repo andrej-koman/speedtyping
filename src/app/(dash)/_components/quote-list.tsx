@@ -10,10 +10,12 @@ export default function QuoteList({
   quotes,
   quoteCount,
   className,
+  query,
 }: {
   quotes: Quote[];
   quoteCount: number;
   className?: string;
+  query: string;
 }) {
   const router = useRouter();
   const [isLoading] = useQuoteListLoading();
@@ -24,17 +26,17 @@ export default function QuoteList({
 
   return (
     <div className={cn("m-2 space-y-2", className)}>
-      <div className="flex w-full items-center justify-between">
-        <div></div>
-        <small className="text-muted-foreground">
-          {quotes.length} out of {quoteCount} shown
-        </small>
-      </div>
-      <ScrollArea className="h-full">
-        <ScrollBar forceMount={true} />
-        <div className="grid grid-cols-4 gap-4">
-          {quotes.length > 0 ? (
-            <>
+      {quotes.length > 0 ? (
+        <>
+          <div className="flex w-full items-center justify-between">
+            <div></div>
+            <small className="text-muted-foreground">
+              {quotes.length} out of {quoteCount} shown
+            </small>
+          </div>
+          <ScrollArea className="h-full">
+            <ScrollBar forceMount={true} />
+            <div className="grid grid-cols-4 gap-4">
               {quotes.map((quote) => (
                 <button
                   key={quote.id}
@@ -61,14 +63,18 @@ export default function QuoteList({
                   </div>
                 </button>
               ))}
-            </>
-          ) : (
-            <div className="col-span-full flex w-full justify-center">
-              <small className="text-muted-foreground">No quotes found</small>
             </div>
-          )}
-        </div>
-      </ScrollArea>
+          </ScrollArea>
+        </>
+      ) : (
+        query.length !== 0 && (
+          <div className="col-span-full flex w-full justify-center">
+            <small className="text-muted-foreground">
+              No quotes found for search query &apos;{query}&apos;
+            </small>
+          </div>
+        )
+      )}
     </div>
   );
 }

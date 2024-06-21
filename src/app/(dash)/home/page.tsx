@@ -4,7 +4,7 @@ export const generateMetadata = async () => {
   const t = await getTranslations();
   return {
     title: t("home"),
-    description: "The home page",
+    description: t("homeDescription"),
   };
 };
 
