@@ -1,6 +1,4 @@
 "use server";
-import { and, eq } from "drizzle-orm";
-import { db } from "~/server/db";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
@@ -19,11 +17,19 @@ export async function getUserStats() {
 
   // If the user has no stats object, create one
   if (await userHasStatsObject(user.id)) {
-    return await getUserStatsForUser(user.id);
+    const stats = await getUserStatsForUser(user.id);
+    if (stats) {
+      return stats;
+    }
   } else {
     await createUserStats(user.id);
-    return await getUserStatsForUser(user.id);
+    const stats = await getUserStatsForUser(user.id);
+    if (stats) {
+      return stats;
+    }
   }
+
+  return null;
 }
 
 export async function setLocale(locale: string, url: string) {

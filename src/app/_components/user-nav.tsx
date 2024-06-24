@@ -1,6 +1,4 @@
 "use client";
-import { useState } from "react";
-
 import { SignedIn, useUser, useClerk } from "@clerk/nextjs";
 
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
@@ -16,14 +14,11 @@ import {
 } from "~/components/ui/dropdown-menu";
 
 import { LogOut } from "lucide-react";
+import { useStats } from "~/contexts/StatsContext";
 
-export default function UserNav({ stats }: { stats: Stats }) {
+export default function UserNav() {
   const { user } = useUser();
-
-  const [progress, setProgress] = useState<number>(0);
-  const [level, setLevel] = useState<number>(0);
-
-  console.log(stats);
+  const { level, progress } = useStats();
 
   const { signOut } = useClerk();
   return (

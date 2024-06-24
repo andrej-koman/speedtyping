@@ -38,3 +38,11 @@ declare interface Stats {
   total_finished: number;
   created_at: Date;
 }
+
+/**
+ *  This represents stats with calculated fields
+ */
+declare interface StatsWithCalculatedFields extends Stats {
+  level: number;
+  progress: number;
+}

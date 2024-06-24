@@ -39,6 +39,7 @@ import { addQuoteToFavorites, removeQuoteFromFavorites } from "../[id]/actions";
 import { toast } from "sonner";
 import CameraSheet from "./camera-sheet";
 import { Quaternion } from "three";
+import { useStats } from "~/contexts/StatsContext";
 
 export default function Options({
   handle3DChange,
@@ -140,7 +141,7 @@ export default function Options({
 
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
-      if (e.ctrlKey && e.key.toLowerCase() === "r") {
+      if (e.ctrlKey && e.key.toLowerCase() === "q") {
         e.preventDefault();
         handleRestartGame();
       }
