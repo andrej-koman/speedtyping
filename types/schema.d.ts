@@ -12,7 +12,7 @@ declare interface Quote {
   author: string;
   created_at: Date;
   updated_at: Date;
-  lengthWord: "short" | "medium" | "long" | "very_long";
+  lengthWord: string;
   isFavorite?: boolean;
 }
 
@@ -24,5 +24,17 @@ declare interface Favorite {
   id: number;
   quote_id: number;
   user_id: string;
+  created_at: Date;
+}
+
+/**
+ * This represents a single stats object
+ */
+declare interface Stats {
+  id: number;
+  user_id: string;
+  xp: number;
+  total_started: number;
+  total_finished: number;
   created_at: Date;
 }

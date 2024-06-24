@@ -3,6 +3,15 @@ import { calculateCarSpeed } from "~/lib/utils";
 import { GameProvider } from "~/contexts/GameContext";
 import Play from "../_components/play";
 import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata() {
+  const t = await getTranslations();
+  return {
+    title: t("play"),
+    description: t("description"),
+  };
+}
 
 const getSettings = async (quoteId: number) => {
   const settings = cookies().get("gameSettings")?.value ?? "";

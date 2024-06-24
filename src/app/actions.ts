@@ -3,12 +3,27 @@ import { and, eq } from "drizzle-orm";
 import { db } from "~/server/db";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import {
+  createUserStats,
+  getUserStatsForUser,
+  userHasStatsObject,
+} from "~/server/queries";
+import { currentUser } from "@clerk/nextjs/server";
 
-export async function getUserStats(userId: string) {
-  // TODO
-  // - Fetch the user from Clerk
-  // - Fetch the users stats from the database
-  // - Return the user object with the stats
+export async function getUserStats() {
+  const user = await currentUser();
+
+  if (!user) {
+    return null;
+  }
+
+  // If the user has no stats object, create one
+  if (await userHasStatsObject(user.id)) {
+    return await getUserStatsForUser(user.id);
+  } else {
+    await createUserStats(user.id);
+    return await getUserStatsForUser(user.id);
+  }
 }
 
 export async function setLocale(locale: string, url: string) {

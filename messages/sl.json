@@ -4,6 +4,7 @@
   "description": "Izboljšajte hitrost in natančnost tipkanja med dirkanjem v poglobljenih 3D okoljih!",
   "moveTheCar": "Premaknite avto tako, da ga povlečete!",
   "play": "Igraj",
+  "playDescription": "Igrajte hitrostno tipkanje in izboljšajte svoje veščine tipkanja.",
   "home": "Domov",
   "homeDescription": "Domača stran za igro hitrostnega tipkanja.",
   "search": "Išči",
@@ -11,6 +12,7 @@
   "favorites": "Priljubljeni",
   "leaderboards": "Lestvice",
   "customize": "Prilagodi",
+  "settings": "Nastavitve",
   "Features": {
     "typingPractice": "Vaja tipkanja",
     "typingPracticeDescription": "Vadite svoje veščine tipkanja z našo interaktivno igro tipkanja. Izboljšajte hitrost in natančnost tipkanja.",

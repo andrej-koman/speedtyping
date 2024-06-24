@@ -8,6 +8,7 @@ import {
   Star,
   TableProperties,
   Paintbrush2,
+  Settings,
 } from "lucide-react";
 import { Separator } from "~/components/ui/separator";
 import Link from "next/link";
@@ -63,6 +64,10 @@ export function Sidebar({ className }: { className?: string }) {
             <Button variant="ghost" className="w-full justify-start">
               <Paintbrush2 className="mr-2 h-4 w-4" />
               {t("customize")}
+            </Button>
+            <Button variant="ghost" className="w-full justify-start">
+              <Settings className="mr-2 h-4 w-4" />
+              {t("settings")}
             </Button>
           </div>
         </div>

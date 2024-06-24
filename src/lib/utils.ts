@@ -103,3 +103,7 @@ export const updateRecentSearches = (currentArray: string[], query: string) => {
   // If found and length is less than 6 Default just append to the end of array
   return [...currentArray, query];
 };
+
+export const calulateLevel = (xp: number) => {
+  return Math.floor(xp / 100);
+};

@@ -4,6 +4,7 @@
   "description": "Improve your typing speed and accuracy while racing in immersive 3D environments!",
   "moveTheCar": "Move the car by dragging it!",
   "play": "Play",
+  "playDescription": "Start the game and improve your typing skills.",
   "home": "Home",
   "homeDescription": "Home page of the speed typing game.",
   "search": "Search",
@@ -11,6 +12,7 @@
   "favorites": "Favorites",
   "leaderboards": "Leaderboards",
   "customize": "Customize",
+  "settings": "Settings",
   "Features": {
     "typingPractice": "Typing Practice",
     "typingPracticeDescription": "Practice your typing skills with our interactive typing game. Improve your typing speed and accuracy.",

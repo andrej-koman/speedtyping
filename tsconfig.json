@@ -37,7 +37,10 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    "types/**/*.d.ts",
+    "types/**/*.d.ts"
   ],
+  "ts-node": {
+    "esm": true
+  },
   "exclude": ["node_modules"]
 }

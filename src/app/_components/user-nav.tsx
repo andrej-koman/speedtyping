@@ -17,10 +17,14 @@ import {
 
 import { LogOut } from "lucide-react";
 
-export default function UserNav() {
+export default function UserNav({ stats }: { stats: Stats }) {
   const { user } = useUser();
+
   const [progress, setProgress] = useState<number>(0);
-  const [level, setLevel] = useState<number>(1);
+  const [level, setLevel] = useState<number>(0);
+
+  console.log(stats);
+
   const { signOut } = useClerk();
   return (
     <SignedIn>

@@ -26,7 +26,7 @@ export default function LoginPage() {
   const { signIn } = useSignIn();
   const { isSignedIn, isLoaded } = useSession();
   const router = useRouter();
-  const redirectUrlComplete = "/play";
+  const redirectUrlComplete = "/home";
   const redirectUrl = "/sso-callback";
 
   if (!isLoaded) {
@@ -34,7 +34,7 @@ export default function LoginPage() {
   }
 
   if (isSignedIn) {
-    router.push("/play");
+    router.push(redirectUrlComplete);
     return <Loader />;
   }
 

@@ -1,6 +1,6 @@
 "use client";
 // THREE js
-import { useGLTF, Text } from "@react-three/drei";
+import { useGLTF, Text3D } from "@react-three/drei";
 import {
   CatmullRomCurve3,
   Euler,
@@ -13,7 +13,6 @@ import {
 
 // Hooks
 import { memo, useEffect, useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
 import { useGame } from "~/contexts/GameContext";
 import { useUser } from "@clerk/nextjs";
 
@@ -59,15 +58,6 @@ const CarModel = memo(function CarModel() {
       rotation={carStartRotationRef.current}
       dispose={null}
     >
-      <Text
-        ref={textRef}
-        position={[0, 5, 0]}
-        fontSize={2.5}
-        font="/fonts/Inter-Regular.woff"
-        color="white"
-      >
-        {user?.username ?? ""}
-      </Text>
       <mesh
         castShadow
         receiveShadow
