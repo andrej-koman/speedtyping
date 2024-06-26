@@ -14,6 +14,7 @@ export default function GameText({
   className?: string;
   has3D: boolean;
 }) {
+  // Handle 3D stuff
   const {
     carRef,
     curveRef,
@@ -26,9 +27,18 @@ export default function GameText({
   } = useGame();
   const [hasStarted, setHasStarted] = hasStartedState;
 
+  // Game specific stuff
   const words = useRef<NodeListOf<Element>>(
     [] as unknown as NodeListOf<Element>,
   );
+
+  // Statistics
+  const statistics = {
+    time: 0,
+    characters: 0,
+    words: 0,
+    mistakes: 0,
+  };
 
   // TODO
   // - Dodaj, da se game nekak konča
@@ -137,6 +147,12 @@ export default function GameText({
       );
       */
     }
+  };
+
+  const handleGameFinish = () => {
+    // TODO
+    // - Implement the game finish
+    // For now, start tracking time, characters typed, words typed, correct characters typed
   };
 
   return (

@@ -1,5 +1,5 @@
 import { getQuoteById, isQuoteFavoritedByUser } from "~/server/queries";
-import { calculateCarSpeed } from "~/lib/utils";
+import { calculateCarSpeed } from "~/lib/game";
 import { GameProvider } from "~/contexts/GameContext";
 import Play from "../_components/play";
 import { cookies } from "next/headers";

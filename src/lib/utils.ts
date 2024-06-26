@@ -1,15 +1,17 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { quotes } from "~/server/db/schema";
 
+/**
+ *  Combines the Tailwind CSS classes with the clsx classes
+ */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function calculateCarSpeed(numOfLetters: number) {
-  return 1 / numOfLetters;
-}
-
+/**
+ *  Map Tailwind CSS size to a human readable size
+ *
+ */
 export const textSizeMapping: Record<string, string> = {
   sm: "Small",
   md: "Medium",
@@ -17,6 +19,10 @@ export const textSizeMapping: Record<string, string> = {
   "4xl": "Extra Large",
 };
 
+/**
+ *  Map Tailwind CSS size to a human readable size
+ *
+ */
 export const ColorSchemes = [
   {
     body: "#e11d48",
@@ -61,49 +67,3 @@ export const ColorSchemes = [
     wheels: "#d3d3d3",
   },
 ];
-
-export const DefaultGameSettings = {
-  has3D: true,
-};
-
-export const convertSearchBy = (searchBy: string) => {
-  switch (searchBy) {
-    case "Text":
-      return quotes.text;
-    case "Author":
-      return quotes.author;
-    case "Source":
-      return quotes.source;
-    default:
-      return quotes.text;
-  }
-};
-
-export const updateRecentSearches = (currentArray: string[], query: string) => {
-  // Check if array already contains a word that starts with the query
-  let foundIndex = 0;
-  const found = currentArray.find((element, index) => {
-    const startsWith = element.startsWith(query) || query.startsWith(element);
-    if (startsWith) foundIndex = index;
-    return startsWith;
-  });
-
-  if (!found) {
-    // If we do not find the element and the list is  too big we add the query to the start
-    if (currentArray.length >= 5) return [query, ...currentArray.slice(0, -1)];
-  } else {
-    if (currentArray.length < 6)
-      return [
-        ...currentArray.slice(0, foundIndex),
-        query,
-        ...currentArray.slice(foundIndex + 1),
-      ];
-  }
-
-  // If found and length is less than 6 Default just append to the end of array
-  return [...currentArray, query];
-};
-
-export const calulateLevel = (xp: number) => {
-  return Math.floor(xp / 100);
-};

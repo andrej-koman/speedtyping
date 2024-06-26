@@ -12,7 +12,6 @@ import Options from "./options";
 import { useState } from "react";
 import { useGame } from "~/contexts/GameContext";
 import { TooltipProvider } from "~/components/ui/tooltip";
-import { useStats } from "~/contexts/StatsContext";
 
 export default function Play({
   quote,
@@ -29,7 +28,6 @@ export default function Play({
     isFavorite: boolean;
   };
 }) {
-  const { setLevel, setProgress } = useStats();
   const [show3D, setShow3D] = useState(settings.has3D);
   const [useTextSize, setUseTextSize] = useState(settings.textSize);
   quote.isFavorite = settings.isFavorite;
@@ -47,8 +45,6 @@ export default function Play({
     setUseTextSize(value);
     settings.textSize = value;
     document.cookie = `gameSettings=${JSON.stringify(settings)}; max-age=${24 * 60 * 60 * 365};`;
-    setLevel((prev) => prev + 1);
-    setProgress((prev) => prev + 1);
   };
 
   const OptionsMounted = (

@@ -1,7 +1,7 @@
 import { eq, sql, count, and } from "drizzle-orm";
 import { db } from "./db";
 import { favorites, quotes, stats } from "./db/schema";
-import { convertSearchBy } from "~/lib/utils";
+import { convertSearchBy } from "~/lib/search";
 import { currentUser } from "@clerk/nextjs/server";
 import { type RowList } from "postgres";
 

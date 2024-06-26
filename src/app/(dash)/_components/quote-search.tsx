@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Search, X } from "lucide-react";
 import { Input } from "~/components/ui/input";
 import SearchFilters from "./search-filters";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { useDebouncedCallback } from "use-debounce";
-import { updateRecentSearches } from "~/lib/utils";
+import { updateRecentSearches } from "~/lib/search";
 import { useQuoteListLoading } from "~/contexts/QuoteListLoadingContext";
 
 export default function QuoteSearch({
