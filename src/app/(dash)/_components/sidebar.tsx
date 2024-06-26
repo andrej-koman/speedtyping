@@ -8,15 +8,37 @@ import {
   Star,
   TableProperties,
   Paintbrush2,
-  Settings,
 } from "lucide-react";
+import { Github, GitGraph, Mail } from "lucide-react";
 import { Separator } from "~/components/ui/separator";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  TooltipProvider,
+  TooltipContent,
+  TooltipTrigger,
+  Tooltip,
+} from "~/components/ui/tooltip";
 
 export function Sidebar({ className }: { className?: string }) {
   const t = useTranslations();
   const pathname = usePathname();
+
+  const links = [
+    {
+      href: "mailto:",
+      icon: <Mail className="h-5 w-5" />,
+      target: "_blank",
+      text: t("contact"),
+    },
+    {
+      href: "https://github.com/andrej-koman/speedtyping.git",
+      icon: <Github className="h-5 w-5" />,
+      target: "_blank",
+      text: "Github",
+    },
+  ];
+
   return (
     <div className={cn("flex flex-col justify-between", className)}>
       <div className="space-y-2 py-4">
@@ -65,14 +87,36 @@ export function Sidebar({ className }: { className?: string }) {
               <Paintbrush2 className="mr-2 h-4 w-4" />
               {t("customize")}
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              <Settings className="mr-2 h-4 w-4" />
-              {t("settings")}
-            </Button>
           </div>
         </div>
       </div>
-      <div className="px-3 py-4"></div>
+      <div className="flex items-center justify-between px-3 py-4">
+        <small className="flex items-center gap-1">
+          <GitGraph className="h-4 w-4" />
+          1.0.0 BETA
+        </small>
+        <div className="flex gap-2">
+          <TooltipProvider delayDuration={0}>
+            {links.map((link) => (
+              <Tooltip key={link.href}>
+                <TooltipTrigger asChild>
+                  <Link
+                    href={link.href}
+                    target={link.target}
+                    className={cn(
+                      buttonVariants({ variant: "ghost", size: "icon" }),
+                      "flex items-center",
+                    )}
+                  >
+                    {link.icon}
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>{link.text}</TooltipContent>
+              </Tooltip>
+            ))}
+          </TooltipProvider>
+        </div>
+      </div>
     </div>
   );
 }

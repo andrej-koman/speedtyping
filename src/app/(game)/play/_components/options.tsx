@@ -39,7 +39,7 @@ import { addQuoteToFavorites, removeQuoteFromFavorites } from "../[id]/actions";
 import { toast } from "sonner";
 import CameraSheet from "./camera-sheet";
 import { Quaternion } from "three";
-import { useStats } from "~/contexts/StatsContext";
+import { useTranslations } from "next-intl";
 
 export default function Options({
   handle3DChange,
@@ -50,6 +50,7 @@ export default function Options({
   quote,
   hasStarted,
 }: OptionsProps) {
+  const t = useTranslations();
   const {
     carStartRotationRef,
     carStartPositionRef,
@@ -165,7 +166,13 @@ export default function Options({
                 <RotateCcw className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Restart - Ctrl + Q</TooltipContent>
+            <TooltipContent>
+              <div className="flex justify-center">
+                {t("Options.restartGame")}
+                <br />
+                Ctrl + R
+              </div>
+            </TooltipContent>
           </Tooltip>
         </div>
       ) : (

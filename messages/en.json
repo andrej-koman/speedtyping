@@ -13,6 +13,7 @@
   "leaderboards": "Leaderboards",
   "customize": "Customize",
   "settings": "Settings",
+  "contact": "Contact",
   "Features": {
     "typingPractice": "Typing Practice",
     "typingPracticeDescription": "Practice your typing skills with our interactive typing game. Improve your typing speed and accuracy.",
@@ -23,7 +24,8 @@
   },
   "Header": {
     "login": "Login",
-    "play": "Play"
+    "play": "Play",
+    "logout": "Logout"
   },
   "Auth": {
     "signInText": "Sign in to your account",
@@ -36,5 +38,8 @@
   "Lang": {
     "en": "English",
     "sl": "Slovenian"
+  },
+  "Options": {
+    "restartGame": "Restart Game"
   }
 }

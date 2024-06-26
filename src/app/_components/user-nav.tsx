@@ -13,10 +13,12 @@ import {
   DropdownMenuLabel,
 } from "~/components/ui/dropdown-menu";
 
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { useStats } from "~/contexts/StatsContext";
+import { useTranslations } from "next-intl";
 
 export default function UserNav() {
+  const t = useTranslations();
   const { user } = useUser();
   const { level, progress } = useStats();
 
@@ -54,13 +56,19 @@ export default function UserNav() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
+            <button className="flex w-full items-center justify-between">
+              {t("settings")}
+              <Settings className="h-4 w-4" />
+            </button>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
             <button
               onClick={async () => {
                 await signOut();
               }}
               className="flex w-full items-center justify-between"
             >
-              Sign out
+              {t("Header.logout")}
               <LogOut className="h-4 w-4" />
             </button>
           </DropdownMenuItem>
