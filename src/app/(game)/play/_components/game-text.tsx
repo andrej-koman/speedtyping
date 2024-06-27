@@ -2,6 +2,8 @@
 import { useEffect, useRef } from "react";
 import { type Quaternion, Vector3 } from "three";
 import { useGame } from "~/contexts/GameContext";
+import { type StatisticsRaw } from "types/game";
+import { calculateStats } from "~/lib/game";
 
 export default function GameText({
   quote,
@@ -25,7 +27,7 @@ export default function GameText({
     tRef,
     hasStartedState,
   } = useGame();
-  const [hasStarted, setHasStarted] = hasStartedState;
+  const [_hasStarted, setHasStarted] = hasStartedState;
 
   // Game specific stuff
   const words = useRef<NodeListOf<Element>>(
@@ -33,12 +35,14 @@ export default function GameText({
   );
 
   // Statistics
-  const statistics = {
+  const statistics = useRef<StatisticsRaw>({
     time: 0,
     characters: 0,
     words: 0,
     mistakes: 0,
-  };
+  });
+
+  const timerIntervalRef = useRef<number | null>(null);
 
   // TODO
   // - Dodaj, da se game nekak konča
@@ -63,9 +67,12 @@ export default function GameText({
       }
 
       if (e.key === currentLetter.textContent) {
-        if (!hasStarted) {
-          setHasStarted(true);
+        if (currentLetter.textContent === quote.text[0]) {
+          handleGameStart();
         }
+
+        // Count the character
+        if (statistics.current) statistics.current.characters++;
 
         currentLetter.classList.add("correct");
         currentLetterIndexRef.current++;
@@ -74,6 +81,9 @@ export default function GameText({
         if (currentLetterIndexRef.current >= letters.length) {
           currentWordIndexRef.current++;
           currentLetterIndexRef.current = 0;
+
+          // Count the word
+          if (statistics.current) statistics.current.words++;
         }
 
         // Move the car
@@ -84,7 +94,8 @@ export default function GameText({
         // Check if the game is finished
         if (currentWordIndexRef.current >= words.current.length) {
           currentLetter.classList.remove("cursor");
-          console.log("Game finished");
+          handleGameFinish();
+          return;
         }
 
         // Move the cursor to the next letter
@@ -98,6 +109,9 @@ export default function GameText({
           if (!nextLetter) return;
           nextLetter.classList.add("cursor");
         }
+      } else {
+        // Count the mistake
+        if (statistics.current) statistics.current.mistakes++;
       }
     };
 
@@ -153,6 +167,21 @@ export default function GameText({
     // TODO
     // - Implement the game finish
     // For now, start tracking time, characters typed, words typed, correct characters typed
+    console.log("Game finished");
+    // Stop the timerIntervalRef
+    if (timerIntervalRef.current)
+      window.clearInterval(timerIntervalRef.current);
+
+    // Calculate the statistics
+    const stats = calculateStats(statistics.current);
+    console.log(stats);
+  };
+
+  const handleGameStart = () => {
+    setHasStarted(true);
+    timerIntervalRef.current = window.setInterval(() => {
+      if (statistics.current) statistics.current.time += 0.1;
+    }, 100);
   };
 
   return (

@@ -44,3 +44,23 @@ declare interface Game {
   textRef: MutableRefObject<Text | null>;
   hasStartedState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }
+
+/**
+ *  Raw statistics type, before it is processed and displayed
+ */
+declare interface StatisticsRaw {
+  time: number;
+  characters: number;
+  words: number;
+  mistakes: number;
+}
+
+/**
+ *  Statistics type
+ */
+declare interface Statistics {
+  time: string;
+  characters: number;
+  words: number;
+  mistakes: number;
+}
