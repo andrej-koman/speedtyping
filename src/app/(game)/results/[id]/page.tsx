@@ -1,12 +1,14 @@
 import { currentUser } from "@clerk/nextjs/server";
 import NotFound from "~/app/not-found";
 import { getUserPlay } from "~/server/queries";
+import { updateStats } from "~/server/queries";
 
 export default async function ResultsPage({
   params,
 }: {
   params: { id: number };
 }) {
+  const showAnimation = false;
   const user = await currentUser();
   if (!user) {
     return <NotFound />;

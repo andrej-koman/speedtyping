@@ -102,6 +102,9 @@ export async function savePlayStats(stats: PlayStats, quoteId: number) {
   }
   const userId = user.id;
 
+  // Make the time a decimal with 2 decimal places
+  stats.time = parseFloat(stats.time.toFixed(2));
+
   const result = await db
     .insert(plays)
     .values({
