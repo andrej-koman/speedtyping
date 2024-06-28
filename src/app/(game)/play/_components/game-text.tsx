@@ -2,19 +2,22 @@
 import { useEffect, useRef } from "react";
 import { type Quaternion, Vector3 } from "three";
 import { useGame } from "~/contexts/GameContext";
-import { type StatisticsRaw } from "types/game";
-import { calculateStats } from "~/lib/game";
+import { type PlayStats } from "types/game";
 
 export default function GameText({
   quote,
   carSpeed,
   className,
   has3D,
+  handleGameFinish,
+  handleGameStart,
 }: {
   quote: Quote;
   carSpeed: number;
   className?: string;
   has3D: boolean;
+  handleGameFinish: (stats: PlayStats) => void;
+  handleGameStart: () => void;
 }) {
   // Handle 3D stuff
   const {
@@ -25,9 +28,7 @@ export default function GameText({
     currentLetterIndexRef,
     targetQuaternionRef,
     tRef,
-    hasStartedState,
   } = useGame();
-  const [_hasStarted, setHasStarted] = hasStartedState;
 
   // Game specific stuff
   const words = useRef<NodeListOf<Element>>(
@@ -35,7 +36,7 @@ export default function GameText({
   );
 
   // Statistics
-  const statistics = useRef<StatisticsRaw>({
+  const statistics = useRef<PlayStats>({
     time: 0,
     characters: 0,
     words: 0,
@@ -45,9 +46,7 @@ export default function GameText({
   const timerIntervalRef = useRef<number | null>(null);
 
   // TODO
-  // - Dodaj, da se game nekak konča
   // - Dodaj, da se spaci upoštevajo / ugotovi kako jih upoštevati
-  // - Naredi, da se ob prvem začetku tipkanja skrijejo nepomembne stvari
   useEffect(() => {
     words.current = document.querySelectorAll(".word");
     const handleKeyDown = (e: { key: string }) => {
@@ -69,6 +68,9 @@ export default function GameText({
       if (e.key === currentLetter.textContent) {
         if (currentLetter.textContent === quote.text[0]) {
           handleGameStart();
+          timerIntervalRef.current = window.setInterval(() => {
+            if (statistics.current) statistics.current.time += 0.1;
+          }, 100);
         }
 
         // Count the character
@@ -94,7 +96,12 @@ export default function GameText({
         // Check if the game is finished
         if (currentWordIndexRef.current >= words.current.length) {
           currentLetter.classList.remove("cursor");
-          handleGameFinish();
+          console.log("Game finished");
+          // Stop the timerIntervalRef
+          if (timerIntervalRef.current)
+            window.clearInterval(timerIntervalRef.current);
+
+          handleGameFinish(statistics.current);
           return;
         }
 
@@ -161,27 +168,6 @@ export default function GameText({
       );
       */
     }
-  };
-
-  const handleGameFinish = () => {
-    // TODO
-    // - Implement the game finish
-    // For now, start tracking time, characters typed, words typed, correct characters typed
-    console.log("Game finished");
-    // Stop the timerIntervalRef
-    if (timerIntervalRef.current)
-      window.clearInterval(timerIntervalRef.current);
-
-    // Calculate the statistics
-    const stats = calculateStats(statistics.current);
-    console.log(stats);
-  };
-
-  const handleGameStart = () => {
-    setHasStarted(true);
-    timerIntervalRef.current = window.setInterval(() => {
-      if (statistics.current) statistics.current.time += 0.1;
-    }, 100);
   };
 
   return (

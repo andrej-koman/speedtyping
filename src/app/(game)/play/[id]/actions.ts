@@ -1,12 +1,25 @@
 "use server";
 import { and, eq } from "drizzle-orm";
 import { db } from "~/server/db";
-import { favorites } from "~/server/db/schema";
+import { favorites, plays } from "~/server/db/schema";
+import { currentUser } from "@clerk/nextjs/server";
+import { type PlayStats } from "types/game";
 
 /**
  *  Add a Quote to favorites
  */
-export async function addQuoteToFavorites(quoteId: number, userId: string) {
+export async function addQuoteToFavorites(quoteId: number) {
+  const user = await currentUser();
+
+  if (!user) {
+    return {
+      status: "error",
+      message: "User not found",
+    };
+  }
+
+  const userId = user.id;
+
   if (!quoteId || !userId) {
     return {
       status: "error",
@@ -15,7 +28,7 @@ export async function addQuoteToFavorites(quoteId: number, userId: string) {
   }
 
   // Check if the quote is already in the user's favorites
-  const exists = await checkIfFavoriteExists(quoteId, userId);
+  const exists = await checkIfFavoriteExists(quoteId);
   if (exists.length > 0) {
     return {
       status: "error",
@@ -40,11 +53,17 @@ export async function addQuoteToFavorites(quoteId: number, userId: string) {
 /**
  *  Remove a quote from favorites
  */
-export async function removeQuoteFromFavorites(
-  quoteId: number,
-  userId: string,
-) {
-  if (!quoteId || !userId) {
+export async function removeQuoteFromFavorites(quoteId: number) {
+  const user = await currentUser();
+  if (!user) {
+    return {
+      status: "error",
+      message: "User not found",
+    };
+  }
+  const userId = user.id;
+
+  if (!quoteId) {
     return {
       status: "error",
       message: "Quote id or user id are missing.",
@@ -52,7 +71,7 @@ export async function removeQuoteFromFavorites(
   }
 
   // Check if the quote is already in the user's favorites
-  const exists = await checkIfFavoriteExists(quoteId, userId);
+  const exists = await checkIfFavoriteExists(quoteId);
   if (exists.length == 0) {
     return {
       status: "error",
@@ -71,8 +90,44 @@ export async function removeQuoteFromFavorites(
     });
 }
 
+/**
+ *  Save play stats to the database
+ *
+ *  Return a promise with the id of the saved play
+ */
+export async function savePlayStats(stats: PlayStats, quoteId: number) {
+  const user = await currentUser();
+  if (!stats || !user) {
+    return Promise.reject("Stats are missing.");
+  }
+  const userId = user.id;
+
+  const result = await db
+    .insert(plays)
+    .values({
+      ...stats,
+      quote_id: quoteId,
+      user_id: userId,
+    })
+    .returning({
+      insertedId: plays.id,
+    });
+
+  if (!result[0]) {
+    return Promise.reject("Error saving play stats");
+  }
+
+  return result[0].insertedId;
+}
+
 // Helper functions
-async function checkIfFavoriteExists(quoteId: number, userId: string) {
+async function checkIfFavoriteExists(quoteId: number) {
+  const user = await currentUser();
+  if (!user) {
+    return [];
+  }
+  const userId = user.id;
+
   return await db
     .select()
     .from(favorites)

@@ -18,7 +18,6 @@ import {
 } from "~/components/ui/dropdown-menu";
 
 import { useGame } from "~/contexts/GameContext";
-import { useUser } from "@clerk/nextjs";
 import { textSizeMapping } from "~/lib/utils";
 
 import {
@@ -60,7 +59,6 @@ export default function Options({
     tRef,
     carRef,
   } = useGame();
-  const { user } = useUser();
   const [isFavorite, setIsFavorite] = useState<boolean>(
     quote?.isFavorite ?? false,
   );
@@ -100,13 +98,13 @@ export default function Options({
   };
 
   const handleFavorite = async () => {
-    if (!quote || !user) {
+    if (!quote) {
       throw new Error("Invalid state while adding to favorites");
     }
 
     if (isFavorite) {
       // Remove from favorites
-      await removeQuoteFromFavorites(quote.id, user.id).then((res) => {
+      await removeQuoteFromFavorites(quote.id).then((res) => {
         if (!res) {
           throw new Error("Something is wrong");
         }
@@ -123,7 +121,7 @@ export default function Options({
       });
     } else {
       // Add to favorites
-      await addQuoteToFavorites(quote.id, user.id).then((res) => {
+      await addQuoteToFavorites(quote.id).then((res) => {
         if (!res) {
           throw new Error("Something is wrong");
         }

@@ -6,6 +6,8 @@ import {
   text,
   timestamp,
   varchar,
+  boolean,
+  doublePrecision,
 } from "drizzle-orm/pg-core";
 
 export const quotes = pgTable("quotes", {
@@ -38,8 +40,23 @@ export const stats = pgTable("stats", {
   id: serial("id").primaryKey(),
   user_id: varchar("user_id").notNull(),
   xp: integer("xp").default(0).notNull(),
-  total_started: integer("total_games").default(0).notNull(),
-  total_finished: integer("total_finished").default(0).notNull(),
+  total_plays: integer("total_plays").default(0).notNull(),
+  created_at: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
+
+export const plays = pgTable("plays", {
+  id: serial("id").primaryKey(),
+  user_id: varchar("user_id").notNull(),
+  quote_id: integer("quote_id")
+    .references(() => quotes.id)
+    .notNull(),
+  mistakes: integer("mistakes").default(0).notNull(),
+  characters: integer("characters").default(0).notNull(),
+  words: integer("words").default(0).notNull(),
+  time: doublePrecision("time").default(0).notNull(),
+  viewed: boolean("viewed").default(false).notNull(),
   created_at: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

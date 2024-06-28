@@ -34,8 +34,7 @@ declare interface Stats {
   id: number;
   user_id: string;
   xp: number;
-  total_started: number;
-  total_finished: number;
+  total_plays: number;
   created_at: Date;
 }
 
@@ -45,4 +44,19 @@ declare interface Stats {
 declare interface StatsWithCalculatedFields extends Stats {
   level: number;
   progress: number;
+}
+
+/**
+ * This represents a single play object
+ */
+declare interface Play {
+  id: number;
+  user_id: string;
+  quote_id: number;
+  mistakes: number;
+  characters: number;
+  words: number;
+  time: number;
+  viewed: boolean;
+  created_at: Date;
 }

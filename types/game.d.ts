@@ -48,18 +48,8 @@ declare interface Game {
 /**
  *  Raw statistics type, before it is processed and displayed
  */
-declare interface StatisticsRaw {
+declare interface PlayStats {
   time: number;
-  characters: number;
-  words: number;
-  mistakes: number;
-}
-
-/**
- *  Statistics type
- */
-declare interface Statistics {
-  time: string;
   characters: number;
   words: number;
   mistakes: number;

@@ -1,6 +1,6 @@
 import { eq, sql, count, and } from "drizzle-orm";
 import { db } from "./db";
-import { favorites, quotes, stats } from "./db/schema";
+import { favorites, quotes, stats, plays } from "./db/schema";
 import { convertSearchBy } from "~/lib/search";
 import { currentUser } from "@clerk/nextjs/server";
 import { type RowList } from "postgres";
@@ -174,4 +174,48 @@ export async function createUserStats(userId: string): Promise<{
         object: res,
       };
     });
+}
+
+/**
+ *  Get a users play
+ */
+export async function getUserPlay(
+  playId: number,
+  userId: string,
+): Promise<Play | undefined> {
+  const play = await db
+    .select()
+    .from(plays)
+    .where(and(eq(plays.id, playId), eq(plays.user_id, userId)));
+
+  return play[0];
+}
+
+/**
+ * Set user play as viewed
+ */
+export async function setPlayAsViewed(playId: number): Promise<void> {
+  await db
+    .update(plays)
+    .set({
+      viewed: true,
+    })
+    .where(eq(plays.id, playId));
+}
+
+/**
+ * Updated stats object with xp and increment total_plays by 1
+ */
+export async function updateStats(userId: string, xp: number) {
+  try {
+    await db
+      .update(stats)
+      .set({
+        xp: sql`${stats.xp} + ${xp}`,
+        total_plays: sql`${stats.total_plays} + 1`,
+      })
+      .where(eq(stats.user_id, userId));
+  } catch (e) {
+    console.error(e);
+  }
 }
