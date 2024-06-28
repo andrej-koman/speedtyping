@@ -1,4 +1,4 @@
-import { StatisticsRaw } from "types/game";
+import { type PlayStats } from "types/game";
 
 /**
  *  Calculate the speed of the car based on the number of letters in the quote
@@ -12,25 +12,26 @@ export function calculateCarSpeed(numOfLetters: number) {
  *  Calculate the stats for the play
  *
  */
-export function calculateStats(stats: StatisticsRaw) {
+export function calculateStats(stats: PlayStats) {
   return {
     wpm: calculateWPM(stats.words, stats.time),
     accuracy: calculateAccuracy(stats.mistakes, stats.characters),
-    ...stats
+    ...stats,
   };
+}
 
-  /**
-   *  Calculate WPM based on the number of words and time
-   *
-   */
-  function calculateWPM(words: number, time: number) {
-    return Math.round((words / time) * 60);
-  }
+/**
+ *  Calculate WPM based on the number of words and time
+ *
+ */
+function calculateWPM(words: number, time: number) {
+  return Math.round((words / time) * 60);
+}
 
-  /**
-   *  Calculate the accuracy based on the number of mistakes and characters
-   *
-   */
-  function calculateAccuracy(mistakes: number, characters: number) {
-    return Math.round(((characters - mistakes) / characters) * 100);
-  }
+/**
+ *  Calculate the accuracy based on the number of mistakes and characters
+ *
+ */
+function calculateAccuracy(mistakes: number, characters: number) {
+  return Math.round(((characters - mistakes) / characters) * 100);
+}
