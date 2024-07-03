@@ -30,7 +30,7 @@ declare interface Favorite {
 /**
  * This represents a single stats object
  */
-declare interface Stats {
+declare interface PlayerStats {
   id: number;
   user_id: string;
   xp: number;
@@ -41,7 +41,7 @@ declare interface Stats {
 /**
  *  This represents stats with calculated fields
  */
-declare interface StatsWithCalculatedFields extends Stats {
+declare interface StatsWithCalculatedFields extends PlayerStats {
   level: number;
   progress: number;
 }

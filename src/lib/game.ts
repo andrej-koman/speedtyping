@@ -9,28 +9,10 @@ export function calculateCarSpeed(numOfLetters: number) {
 }
 
 /**
- * Calculate the xp gained based on the stats of the play
- *
- */
-export function calculateXPGained(stats: PlayStats): number {
-  const { wpm, accuracy } = calculateStats(stats);
-  let xp = 0;
-  if (wpm > 0) xp += wpm;
-  if (accuracy > 0) xp += accuracy;
-  if (stats.words > 0) xp += Math.round(stats.words / 2);
-
-  if (stats.mistakes > 0) xp -= stats.mistakes * 5;
-
-  if (xp < 0) xp = 0;
-
-  return xp;
-}
-
-/**
  *  Calculate the stats for the play
  *
  */
-export function calculateStats(stats: PlayStats) {
+export function calculatePlayStats(stats: PlayStats) {
   return {
     wpm: calculateWPM(stats.words, stats.time),
     accuracy: calculateAccuracy(stats.mistakes, stats.characters),

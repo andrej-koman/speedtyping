@@ -1,44 +1,39 @@
 "use client";
 import { useEffect } from "react";
-import { handleViewPlay } from "../[id]/actions";
 import { useStats } from "~/contexts/StatsContext";
-import { type XPAnimation } from "types/game";
+import { type Results } from "types/game";
 
-export default function Results({
-  play,
-  xp,
-}: {
-  play: Play;
-  xp: number | null;
-}) {
-  const { setProgress, setText } = useStats();
+export default function Results({ results }: { results: Results }) {
+  const { setProgress, setText, stats, setLevel } = useStats();
+  const level = stats.level;
 
   useEffect(() => {
-    if (play.viewed === false && xp) {
+    if (results.play.viewed === false) {
       // First update the wpm
-      setText(`+${xp} XP`);
-
-      // Then update the progress incrementally
-
-      const interval = setInterval(() => {
-        setProgress((prev) => {
-          if (prev + 1 >= xp) {
-            clearInterval(interval);
-            return xp;
-          }
-          return prev + 1;
-        });
-      }, 10);
+      setText(`+${results.gainedXp} XP`);
+      // Then update the progress
+      if (
+        results.targetLevel === undefined ||
+        results.targetProgress === undefined
+      ) {
+        return;
+      }
+      // TODO
+      // For now, no animation is implemented
+      // I do intend to implement an animation in the future
+      setProgress(results.targetProgress);
+      // Then update the level
+      setLevel(results.targetLevel);
     }
   }, []);
 
   return (
     <>
       <h1>Play Results</h1>
-      <p>Mistakes: {play.mistakes}</p>
-      <p>Time: {play.time}</p>
-      <p>Characters: {play.characters}</p>
-      <p>Words: {play.words}</p>
+      <p>Mistakes: {results.play.mistakes}</p>
+      <p>Time: {results.play.time}</p>
+      <p>Characters: {results.play.characters}</p>
+      <p>Words: {results.play.words}</p>
     </>
   );
 }

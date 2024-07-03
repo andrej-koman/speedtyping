@@ -2,8 +2,11 @@ import { eq, sql, count, and } from "drizzle-orm";
 import { db } from "./db";
 import { favorites, quotes, stats, plays } from "./db/schema";
 import { convertSearchBy } from "~/lib/search";
-import { currentUser } from "@clerk/nextjs/server";
+import { type User, currentUser } from "@clerk/nextjs/server";
 import { type RowList } from "postgres";
+import { calculateXPAnimation, calculateXPGained } from "~/lib/levels";
+import { calculatePlayStats } from "~/lib/game";
+import { type Results } from "types/game";
 
 /**
  * Get all the quotes from the db
@@ -142,7 +145,9 @@ export async function userHasStatsObject(userId: string): Promise<boolean> {
 /**
  * Get a users stats object
  */
-export async function getUserStatsForUser(userId: string): Promise<Stats> {
+export async function getUserStatsForUser(
+  userId: string,
+): Promise<PlayerStats> {
   const userStats = await db
     .select()
     .from(stats)
@@ -218,4 +223,47 @@ export async function updateStats(userId: string, xp: number) {
   } catch (e) {
     console.error(e);
   }
+}
+
+/**
+ *  Get the results object for the play
+ *
+ */
+export async function getResults(user: User, play: Play): Promise<Results> {
+  const quote = await getQuoteById(play.quote_id);
+  if (!quote) throw new Error("Quote not found");
+
+  const playerStats = await getUserStatsForUser(user.id);
+
+  const { wpm, accuracy } = calculatePlayStats(play);
+  if (play.viewed === false) {
+    const gainedXp = calculateXPGained(wpm, accuracy, play);
+    const { targetXp, targetLevel, targetProgress } = calculateXPAnimation(
+      gainedXp,
+      playerStats,
+    );
+
+    // Update the stats object with the xp and increment total_plays by 1
+    await updateStats(user.id, gainedXp);
+
+    // Set the play as viewed
+    await setPlayAsViewed(play.id);
+
+    return {
+      play,
+      quote,
+      wpm,
+      accuracy,
+      gainedXp,
+      targetXp,
+      targetLevel,
+      targetProgress,
+    };
+  }
+  return {
+    play,
+    quote,
+    wpm,
+    accuracy,
+  };
 }

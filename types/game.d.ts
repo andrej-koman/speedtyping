@@ -56,14 +56,16 @@ declare interface PlayStats {
 }
 
 /**
- *  XP Animation
+ *  Results object
+ *
  */
-declare interface XPAnimation {
-  xp: number;
-  xpSeperated: {
-    wpm: number;
-    accuracy: number;
-    words: number;
-    mistakes: number;
-  };
+declare interface Results {
+  play: Play;
+  quote: Quote;
+  wpm: number;
+  accuracy: number;
+  gainedXp?: number;
+  targetXp?: number;
+  targetLevel?: number;
+  targetProgress?: number;
 }

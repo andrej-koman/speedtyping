@@ -1,40 +1,24 @@
-import { currentUser } from "@clerk/nextjs/server";
-import NotFound from "~/app/not-found";
-import { getUserPlay, getQuoteById } from "~/server/queries";
 import Results from "../_components/results";
-import { calculateXPGained } from "~/lib/game";
+import { getResults } from "~/server/queries";
+import { currentUser } from "@clerk/nextjs/server";
+import { getUserPlay } from "~/server/queries";
+import { redirect } from "next/navigation";
 
 export default async function ResultsPage({
   params,
 }: {
   params: { id: number };
 }) {
-  let xp = null,
-    user = null,
-    play = null,
-    quote = null;
-  user = await currentUser();
-  if (!user) {
-    return <NotFound />;
-  }
+  const user = await currentUser();
+  if (!user) throw new Error("User not found");
 
-  play = await getUserPlay(params.id, user.id);
-  if (!play) {
-    return <NotFound />;
-  }
+  const play = await getUserPlay(params.id, user.id);
+  if (!play) return redirect("/notfound");
 
-  quote = await getQuoteById(play.quote_id);
-  if (!quote) {
-    return <NotFound />;
-  }
-
-  if (play.viewed === false) {
-    xp = calculateXPGained(play);
-  }
-
+  const results = await getResults(user, play);
   return (
     <div className="flex h-[calc(100vh-5rem)] w-screen flex-col items-center p-0">
-      <Results play={play} xp={xp} />
+      <Results results={results} />
     </div>
   );
 }

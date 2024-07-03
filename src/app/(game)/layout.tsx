@@ -1,7 +1,7 @@
 import Header from "../_components/app-header";
 import { StatsProvider } from "~/contexts/StatsContext";
 import { getUserStats } from "../actions";
-import { calculateStats } from "~/lib/levels";
+import { calculateStatsWithCalculatedFields } from "~/lib/levels";
 
 export default async function AppLayout({
   children,
@@ -14,7 +14,7 @@ export default async function AppLayout({
     return null;
   }
 
-  const stats = calculateStats(fetchedStats);
+  const stats = calculateStatsWithCalculatedFields(fetchedStats);
   return (
     <StatsProvider stats={stats}>
       <Header />

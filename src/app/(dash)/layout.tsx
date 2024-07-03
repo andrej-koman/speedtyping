@@ -2,7 +2,7 @@ import { StatsProvider } from "~/contexts/StatsContext";
 import Header from "../_components/app-header";
 import { getUserStats } from "../actions";
 import { Sidebar } from "./_components/sidebar";
-import { calculateStats } from "~/lib/levels";
+import { calculateStatsWithCalculatedFields } from "~/lib/levels";
 
 export default async function AppLayout({
   children,
@@ -15,7 +15,7 @@ export default async function AppLayout({
     return null;
   }
 
-  const stats = calculateStats(fetchedStats);
+  const stats = calculateStatsWithCalculatedFields(fetchedStats);
   return (
     <StatsProvider stats={stats}>
       <div className="flex h-screen w-screen flex-col">

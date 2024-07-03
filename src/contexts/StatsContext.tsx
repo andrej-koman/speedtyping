@@ -2,7 +2,7 @@
 import { createContext, useContext, useState } from "react";
 
 type StatsContextType = {
-  stats: Stats;
+  stats: StatsWithCalculatedFields;
   level: number;
   setLevel: React.Dispatch<React.SetStateAction<number>>;
   progress: number;
