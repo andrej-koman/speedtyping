@@ -1,11 +1,9 @@
 .not-found {
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(15, 15, 15, 1) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(15, 15, 15, 1) 100%);
   background-size: 200% 200%;
-  animation: gradient 15s ease;
+  animation: gradient 5s ease;
   animation-fill-mode: forwards;
 }
 
@@ -27,11 +25,13 @@
     left: 396px;
     bottom: 77px;
   }
+
   33% {
     background-color: orange;
     left: 396px;
     bottom: 336px;
   }
+
   66% {
     background-color: red;
     left: 396px;
@@ -43,9 +43,11 @@
   0% {
     background-position: 0% 50%;
   }
+
   100% {
     background-position: 100% 50%;
   }
+
   0% {
     background-position: 0% 50%;
   }

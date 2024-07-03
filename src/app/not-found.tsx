@@ -31,7 +31,9 @@ export default function NotFound() {
         <div className="mt-12 flex flex-row items-center justify-start space-x-4">
           <NotFoundLink href="/">Home</NotFoundLink>
           <Separator orientation="vertical" />
-          <NotFoundLink href="/play">Search</NotFoundLink>
+          <NotFoundLink href="/home">Play</NotFoundLink>
+          <Separator orientation="vertical" />
+          <NotFoundLink href="/contact">Contact</NotFoundLink>
         </div>
       </div>
       <div className="relative col-span-2 col-start-2 row-span-4 flex items-center justify-center">
