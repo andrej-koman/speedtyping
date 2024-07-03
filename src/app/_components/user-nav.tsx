@@ -20,7 +20,7 @@ import { useTranslations } from "next-intl";
 export default function UserNav() {
   const t = useTranslations();
   const { user } = useUser();
-  const { level, progress } = useStats();
+  const { level, progress, text } = useStats();
 
   const { signOut } = useClerk();
   return (
@@ -31,7 +31,8 @@ export default function UserNav() {
             <div className="flex min-w-[8rem] flex-col items-end justify-center">
               <div className="flex w-full items-center justify-between">
                 <span className="text-md font-bold">{level}</span>
-                <span className="ms-5 text-sm font-bold">{user?.username}</span>
+                <span className="text-xs text-primary">{text}</span>
+                <span className="text-sm font-bold">{user?.username}</span>
               </div>
               <Progress value={progress} />
             </div>

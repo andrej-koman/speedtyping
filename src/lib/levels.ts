@@ -5,20 +5,20 @@ const constant = 0.1;
  *  Calculate the current level of the user based on the xp
  *
  */
-const getCurrentLevel = (stats: Stats): number => {
-  return Math.floor(constant * Math.sqrt(stats.xp));
+const getCurrentLevel = (xp: number): number => {
+  return Math.floor(constant * Math.sqrt(xp));
 };
 
 /*
  *  Calculate the progress of the user based on the xp
  *
  */
-const getProgress = (stats: Stats, level: number): number => {
+const getProgress = (xp: number, level: number): number => {
   const nextLevel = level + 1;
   const currentLevelXP = Math.pow(level / constant, 2);
   const nextLevelXP = Math.pow(nextLevel / constant, 2);
 
-  return ((stats.xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
+  return ((xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
 };
 
 /*
@@ -26,7 +26,25 @@ const getProgress = (stats: Stats, level: number): number => {
  *
  */
 export const calculateStats = (stats: Stats): StatsWithCalculatedFields => {
-  const level = getCurrentLevel(stats);
-  const progress = getProgress(stats, level);
+  const level = getCurrentLevel(stats.xp);
+  const progress = getProgress(stats.xp, level);
   return { ...stats, level, progress };
 };
+
+/**
+ *  Calculate the XP for the animation, by figuring out what level the user will finish at and at what percentage
+ *  of that level they will finish at
+ *
+ */
+export function calculateXPAnimation(gainedXp: number, stats: Stats) {
+  // My plan is, that i map all the levels and the progress of the lever to the xp
+  const targetXp = stats.xp + gainedXp;
+  const targetLevel = getCurrentLevel(stats.xp);
+  const targetProgress = getProgress(targetXp, targetLevel);
+
+  return {
+    targetXp,
+    targetLevel,
+    targetProgress,
+  };
+}

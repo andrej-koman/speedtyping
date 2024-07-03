@@ -1,36 +1,40 @@
 import { currentUser } from "@clerk/nextjs/server";
 import NotFound from "~/app/not-found";
-import { getUserPlay } from "~/server/queries";
-import { updateStats } from "~/server/queries";
+import { getUserPlay, getQuoteById } from "~/server/queries";
+import Results from "../_components/results";
+import { calculateXPGained } from "~/lib/game";
 
 export default async function ResultsPage({
   params,
 }: {
   params: { id: number };
 }) {
-  const showAnimation = false;
-  const user = await currentUser();
+  let xp = null,
+    user = null,
+    play = null,
+    quote = null;
+  user = await currentUser();
   if (!user) {
     return <NotFound />;
   }
 
-  const play = await getUserPlay(params.id, user.id);
+  play = await getUserPlay(params.id, user.id);
   if (!play) {
     return <NotFound />;
   }
 
+  quote = await getQuoteById(play.quote_id);
+  if (!quote) {
+    return <NotFound />;
+  }
+
   if (play.viewed === false) {
-    // Create the animation that adds the xp to the user
-    // Set the play as viewed
+    xp = calculateXPGained(play);
   }
 
   return (
-    <div>
-      <h1>Play Results</h1>
-      <p>Mistakes: {play.mistakes}</p>
-      <p>Time: {play.time}</p>
-      <p>Characters: {play.characters}</p>
-      <p>Words: {play.words}</p>
+    <div className="flex h-[calc(100vh-5rem)] w-screen flex-col items-center p-0">
+      <Results play={play} xp={xp} />
     </div>
   );
 }

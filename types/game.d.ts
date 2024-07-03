@@ -54,3 +54,16 @@ declare interface PlayStats {
   words: number;
   mistakes: number;
 }
+
+/**
+ *  XP Animation
+ */
+declare interface XPAnimation {
+  xp: number;
+  xpSeperated: {
+    wpm: number;
+    accuracy: number;
+    words: number;
+    mistakes: number;
+  };
+}

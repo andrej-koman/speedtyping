@@ -7,6 +7,9 @@ type StatsContextType = {
   setLevel: React.Dispatch<React.SetStateAction<number>>;
   progress: number;
   setProgress: React.Dispatch<React.SetStateAction<number>>;
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  clearText: () => void;
 };
 
 const StatsContext = createContext<StatsContextType | undefined>(undefined);
@@ -29,6 +32,7 @@ export function StatsProvider({
 }) {
   const [level, setLevel] = useState(stats.level);
   const [progress, setProgress] = useState(stats.progress);
+  const [text, setText] = useState("");
 
   return (
     <StatsContext.Provider
@@ -38,6 +42,9 @@ export function StatsProvider({
         setLevel,
         progress,
         setProgress,
+        text,
+        setText,
+        clearText: () => setText(""),
       }}
     >
       {children}
