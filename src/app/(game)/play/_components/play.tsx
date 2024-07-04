@@ -15,6 +15,7 @@ import { TooltipProvider } from "~/components/ui/tooltip";
 import { type PlayStats } from "types/game";
 import { savePlayStats } from "../[id]/actions";
 import { useRouter } from "next/navigation";
+import Loader from "~/app/_components/loader";
 
 export default function Play({
   quote,
@@ -34,6 +35,7 @@ export default function Play({
   const router = useRouter();
   const [show3D, setShow3D] = useState(settings.has3D);
   const [useTextSize, setUseTextSize] = useState(settings.textSize);
+  const [isLoading, setIsLoading] = useState(false);
   quote.isFavorite = settings.isFavorite;
 
   const { hasStartedState } = useGame();
@@ -56,6 +58,7 @@ export default function Play({
   };
 
   const handleGameFinish = async (stats: PlayStats) => {
+    setIsLoading(true);
     // Save the stats to the database
     const id = await savePlayStats(stats, quote.id);
     // Redirect to the results page
@@ -83,6 +86,8 @@ export default function Play({
       handleGameFinish={handleGameFinish}
     />
   );
+
+  if (isLoading) return <Loader />;
 
   return (
     <TooltipProvider>
