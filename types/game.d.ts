@@ -16,7 +16,6 @@ declare interface GameSettings {
 
 /**
  *  Options props
- *
  */
 declare interface OptionsProps {
   handle3DChange: (pressed: boolean) => void;
@@ -30,7 +29,6 @@ declare interface OptionsProps {
 
 /**
  * Game type
- *
  */
 declare interface Game {
   carRef: MutableRefObject<Group<Object3DEventMap> | null>;
@@ -57,7 +55,6 @@ declare interface PlayStats {
 
 /**
  *  Results object
- *
  */
 declare interface Results {
   play: Play;

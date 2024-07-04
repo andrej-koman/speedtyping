@@ -38,22 +38,18 @@ export default async function Page({
   }
 
   return (
-    <div className="flex w-full flex-row justify-center">
-      <div className="flex h-full w-full">
-        <div className="flex w-full flex-col space-y-4">
-          <QuoteListLoadingProvider>
-            <QuoteSearch
-              queryDefault={searchParams?.query ?? ""}
-              searchByDefault={(searchParams?.searchBy ?? "Text") as SearchBy}
-            />
-            <QuoteList
-              quotes={quotes}
-              quoteCount={quoteCount}
-              query={searchParams?.query ?? ""}
-            />
-          </QuoteListLoadingProvider>
-        </div>
-      </div>
+    <div className="flex w-full flex-col space-y-4">
+      <QuoteListLoadingProvider>
+        <QuoteSearch
+          queryDefault={searchParams?.query ?? ""}
+          searchByDefault={(searchParams?.searchBy ?? "Text") as SearchBy}
+        />
+        <QuoteList
+          quotes={quotes}
+          quoteCount={quoteCount}
+          query={searchParams?.query ?? ""}
+        />
+      </QuoteListLoadingProvider>
     </div>
   );
 }
