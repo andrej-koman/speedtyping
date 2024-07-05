@@ -3,6 +3,15 @@ import { getResults } from "~/server/queries";
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserPlay } from "~/server/queries";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+
+export const generateMetadata = async () => {
+  const t = await getTranslations();
+  return {
+    title: t("playResults"),
+    description: t("playResultsDescription"),
+  };
+};
 
 export default async function ResultsPage({
   params,
