@@ -16,6 +16,9 @@
   "contact": "Kontakt",
   "playResults": "Rezultati igre",
   "playResultsDescription": "Oglejte si svoje rezultate igre hitrostnega tipkanja.",
+  "accuracy": "Natančnost",
+  "mistakes": "Napake",
+  "playAgain": "Igraj ponovno",
   "Features": {
     "typingPractice": "Vaja tipkanja",
     "typingPracticeDescription": "Vadite svoje veščine tipkanja z našo interaktivno igro tipkanja. Izboljšajte hitrost in natančnost tipkanja.",

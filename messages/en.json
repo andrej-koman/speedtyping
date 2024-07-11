@@ -16,6 +16,9 @@
   "contact": "Contact",
   "playResults": "Play Results",
   "playResultsDescription": "View your results from the last game you played.",
+  "accuracy": "Accuracy",
+  "mistakes": "Mistakes",
+  "playAgain": "Play again",
   "Features": {
     "typingPractice": "Typing Practice",
     "typingPracticeDescription": "Practice your typing skills with our interactive typing game. Improve your typing speed and accuracy.",
