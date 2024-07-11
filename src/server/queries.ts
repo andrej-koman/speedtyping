@@ -1,12 +1,11 @@
-import { eq, sql, count, and } from "drizzle-orm";
+import { eq, sql, count, and, desc } from "drizzle-orm";
 import { db } from "./db";
 import { favorites, quotes, stats, plays } from "./db/schema";
 import { convertSearchBy } from "~/lib/search";
 import { type User, currentUser } from "@clerk/nextjs/server";
 import { type RowList } from "postgres";
 import { calculateXPAnimation, calculateXPGained } from "~/lib/levels";
-import { calculatePlayStats } from "~/lib/game";
-import { type Results } from "types/game";
+import { type ResultsGraphData, type Results } from "types/game";
 
 /**
  * Get all the quotes from the db
@@ -226,6 +225,45 @@ export async function updateStats(userId: string, xp: number) {
 }
 
 /**
+ *  Get plays for a certain quote and create graph data
+ *
+ */
+export async function getDataForResultsGraph(
+  user_id: string,
+  quote_id: number,
+): Promise<ResultsGraphData[]> {
+  // Get the last 20 plays for the current user
+  // Save the number of all plays into a variable
+
+  // This gets all the plays for the user
+  const allPlays = await db
+    .select()
+    .from(plays)
+    .where(and(eq(plays.user_id, user_id), eq(plays.quote_id, quote_id)))
+    .orderBy(desc(plays.created_at));
+
+  const playsCount = allPlays.length;
+  const playsToDisplay = playsCount > 20 ? 20 : playsCount;
+
+  const graphData: ResultsGraphData[] = [];
+
+  // Create the graph data
+  for (let i = 0; i < playsToDisplay; i++) {
+    const play = allPlays[i];
+    if (play) {
+      graphData.push({
+        number: playsToDisplay - i,
+        wpm: play.wpm,
+        accuracy: play.accuracy,
+      });
+    }
+  }
+  // Reverse the array so the graph starts from the first
+  graphData.reverse();
+  return graphData;
+}
+
+/**
  *  Get the results object for the play
  *
  */
@@ -235,35 +273,32 @@ export async function getResults(user: User, play: Play): Promise<Results> {
 
   const playerStats = await getUserStatsForUser(user.id);
 
-  const { wpm, accuracy } = calculatePlayStats(play);
-  if (play.viewed === false) {
-    const gainedXp = calculateXPGained(wpm, accuracy, play);
-    const { targetXp, targetLevel, targetProgress } = calculateXPAnimation(
-      gainedXp,
-      playerStats,
-    );
+  const graphData = await getDataForResultsGraph(user.id, play.quote_id);
 
-    // Update the stats object with the xp and increment total_plays by 1
-    await updateStats(user.id, gainedXp);
-
-    // Set the play as viewed
-    await setPlayAsViewed(play.id);
-
-    return {
-      play,
-      quote,
-      wpm,
-      accuracy,
-      gainedXp,
-      targetXp,
-      targetLevel,
-      targetProgress,
-    };
-  }
-  return {
+  const returnObject = {
     play,
     quote,
-    wpm,
-    accuracy,
+    resultsGraph: graphData,
+  };
+
+  if (play.viewed) return returnObject;
+
+  const gainedXp = calculateXPGained(play.wpm, play.accuracy, play);
+  const { targetLevel, targetProgress } = calculateXPAnimation(
+    gainedXp,
+    playerStats,
+  );
+
+  // Update the stats object with the xp and increment total_plays by 1
+  await updateStats(user.id, gainedXp);
+
+  // Set the play as viewed
+  await setPlayAsViewed(play.id);
+
+  return {
+    ...returnObject,
+    gainedXp,
+    targetLevel,
+    targetProgress,
   };
 }

@@ -13,6 +13,13 @@ import {
   DropdownMenuLabel,
 } from "~/components/ui/dropdown-menu";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
+
 import { LogOut, Settings } from "lucide-react";
 import { useStats } from "~/contexts/StatsContext";
 import { useTranslations } from "next-intl";
@@ -20,7 +27,7 @@ import { useTranslations } from "next-intl";
 export default function UserNav() {
   const t = useTranslations();
   const { user } = useUser();
-  const { level, progress, text } = useStats();
+  const { level, progress, text, stats } = useStats();
 
   const { signOut } = useClerk();
   return (
@@ -34,7 +41,16 @@ export default function UserNav() {
                 <span className="text-xs text-primary">{text}</span>
                 <span className="text-sm font-bold">{user?.username}</span>
               </div>
-              <Progress value={progress} />
+              <TooltipProvider delayDuration={0}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Progress value={progress} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {stats.xpToNextLevel} XP {t("Header.toLevel")} {level + 1}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <Avatar className="h-8 w-8 cursor-pointer">
               <AvatarImage

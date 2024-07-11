@@ -22,6 +22,16 @@ const getProgress = (xp: number, level: number): number => {
   return ((xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
 };
 
+/**
+ *  Calculate xp needed to reach the next level
+ */
+const getXpToNextLevel = (xp: number, level: number): number => {
+  const nextLevel = level + 1;
+  const nextLevelXP = Math.pow(nextLevel / constant, 2);
+
+  return nextLevelXP - xp;
+};
+
 /*
  *  Calculate the stats of the user based on the xp
  *
@@ -31,7 +41,8 @@ export const calculateStatsWithCalculatedFields = (
 ): StatsWithCalculatedFields => {
   const level = getCurrentLevel(stats.xp);
   const progress = getProgress(stats.xp, level);
-  return { ...stats, level, progress };
+  const xpToNextLevel = getXpToNextLevel(stats.xp, level);
+  return { ...stats, level, progress, xpToNextLevel };
 };
 
 /**
@@ -49,7 +60,6 @@ export function calculateXPAnimation(
   const targetProgress = getProgress(targetXp, targetLevel);
 
   return {
-    targetXp,
     targetLevel,
     targetProgress,
   };

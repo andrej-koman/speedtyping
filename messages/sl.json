@@ -27,7 +27,8 @@
   "Header": {
     "login": "Prijava",
     "play": "Igraj",
-    "logout": "Odjava"
+    "logout": "Odjava",
+    "toLevel": "do levela"
   },
   "Auth": {
     "signInText": "Prijavite se v svoj račun",

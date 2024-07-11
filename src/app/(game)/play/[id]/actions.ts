@@ -4,6 +4,7 @@ import { db } from "~/server/db";
 import { favorites, plays } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { type PlayStats } from "types/game";
+import { calculatePlayStats } from "~/lib/game";
 
 /**
  *  Add a Quote to favorites
@@ -104,6 +105,7 @@ export async function savePlayStats(stats: PlayStats, quoteId: number) {
 
   // Make the time a decimal with 2 decimal places
   stats.time = parseFloat(stats.time.toFixed(2));
+  const { wpm, accuracy } = calculatePlayStats(stats);
 
   const result = await db
     .insert(plays)
@@ -111,6 +113,8 @@ export async function savePlayStats(stats: PlayStats, quoteId: number) {
       ...stats,
       quote_id: quoteId,
       user_id: userId,
+      wpm,
+      accuracy,
     })
     .returning({
       insertedId: plays.id,

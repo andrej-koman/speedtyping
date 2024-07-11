@@ -56,6 +56,8 @@ export const plays = pgTable("plays", {
   characters: integer("characters").default(0).notNull(),
   words: integer("words").default(0).notNull(),
   time: doublePrecision("time").default(0).notNull(),
+  wpm: doublePrecision("wpm").default(0).notNull(),
+  accuracy: doublePrecision("accuracy").default(0).notNull(),
   viewed: boolean("viewed").default(false).notNull(),
   created_at: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)

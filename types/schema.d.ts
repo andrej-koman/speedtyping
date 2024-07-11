@@ -44,6 +44,7 @@ declare interface PlayerStats {
 declare interface StatsWithCalculatedFields extends PlayerStats {
   level: number;
   progress: number;
+  xpToNextLevel: number;
 }
 
 /**
@@ -58,5 +59,7 @@ declare interface Play {
   words: number;
   time: number;
   viewed: boolean;
+  wpm: number;
+  accuracy: number;
   created_at: Date;
 }

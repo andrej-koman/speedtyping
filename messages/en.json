@@ -27,7 +27,8 @@
   "Header": {
     "login": "Login",
     "play": "Play",
-    "logout": "Logout"
+    "logout": "Logout",
+    "toLevel": "to level"
   },
   "Auth": {
     "signInText": "Sign in to your account",

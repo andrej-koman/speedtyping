@@ -54,15 +54,22 @@ declare interface PlayStats {
 }
 
 /**
+ *  Results graph object
+ */
+declare interface ResultsGraphData {
+  number: number;
+  wpm: number;
+  accuracy: number;
+}
+
+/**
  *  Results object
  */
 declare interface Results {
   play: Play;
   quote: Quote;
-  wpm: number;
-  accuracy: number;
   gainedXp?: number;
-  targetXp?: number;
   targetLevel?: number;
   targetProgress?: number;
+  resultsGraph: ResultsGraphData[];
 }
