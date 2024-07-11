@@ -243,7 +243,7 @@ export async function getDataForResultsGraph(
     .orderBy(desc(plays.created_at));
 
   const playsCount = allPlays.length;
-  const playsToDisplay = playsCount > 20 ? 20 : playsCount;
+  const playsToDisplay = playsCount > 10 ? 10 : playsCount;
 
   const graphData: ResultsGraphData[] = [];
 
@@ -252,15 +252,51 @@ export async function getDataForResultsGraph(
     const play = allPlays[i];
     if (play) {
       graphData.push({
-        number: playsToDisplay - i,
+        number: playsCount - i,
         wpm: play.wpm,
         accuracy: play.accuracy,
+        mistakes: play.mistakes,
       });
     }
   }
   // Reverse the array so the graph starts from the first
   graphData.reverse();
   return graphData;
+}
+
+/**
+ *  Get player bests for a certain quote
+ *
+ */
+export async function getPlayerBestsForQuote(
+  user_id: string,
+  quote_id: number,
+): Promise<{ wpm: number; accuracy: number }> {
+  const wpmPB = await db
+    .select()
+    .from(plays)
+    .where(and(eq(plays.user_id, user_id), eq(plays.quote_id, quote_id)))
+    .orderBy(desc(plays.wpm))
+    .limit(1);
+
+  const accuracyPB = await db
+    .select()
+    .from(plays)
+    .where(and(eq(plays.user_id, user_id), eq(plays.quote_id, quote_id)))
+    .orderBy(desc(plays.accuracy))
+    .limit(1);
+
+  if (wpmPB[0] === undefined || accuracyPB[0] === undefined) {
+    return {
+      wpm: 0,
+      accuracy: 0,
+    };
+  }
+
+  return {
+    wpm: wpmPB[0].wpm,
+    accuracy: accuracyPB[0].accuracy,
+  };
 }
 
 /**
@@ -272,16 +308,17 @@ export async function getResults(user: User, play: Play): Promise<Results> {
   if (!quote) throw new Error("Quote not found");
 
   const playerStats = await getUserStatsForUser(user.id);
-
   const graphData = await getDataForResultsGraph(user.id, play.quote_id);
+  const personalBests = await getPlayerBestsForQuote(user.id, play.quote_id);
 
   const returnObject = {
     play,
     quote,
     resultsGraph: graphData,
+    personalBests,
   };
 
-  if (play.viewed) return returnObject;
+  if (play.viewed == true) return returnObject;
 
   const gainedXp = calculateXPGained(play.wpm, play.accuracy, play);
   const { targetLevel, targetProgress } = calculateXPAnimation(

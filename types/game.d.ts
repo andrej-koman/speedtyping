@@ -60,6 +60,7 @@ declare interface ResultsGraphData {
   number: number;
   wpm: number;
   accuracy: number;
+  mistakes: number;
 }
 
 /**
@@ -72,4 +73,5 @@ declare interface Results {
   targetLevel?: number;
   targetProgress?: number;
   resultsGraph: ResultsGraphData[];
+  personalBests: { wpm: number; accuracy: number };
 }

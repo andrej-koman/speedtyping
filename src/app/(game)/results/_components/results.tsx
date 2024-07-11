@@ -28,15 +28,8 @@ export default function Results({ results }: { results: Results }) {
   }, []);
 
   return (
-    <>
+    <div className="flex w-3/5 flex-col items-stretch space-y-2 p-0">
       <ResultsChart results={results} />
-      <h1>Play Results</h1>
-      <p>Mistakes: {results.play.mistakes}</p>
-      <p>Time: {results.play.time}</p>
-      <p>Characters: {results.play.characters}</p>
-      <p>Words: {results.play.words}</p>
-      <p>Wpm: {results.play.wpm}</p>
-      <p>Accuracy: {results.play.accuracy}</p>
-    </>
+    </div>
   );
 }
