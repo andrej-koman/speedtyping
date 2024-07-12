@@ -20,6 +20,17 @@
   "mistakes": "Napake",
   "playAgain": "Igraj ponovno",
   "developmentText": "Aplikacija je v razvoju.",
+  "Faq": {
+    "title": "Pogosta zastavljena vprašanja",
+    "costQuestion": "Koliko moram plačati, da lahko igram?",
+    "costAnswer": "Hitrostno Tipkanje je popolnoma brezplačno! Ne vsebuje skritih stroškov ali nakupov znotraj aplikacije.",
+    "languagesQuestion": "Kateri jeziki so podprti?",
+    "languagesAnswer": "Trenutno podpiramo slovenski in angleški jezik. Dodanih bo več jezikov in vsak lahko prispeva, saj je odprtokoden.",
+    "specsQuestion": "Ali potrebujem dober računalnik, da lahko igram?",
+    "specsAnswer": "Naša aplikacija uporablja Three.js za 3D grafiko. Večina sodobnih računalnikov bi morala delovati gladko, vendar se zmogljivost lahko razlikuje glede na vašo strojno opremo.",
+    "supportQuestion": "Ali lahko podprem projekt?",
+    "supportAnswer": "Vsekakor! Prispevate lahko na različne načine, kateri so podrobno opisani v našem repozitoriju GitHub."
+  },
   "Features": {
     "typingPractice": "Vaja tipkanja",
     "typingPracticeDescription": "Vadite svoje veščine tipkanja z našo interaktivno igro tipkanja. Izboljšajte hitrost in natančnost tipkanja.",

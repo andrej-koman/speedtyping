@@ -38,7 +38,7 @@ export default function FeaturesSection() {
           <CarSection />
         </div>
       </div>
-      <div className="mt-16 flex flex-col gap-4 sm:mt-10 sm:flex-row">
+      <div className="mt-16 flex flex-col gap-4 sm:flex-row">
         {features.map(({ title, icon, description }) => (
           <div
             key={title}

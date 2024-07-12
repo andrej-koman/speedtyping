@@ -20,6 +20,17 @@
   "mistakes": "Mistakes",
   "playAgain": "Play again",
   "developmentText": "App is in development.",
+  "Faq": {
+    "title": "Frequently asked questions",
+    "costQuestion": "How much does it cost to play?",
+    "costAnswer": "Speed Typing is completely free to play. There are no hidden costs or in-app purchases.",
+    "languagesQuestion": "What languages are supported?",
+    "languagesAnswer": "Currently, we support Slovenian and English. More languages will be added, and anyone can contribute since it's open source.",
+    "specsQuestion": "Do i need a good computer to run this?",
+    "specsAnswer": "Our app uses Three.js for 3D graphics. Most modern computers should run it smoothly, but performance may vary depending on your hardware.",
+    "supportQuestion": "Can i support the project?",
+    "supportAnswer": "Absolutely! You can contribute in different ways, which are all detailed in our GitHub repository."
+  },
   "Features": {
     "typingPractice": "Typing Practice",
     "typingPracticeDescription": "Practice your typing skills with our interactive typing game. Improve your typing speed and accuracy.",
