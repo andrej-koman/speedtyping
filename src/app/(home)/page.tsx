@@ -1,6 +1,7 @@
 import HeroSection from "./_components/hero-section";
 import FeaturesSection from "./_components/features-section";
 import FaqsSection from "./_components/faqs-section";
+import Footer from "./_components/footer";
 
 export default async function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default async function HomePage() {
       <HeroSection />
       <FeaturesSection />
       <FaqsSection />
+      <Footer />
     </div>
   );
 }
