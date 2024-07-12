@@ -26,7 +26,7 @@ export default function FeaturesSection() {
   return (
     <div className="px-2 pb-[72px] pt-[36px] sm:pb-24 xl:w-[75rem]">
       <div className="flex flex-col items-center">
-        <h2 className="text-center text-5xl font-bold tracking-tighter sm:text-6xl">
+        <h2 className="text-center text-4xl font-bold tracking-tighter sm:text-5xl">
           {t("title")}
         </h2>
         <div className="mx-auto max-w-xl">
