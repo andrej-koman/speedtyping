@@ -2,8 +2,9 @@
 import { useTranslations } from "next-intl";
 import { MonitorPlay } from "lucide-react";
 
-import { Button } from "~/components/ui/button";
+import { buttonVariants } from "~/components/ui/button";
 import Link from "next/link";
+import { cn } from "~/lib/utils";
 
 export default function HeroSection() {
   const t = useTranslations();
@@ -32,12 +33,21 @@ export default function HeroSection() {
           </p>
         </div>
         <div className="mt-16 flex justify-center lg:mb-4 lg:mt-8">
-          <Button variant="outline" asChild className="hidden lg:inline-flex">
-            <Link href="/home">
+          {false && (
+            <Link
+              href="/home"
+              className={cn(
+                buttonVariants({
+                  size: "lg",
+                  variant: "outline",
+                }),
+                "hidden lg:inline-flex",
+              )}
+            >
               <MonitorPlay className="mr-2 h-5 w-5" />
               {t("play")}
             </Link>
-          </Button>
+          )}
         </div>
       </div>
     </div>
