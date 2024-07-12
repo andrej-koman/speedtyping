@@ -13,9 +13,9 @@ export default async function Header() {
   const t = await getTranslations("Header");
   return (
     <header className="sticky top-0 z-50 flex w-full justify-center backdrop-blur">
-      <div className="flex h-14 items-center justify-between px-5 xl:w-[75rem]">
+      <div className="flex h-14 w-full items-center justify-between px-5 xl:w-[75rem]">
         <Logo href="/" size="lg" />
-        <div className="flex flex-row gap-x-2">
+        <div className="hidden flex-row gap-x-2 xl:flex">
           <LanguageSwitcher locale={locale} />
           <SignedOut>
             <LoginButton />
@@ -29,6 +29,7 @@ export default async function Header() {
             </Button>
           </SignedIn>
         </div>
+        <LanguageSwitcher locale={locale} className="block xl:hidden" />
       </div>
     </header>
   );

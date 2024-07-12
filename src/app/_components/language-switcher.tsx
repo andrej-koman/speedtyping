@@ -12,13 +12,16 @@ import { GlobeIcon, CheckIcon } from "lucide-react";
 import { setLocale } from "~/app/actions";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { cn } from "~/lib/utils";
 
 export default function LanguageSwitcher({
   locale,
   variant = "ghost",
+  className,
 }: {
   locale: string;
   variant?: "ghost" | "outline";
+  className?: string;
 }) {
   const t = useTranslations("Lang");
   const languages = {
@@ -29,7 +32,7 @@ export default function LanguageSwitcher({
   const pathname = usePathname();
 
   return (
-    <div className="hidden sm:block">
+    <div className={className ?? ""}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant={variant} className="flex items-center gap-2">
