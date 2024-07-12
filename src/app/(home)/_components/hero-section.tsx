@@ -12,11 +12,11 @@ import {
 export default function HeroSection() {
   const t = useTranslations();
   return (
-    <div className="w-full px-2 py-8 xl:w-[75rem]">
+    <div className="w-full px-2 pt-2 xl:w-[75rem]">
       <TooltipProvider delayDuration={0}>
         <div className="hero grid-cols-2 grid-rows-1 rounded-lg px-8 py-12 xl:grid">
           <div>
-            <h1 className="font-bold sm:text-center md:text-start">
+            <h1 className="font-bold tracking-tighter sm:text-center md:text-start">
               {t("name")}
             </h1>
             <h2 className="sm:text-center md:text-start">{t("description")}</h2>

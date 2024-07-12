@@ -25,7 +25,9 @@
     "customization": "Prilagajanje",
     "customizationDescription": "Prilagodite videz aplikacije z različnimi možnostmi prilagajanja. Izberite in pobarvajte svoj avto, poiščite najboljšo progo zase in še več.",
     "leaderboards": "Lestvice",
-    "leaderboardsDescription": "Tekmujte z drugimi dirkači in se povzpnite na vrh lestvice najboljših. Ali lahko premagate najhitrejše tipkarje na svetu?"
+    "leaderboardsDescription": "Tekmujte z drugimi dirkači in se povzpnite na vrh lestvice najboljših. Ali lahko premagate najhitrejše tipkarje na svetu?",
+    "title": "Vse kar potrebujete",
+    "description": "Dirke s tipkanjem v realnem času, poglobljena 3D-grafika, sledenje napredku, globalne lestvice najboljših in zabavno, poučno igranje."
   },
   "Header": {
     "login": "Prijava",
