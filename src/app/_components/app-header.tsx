@@ -10,7 +10,7 @@ export default async function Header() {
       <div className="flex items-center justify-between p-5">
         <Logo href="/home" size="lg" />
         <div className="flex items-center space-x-6">
-          <LanguageSwitcher variant="outline" locale={locale} />
+          <LanguageSwitcher variant="ghost" locale={locale} />
           <UserNav />
         </div>
       </div>
