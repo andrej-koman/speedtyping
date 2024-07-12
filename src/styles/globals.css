@@ -200,11 +200,6 @@ body {
 
 .letter {
   margin-left: 0.1em;
-  color: #84a2ae;
-}
-
-.letter.correct {
-  color: #ffffff;
 }
 
 .text-primary-red {
@@ -231,4 +226,20 @@ body {
 .hero h2 {
   font-size: 1.75rem;
   max-width: 30rem;
+}
+
+.custom-shape-divider-bottom-1720816965 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-bottom-1720816965 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 57px;
 }
