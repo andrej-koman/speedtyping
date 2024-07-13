@@ -34,19 +34,19 @@ export default async function ResultsPage({
       key: "wpm",
       label: "WPM",
       color: "hsl(var(--chart-1))",
-      icon: <Gauge size={16} className="mr-2" />,
+      icon: <Gauge size={18} className="mr-2" />,
     },
     {
       key: "accuracy",
       label: t("accuracy"),
       color: "hsl(var(--chart-2))",
-      icon: <Target size={16} className="mr-2" />,
+      icon: <Target size={18} className="mr-2" />,
     },
     {
       key: "mistakes",
       label: t("mistakes"),
       color: "hsl(var(--chart-3))",
-      icon: <CircleSlash size={16} className="mr-2" />,
+      icon: <CircleSlash size={18} className="mr-2" />,
     },
   ];
   return (

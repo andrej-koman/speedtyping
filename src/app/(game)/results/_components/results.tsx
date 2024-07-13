@@ -9,6 +9,7 @@ import Link from "next/link";
 
 import { type ChartConfig } from "~/components/ui/chart";
 import { useTranslations } from "next-intl";
+import { cn } from "~/lib/utils";
 
 const chartConfig = {
   wpm: {
@@ -60,16 +61,20 @@ export default function Results({
   return (
     <div className="flex w-3/5 flex-col items-stretch space-y-2 p-0">
       <div className="flex justify-between">
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row">
           {charts.map((chart) => {
             const chartKey = chart.key as keyof typeof chartConfig;
             return (
               <Button
                 key={chartKey}
                 variant="outline"
-                className={activeChart === chartKey ? "bg-secondary" : ""}
+                className={cn(
+                  activeChart === chartKey ? "bg-secondary" : "",
+                  chartKey == "wpm" ? "rounded-e-none" : "",
+                  chartKey == "accuracy" ? "rounded-none" : "",
+                  chartKey == "mistakes" ? "rounded-s-none" : "",
+                )}
                 data-active={activeChart === chartKey}
-                size="sm"
                 onClick={() => setActiveChart(chartKey)}
               >
                 {chart.icon}
@@ -83,10 +88,9 @@ export default function Results({
             href={"/play/" + results.quote.id}
             className={buttonVariants({
               variant: "default",
-              size: "sm",
             })}
           >
-            <RotateCcw size={16} className="mr-2" />
+            <RotateCcw size={18} className="mr-2" />
             {t("playAgain")}
           </Link>
         </div>

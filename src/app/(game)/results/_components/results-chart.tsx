@@ -14,7 +14,7 @@ export default function ResultsChart({
   chartConfig: Record<string, { label: string; color: string }>;
 }) {
   return (
-    <ChartContainer config={chartConfig} className="h-[300px] w-full">
+    <ChartContainer config={chartConfig} className="h-[400px] w-full">
       <LineChart
         accessibilityLayer
         data={results.resultsGraph}
