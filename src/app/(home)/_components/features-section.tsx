@@ -2,6 +2,7 @@ import { FlagTriangleLeft, Paintbrush, AlignJustify } from "lucide-react";
 import CarSection from "./car-section";
 
 import { useTranslations } from "next-intl";
+import Feature from "./feature";
 
 export default function FeaturesSection() {
   const t = useTranslations("Features");
@@ -40,16 +41,12 @@ export default function FeaturesSection() {
       </div>
       <div className="mt-16 flex flex-col gap-4 sm:flex-row">
         {features.map(({ title, icon, description }) => (
-          <div
+          <Feature
             key={title}
-            className="rounded-xl border px-5 py-10 text-center sm:flex-1"
-          >
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-white text-black">
-              {icon}
-            </div>
-            <h3 className="mt-6 font-bold">{title}</h3>
-            <p className="mt-2 text-white/70">{description}</p>
-          </div>
+            title={title}
+            icon={icon}
+            description={description}
+          />
         ))}
       </div>
     </div>
