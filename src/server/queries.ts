@@ -1,4 +1,4 @@
-import { eq, sql, count, and, desc } from "drizzle-orm";
+import { eq, sql, count, and, desc, asc } from "drizzle-orm";
 import { db } from "./db";
 import { favorites, quotes, stats, plays } from "./db/schema";
 import { convertSearchBy } from "~/lib/search";
@@ -271,7 +271,7 @@ export async function getDataForResultsGraph(
 export async function getPlayerBestsForQuote(
   user_id: string,
   quote_id: number,
-): Promise<{ wpm: number; accuracy: number }> {
+): Promise<{ wpm: number; accuracy: number; mistakes: number }> {
   const wpmPB = await db
     .select()
     .from(plays)
@@ -286,16 +286,29 @@ export async function getPlayerBestsForQuote(
     .orderBy(desc(plays.accuracy))
     .limit(1);
 
-  if (wpmPB[0] === undefined || accuracyPB[0] === undefined) {
+  const mistakesPB = await db
+    .select()
+    .from(plays)
+    .where(and(eq(plays.user_id, user_id), eq(plays.quote_id, quote_id)))
+    .orderBy(asc(plays.mistakes))
+    .limit(1);
+
+  if (
+    wpmPB[0] === undefined ||
+    accuracyPB[0] === undefined ||
+    mistakesPB[0] === undefined
+  ) {
     return {
       wpm: 0,
       accuracy: 0,
+      mistakes: 0,
     };
   }
 
   return {
     wpm: wpmPB[0].wpm,
     accuracy: accuracyPB[0].accuracy,
+    mistakes: mistakesPB[0].mistakes,
   };
 }
 

@@ -10,6 +10,8 @@ import Link from "next/link";
 import { type ChartConfig } from "~/components/ui/chart";
 import { useTranslations } from "next-intl";
 import { cn } from "~/lib/utils";
+import ResultsCard from "./results-card";
+import { CardContent, CardHeader, Card } from "~/components/ui/card";
 
 const chartConfig = {
   wpm: {
@@ -29,9 +31,11 @@ const chartConfig = {
 export default function Results({
   results,
   charts,
+  play,
 }: {
   results: Results;
   charts: { key: string; label: string; color: string; icon: JSX.Element }[];
+  play: Play;
 }) {
   const t = useTranslations();
   const { setProgress, setText, setLevel } = useStats();
@@ -58,48 +62,86 @@ export default function Results({
     }
   }, []);
 
+  const resultsData = [
+    {
+      data: play.wpm,
+      title: "WPM",
+      personalBest: results.personalBests.wpm,
+    },
+    {
+      data: play.accuracy,
+      title: "Accuracy",
+      personalBest: results.personalBests.accuracy,
+    },
+    {
+      data: play.mistakes,
+      title: "Mistakes",
+      personalBest: results.personalBests.mistakes,
+    },
+  ];
+
   return (
-    <div className="flex w-3/5 flex-col items-stretch space-y-2 p-0">
-      <div className="flex justify-between">
-        <div className="flex flex-row">
-          {charts.map((chart) => {
-            const chartKey = chart.key as keyof typeof chartConfig;
-            return (
-              <Button
-                key={chartKey}
-                variant="outline"
-                className={cn(
-                  activeChart === chartKey ? "bg-secondary" : "",
-                  chartKey == "wpm" ? "rounded-e-none" : "",
-                  chartKey == "accuracy" ? "rounded-none" : "",
-                  chartKey == "mistakes" ? "rounded-s-none" : "",
-                )}
-                data-active={activeChart === chartKey}
-                onClick={() => setActiveChart(chartKey)}
-              >
-                {chart.icon}
-                {chart.label}
-              </Button>
-            );
-          })}
-        </div>
-        <div className="flex flex-row gap-2">
-          <Link
-            href={"/play/" + results.quote.id}
-            className={buttonVariants({
-              variant: "default",
+    <div className="flex w-3/5 flex-col items-stretch space-y-6 p-0">
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div className="flex flex-row">
+            {charts.map((chart) => {
+              const chartKey = chart.key as keyof typeof chartConfig;
+              return (
+                <Button
+                  key={chartKey}
+                  variant="outline"
+                  className={cn(
+                    activeChart === chartKey ? "bg-secondary" : "",
+                    chartKey == "wpm" ? "rounded-e-none" : "",
+                    chartKey == "accuracy" ? "rounded-none" : "",
+                    chartKey == "mistakes" ? "rounded-s-none" : "",
+                  )}
+                  data-active={activeChart === chartKey}
+                  onClick={() => setActiveChart(chartKey)}
+                >
+                  {chart.icon}
+                  {chart.label}
+                </Button>
+              );
             })}
-          >
-            <RotateCcw size={18} className="mr-2" />
-            {t("playAgain")}
-          </Link>
-        </div>
+          </div>
+          <h5 className="font-bold underline underline-offset-8">
+            Last 10 plays
+          </h5>
+          <div className="flex flex-row gap-2">
+            <Link
+              href={"/play/" + results.quote.id}
+              className={buttonVariants({
+                variant: "default",
+              })}
+            >
+              <RotateCcw size={18} className="mr-2" />
+              {t("playAgain")}
+            </Link>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <ResultsChart
+            results={results}
+            chartConfig={chartConfig}
+            activeChart={activeChart}
+          />
+        </CardContent>
+      </Card>
+      <div className="flex items-center justify-between gap-52">
+        {resultsData.map((object) => {
+          return (
+            <ResultsCard
+              key={object.title}
+              data={object.data}
+              title={object.title}
+              personalBest={object.personalBest}
+              className="w-max-1/3 w-full"
+            />
+          );
+        })}
       </div>
-      <ResultsChart
-        results={results}
-        chartConfig={chartConfig}
-        activeChart={activeChart}
-      />
     </div>
   );
 }

@@ -51,7 +51,7 @@ export default async function ResultsPage({
   ];
   return (
     <div className="flex h-[calc(100vh-5rem)] w-screen flex-col items-center p-0">
-      <Results results={results} charts={charts} />
+      <Results results={results} charts={charts} play={play} />
     </div>
   );
 }
