@@ -53,11 +53,8 @@ export default function Results({
       ) {
         return;
       }
-      // TODO
-      // For now, no animation is implemented
-      // I do intend to implement an animation in the future
+
       setProgress(results.targetProgress);
-      // Then update the level
       setLevel(results.targetLevel);
     }
   }, []);
@@ -84,6 +81,9 @@ export default function Results({
     <div className="flex w-3/5 flex-col items-stretch space-y-6 p-0">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
+          <h5 className="font-bold underline underline-offset-8">
+            Last 10 plays
+          </h5>
           <div className="flex flex-row">
             {charts.map((chart) => {
               const chartKey = chart.key as keyof typeof chartConfig;
@@ -106,14 +106,11 @@ export default function Results({
               );
             })}
           </div>
-          <h5 className="font-bold underline underline-offset-8">
-            Last 10 plays
-          </h5>
           <div className="flex flex-row gap-2">
             <Link
               href={"/play/" + results.quote.id}
               className={buttonVariants({
-                variant: "default",
+                variant: "outline",
               })}
             >
               <RotateCcw size={18} className="mr-2" />
