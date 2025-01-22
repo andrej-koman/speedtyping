@@ -1,21 +1,22 @@
 "use client";
-import Link from "next/link";
 import Logo from "~/app/_components/logo";
 import { Button } from "~/components/ui/button";
 import Loader from "~/app/_components/loader";
-import GitHubIcon from "~/icons/github-icon";
-import GoogleIcon from "~/icons/google-icon";
-import SignInIllustration from "~/illustrations/sign-in-illustration";
-import { useTranslations } from "next-intl";
-
-import { useSignIn, useSession } from "@clerk/nextjs";
 import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
   Tooltip,
 } from "~/components/ui/tooltip";
+
+import GitHubIcon from "~/icons/github-icon";
+import GoogleIcon from "~/icons/google-icon";
+import SignInIllustration from "~/illustrations/sign-in-illustration";
+
+import { useSignIn, useSession } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   // TODO

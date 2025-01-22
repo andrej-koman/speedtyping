@@ -1,4 +1,3 @@
-import { type PlayStats } from "types/game";
 // This constants is used to calculate the level and progress of the user based on the xp
 const constant = 0.1;
 
