@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { type LucideIcon } from "lucide-react"
+import { type LucideIcon } from "lucide-react";
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "~/components/ui/collapsible"
+} from "~/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,22 +17,23 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "~/components/ui/sidebar"
-import { ChevronRightIcon } from "@radix-ui/react-icons"
+} from "~/components/ui/sidebar";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon: LucideIcon
-    isActive?: boolean
+    title: string;
+    url: string;
+    icon: LucideIcon;
+    isActive?: boolean;
     items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+      title: string;
+      url: string;
+      isActive?: boolean;
+    }[];
+  }[];
 }) {
   return (
     <SidebarGroup>
@@ -41,7 +42,15 @@ export function NavMain({
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
+              <SidebarMenuButton
+                asChild
+                className={
+                  item.isActive && !item.items?.length
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : ""
+                }
+                tooltip={item.title}
+              >
                 <a href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
@@ -59,7 +68,14 @@ export function NavMain({
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
+                          <SidebarMenuSubButton
+                            className={
+                              subItem.isActive
+                                ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                                : ""
+                            }
+                            asChild
+                          >
                             <a href={subItem.url}>
                               <span>{subItem.title}</span>
                             </a>
@@ -75,5 +91,5 @@ export function NavMain({
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

@@ -2,7 +2,6 @@
 import * as React from "react";
 import {
   BookOpen,
-  Bot,
   LifeBuoy,
   Settings2,
   Send,
@@ -20,37 +19,42 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "~/components/ui/sidebar";
+import { usePathname } from "next/navigation";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+  console.log(pathname);
   const data = {
-    // TODO: Populate this with clerk user data
-    user: {
-      name: "shadcn",
-      email: "m@example.com",
-      avatar: "/avatars/shadcn.jpg",
-    },
     navMain: [
       {
         title: "Dashboard",
         url: "/home",
         icon: LayoutDashboard,
+        isActive: pathname == "/home",
       },
       {
         title: "Play",
-        url: "#",
+        url: "/search",
         icon: CirclePlay,
+        isActive:
+          pathname == "/search" ||
+          pathname == "/favorites" ||
+          pathname == "/recently-played",
         items: [
           {
             title: "Search",
-            url: "search",
+            url: "/search",
+            isActive: pathname == "/search",
           },
           {
             title: "Favorites",
             url: "#",
+            isActive: pathname == "/favorites",
           },
           {
             title: "Recently Played",
             url: "#",
+            isActive: pathname == "/recently-played",
           },
         ],
       },
@@ -107,7 +111,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

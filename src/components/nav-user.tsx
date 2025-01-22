@@ -1,5 +1,5 @@
 "use client";
-import { SignedIn, useUser, useClerk } from "@clerk/nextjs";
+import { useUser, useClerk } from "@clerk/nextjs";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Progress } from "~/components/ui/progress";
 import {
