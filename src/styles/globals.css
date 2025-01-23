@@ -135,7 +135,6 @@ body {
 }
 
 @keyframes spinner_GWy6 {
-
   0%,
   50% {
     width: 9px;
@@ -149,7 +148,6 @@ body {
 }
 
 @keyframes spinner_BNNO {
-
   0%,
   50% {
     x: 1.5px;
@@ -163,7 +161,6 @@ body {
 }
 
 @keyframes spinner_pVqn {
-
   0%,
   50% {
     x: 13.5px;
@@ -177,7 +174,6 @@ body {
 }
 
 @keyframes spinner_6uKB {
-
   0%,
   50% {
     x: 13.5px;
@@ -191,7 +187,6 @@ body {
 }
 
 @keyframes spinner_Qw4x {
-
   0%,
   50% {
     x: 1.5px;
@@ -231,11 +226,13 @@ body {
 }
 
 .hero {
-  background: linear-gradient(90deg,
-      rgba(73, 26, 35, 1) 0%,
-      rgba(112, 32, 48, 1) 30%,
-      rgba(225, 29, 72, 1) 63%,
-      rgba(255, 109, 141, 1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(73, 26, 35, 1) 0%,
+    rgba(112, 32, 48, 1) 30%,
+    rgba(225, 29, 72, 1) 63%,
+    rgba(255, 109, 141, 1) 100%
+  );
 }
 
 .hero h1 {

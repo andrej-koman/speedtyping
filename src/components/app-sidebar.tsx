@@ -21,9 +21,11 @@ import {
 } from "~/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  locale,
+  ...props
+}: { locale: string } & React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
-  console.log(pathname);
   const data = {
     navMain: [
       {
@@ -103,12 +105,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar collapsible="offcanvas" variant="floating" {...props}>
-      <SidebarHeader className="flex items-center justify-center">
+      <SidebarHeader className="flex items-start justify-center">
         <Logo href="/home" size="lg" />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary
+          items={data.navSecondary}
+          locale={locale}
+          className="mt-auto"
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

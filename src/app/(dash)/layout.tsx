@@ -1,10 +1,10 @@
 import { StatsProvider } from "~/contexts/StatsContext";
-import Header from "../_components/app-header";
 import { getUserStats } from "../actions";
 import { calculateStatsWithCalculatedFields } from "~/lib/levels";
 
 import { AppSidebar } from "~/components/app-sidebar";
 import { SidebarProvider } from "~/components/ui/sidebar";
+import { getLocale } from "next-intl/server";
 
 export default async function AppLayout({
   children,
@@ -12,6 +12,7 @@ export default async function AppLayout({
   children: React.ReactNode;
 }) {
   const fetchedStats = await getUserStats();
+  const locale = await getLocale();
 
   if (!fetchedStats) {
     return null;
@@ -22,9 +23,8 @@ export default async function AppLayout({
     <StatsProvider stats={stats}>
       <SidebarProvider>
         <div className="flex h-screen w-screen flex-col">
-          <Header />
           <div className="grid h-full w-full lg:grid-cols-5">
-            <AppSidebar />
+            <AppSidebar locale={locale} />
             <div className="col-span-3 p-4 lg:col-span-4">{children}</div>
           </div>
         </div>
