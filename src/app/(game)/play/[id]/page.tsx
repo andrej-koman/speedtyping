@@ -18,7 +18,6 @@ const getSettings = async (quoteId: number) => {
   const isFavorite = await isQuoteFavoritedByUser(quoteId);
   const defaultSettings = {
     has3D: false,
-    textSize: "md",
     isFavorite,
   };
 
@@ -28,7 +27,6 @@ const getSettings = async (quoteId: number) => {
 
   const settingsParsed = JSON.parse(settings) as {
     has3D: boolean;
-    textSize: string;
   };
 
   return {

@@ -24,8 +24,6 @@ export default function GameText({
     carRef,
     curveRef,
     textRef,
-    currentWordIndexRef,
-    currentLetterIndexRef,
     targetQuaternionRef,
     tRef,
   } = useGame();
@@ -34,6 +32,10 @@ export default function GameText({
   const words = useRef<NodeListOf<Element>>(
     [] as unknown as NodeListOf<Element>,
   );
+
+  // Single character index for simpler tracking
+  const currentCharIndexRef = useRef(0);
+  const gameStartedRef = useRef(false);
 
   // Statistics
   const statistics = useRef<PlayStats>({
@@ -45,81 +47,112 @@ export default function GameText({
 
   const timerIntervalRef = useRef<number | null>(null);
 
-  // TODO
-  // - Dodaj, da se spaci upoštevajo / ugotovi kako jih upoštevati
   useEffect(() => {
     words.current = document.querySelectorAll(".word");
+    
+    // Reset everything
+    currentCharIndexRef.current = 0;
+    gameStartedRef.current = false;
+    tRef.current = 0;
+    
+    statistics.current = {
+      time: 0,
+      characters: 0,
+      words: 0,
+      mistakes: 0,
+    };
+
+    // Initialize all letters as upcoming
+    initializeLetterStates();
+    
+    // Set initial cursor
+    updateCursor();
+    
     const handleKeyDown = (e: { key: string }) => {
       if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
-      const currentWord = words.current[currentWordIndexRef.current];
-      const letters = currentWord?.querySelectorAll(".letter");
-      const currentLetter =
-        currentWord?.children[currentLetterIndexRef.current];
-
-      if (!currentLetter || !currentWord || !letters) return;
+      const currentChar = quote.text[currentCharIndexRef.current];
+      if (!currentChar) return; 
 
       if (e.key === " ") {
-        moveCar();
-        updateText();
+        if (currentChar === " ") {
+          handleCorrectChar();
+        }
         return;
       }
 
-      if (e.key === currentLetter.textContent) {
-        if (currentLetter.textContent === quote.text[0]) {
-          handleGameStart();
-          timerIntervalRef.current = window.setInterval(() => {
-            if (statistics.current) statistics.current.time += 0.1;
-          }, 100);
-        }
-
-        // Count the character
-        if (statistics.current) statistics.current.characters++;
-
-        currentLetter.classList.add("correct");
-        currentLetterIndexRef.current++;
-
-        // Check if the word is completed
-        if (currentLetterIndexRef.current >= letters.length) {
-          currentWordIndexRef.current++;
-          currentLetterIndexRef.current = 0;
-
-          // Count the word
-          if (statistics.current) statistics.current.words++;
-        }
-
-        // Move the car
-        moveCar();
-        // Update the text
-        updateText();
-
-        // Check if the game is finished
-        if (currentWordIndexRef.current >= words.current.length) {
-          currentLetter.classList.remove("cursor");
-          console.log("Game finished");
-          // Stop the timerIntervalRef
-          if (timerIntervalRef.current)
-            window.clearInterval(timerIntervalRef.current);
-
-          handleGameFinish(statistics.current);
-          return;
-        }
-
-        // Move the cursor to the next letter
-        if (currentWordIndexRef.current < words.current.length) {
-          // Remove the cursor from the current letter
-          currentLetter.classList.remove("cursor");
-
-          const nextWord = words.current[currentWordIndexRef.current];
-          if (!nextWord) return;
-          const nextLetter = nextWord.children[currentLetterIndexRef.current];
-          if (!nextLetter) return;
-          nextLetter.classList.add("cursor");
-        }
+      if (e.key === currentChar) {
+        handleCorrectChar();
       } else {
-        // Count the mistake
-        if (statistics.current) statistics.current.mistakes++;
+        handleIncorrectChar();
       }
+    };
+
+    const handleCorrectChar = () => {
+      if (!gameStartedRef.current) {
+        gameStartedRef.current = true;
+        handleGameStart();
+        timerIntervalRef.current = window.setInterval(() => {
+          if (statistics.current) statistics.current.time += 0.1;
+        }, 100);
+      }
+
+      // Mark current letter as correct with better visual feedback
+      const { element } = getCurrentLetterElement();
+      if (element) {
+        element.classList.remove("upcoming", "cursor");
+        element.classList.add("correct", "typed");
+      }
+
+      // Update statistics
+      statistics.current.characters++;
+      
+      // If we just typed a space, increment words
+      if (quote.text[currentCharIndexRef.current] === " ") {
+        statistics.current.words++;
+      }
+
+      // Move to next character
+      currentCharIndexRef.current++;
+
+      // Check if game is finished
+      if (currentCharIndexRef.current >= quote.text.length) {
+        if (timerIntervalRef.current) {
+          window.clearInterval(timerIntervalRef.current);
+        }
+        handleGameFinish(statistics.current);
+        return;
+      }
+
+      updateCursor();
+      moveCar();
+    };
+
+    const handleIncorrectChar = () => {
+      // Mark current letter as incorrect with visual feedback
+      const { element } = getCurrentLetterElement();
+      if (element) {
+        element.classList.remove("upcoming", "cursor");
+        element.classList.add("incorrect", "typed");
+      }
+
+      // Update statistics
+      statistics.current.mistakes++;
+      
+      // Still move to next character
+      currentCharIndexRef.current++;
+
+      // Check if game is finished
+      if (currentCharIndexRef.current >= quote.text.length) {
+        if (timerIntervalRef.current) {
+          window.clearInterval(timerIntervalRef.current);
+        }
+        handleGameFinish(statistics.current);
+        return;
+      }
+
+      updateCursor();
+      moveCar();
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -128,16 +161,71 @@ export default function GameText({
       window.removeEventListener("keydown", handleKeyDown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [quote.id]);
+
+  const initializeLetterStates = () => {
+    const allLetters = document.querySelectorAll(".letter");
+    allLetters.forEach(letter => {
+      letter.classList.remove("correct", "incorrect", "cursor", "typed");
+      letter.classList.add("upcoming");
+    });
+  };
+
+  const getCurrentLetterElement = () => {
+    let wordIndex = 0;
+    let letterIndex = 0;
+
+    for (let i = 0; i < currentCharIndexRef.current; i++) {
+      if (quote.text[i] === " ") {
+        wordIndex++;
+        letterIndex = 0;
+      } else {
+        letterIndex++;
+      }
+    }
+
+    if (quote.text[currentCharIndexRef.current] === " ") {
+      return { element: null, wordIndex, letterIndex };
+    }
+
+    if (quote.text[currentCharIndexRef.current] !== " ") {
+      const word = words.current[wordIndex];
+      if (!word) return { element: null, wordIndex, letterIndex };
+
+      const element = word.children[letterIndex] as HTMLElement;
+      return { element, wordIndex, letterIndex };
+    }
+
+    return { element: null, wordIndex, letterIndex };
+  };
+
+  const updateCursor = () => {
+    // Remove cursor from all elements
+    document.querySelectorAll(".letter.cursor").forEach(el => el.classList.remove("cursor"));
+
+    // Skip if we're at the end
+    if (currentCharIndexRef.current >= quote.text.length) {
+      return;
+    }
+
+    // Skip spaces - they don't get visual cursor
+    if (quote.text[currentCharIndexRef.current] === " ") {
+      return;
+    }
+
+    const { element } = getCurrentLetterElement();
+    if (element) {
+      element.classList.add("cursor");
+    }
+  };
 
   const moveCar = () => {
     if (carRef.current && curveRef.current && has3D) {
-      // update the car's position to create the animation
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      tRef.current += carSpeed;
-
-      // Make the car stop at the end of the curve
-      tRef.current = Math.min(1, tRef.current);
+      const totalCharacters = quote.text.length;
+      const progress = Math.min(currentCharIndexRef.current / totalCharacters, 1);
+      
+      tRef.current = progress;
+      
       const point = curveRef.current.getPointAt(tRef.current);
       const tangent = curveRef.current.getTangentAt(tRef.current);
       carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
@@ -172,16 +260,19 @@ export default function GameText({
 
   return (
     <div
-      className={`noselect flex w-[60rem] flex-row flex-wrap justify-center ${className ?? ""}`}
+      className={`noselect flex w-[60rem] flex-row flex-wrap justify-center leading-relaxed text-2xl ${className ?? ""}`}
+      style={{ fontFamily: 'Consolas, "Courier New", monospace' }}
     >
-      {quote.text.split(" ").map((word, index) => (
-        <span key={`${index} ${word}`} className="word">
-          {word.split("").map((letter, index) => (
-            <span key={`${index} ${letter}`} className="letter">
+      {quote.text.split(" ").map((word, wordIndex) => (
+        <span key={`${wordIndex}-${word}`} className="word inline-block mr-2 mb-1">
+          {word.split("").map((letter, letterIndex) => (
+            <span 
+              key={`${wordIndex}-${letterIndex}-${letter}`} 
+              className="letter inline-block"
+            >
               {letter}
             </span>
           ))}
-          &nbsp;
         </span>
       ))}
     </div>

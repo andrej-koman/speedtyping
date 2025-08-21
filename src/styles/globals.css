@@ -200,21 +200,41 @@ body {
 }
 
 /** CURSOR **/
-.cursor::before {
-  content: "|";
-  opacity: 1;
-  font-size: 1.5rem;
-  width: 0.1em;
-  right: 1px;
-  color: hsl(var(--primary));
+.cursor {
+  position: relative;
+}
+
+.cursor::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: hsl(var(--primary));
 }
 
 .letter {
-  margin-left: 0.1em;
+  position: relative;
+  transition: all 0.15s ease;
+  padding: 2px 1px;
+  border-radius: 3px;
+}
+
+.letter.upcoming {
+  color: #6b7280;
 }
 
 .letter.correct {
-  color: hsl(var(--primary));
+  color: #ffffff;
+}
+
+.letter.incorrect {
+  color: #ef4444;
+}
+
+.letter.typed {
+  opacity: 1;
 }
 
 .text-primary-red {

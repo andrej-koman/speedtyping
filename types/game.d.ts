@@ -19,10 +19,8 @@ declare interface GameSettings {
  */
 declare interface OptionsProps {
   handle3DChange: (pressed: boolean) => void;
-  handleTextSizeChange: (value: string) => void;
   setHasStarted: React.Dispatch<React.SetStateAction<boolean>>;
   show3D: boolean;
-  textSize: string;
   quote?: Quote;
   hasStarted: boolean;
 }

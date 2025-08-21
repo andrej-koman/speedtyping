@@ -9,7 +9,7 @@
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate:pg",
     "db:migrate": "pnpm tsx src/server/db/migrate.ts",
-    "dev": "NODE_OPTIONS='--inspect' next dev --turbo",
+    "dev": "cross-env NODE_OPTIONS=--inspect next dev --turbo",
     "lint": "next lint",
     "start": "next start",
     "git:push": "git push && ./deploy.sh"
@@ -66,6 +66,7 @@
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
+    "cross-env": "^10.0.0",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.22.7",
     "drizzle-orm": "^0.31.2",

@@ -28,13 +28,11 @@ export default function Play({
   defaultLayout?: number[];
   settings: {
     has3D: boolean;
-    textSize: string;
     isFavorite: boolean;
   };
 }) {
   const router = useRouter();
   const [show3D, setShow3D] = useState(settings.has3D);
-  const [useTextSize, setUseTextSize] = useState(settings.textSize);
   const [isLoading, setIsLoading] = useState(false);
   quote.isFavorite = settings.isFavorite;
 
@@ -44,12 +42,6 @@ export default function Play({
   const handle3DChange = (pressed: boolean) => {
     setShow3D(pressed);
     settings.has3D = pressed;
-    document.cookie = `gameSettings=${JSON.stringify(settings)}; max-age=${24 * 60 * 60 * 365};`;
-  };
-
-  const handleTextSizeChange = (value: string) => {
-    setUseTextSize(value);
-    settings.textSize = value;
     document.cookie = `gameSettings=${JSON.stringify(settings)}; max-age=${24 * 60 * 60 * 365};`;
   };
 
@@ -68,9 +60,7 @@ export default function Play({
   const OptionsMounted = (
     <Options
       handle3DChange={handle3DChange}
-      handleTextSizeChange={handleTextSizeChange}
       show3D={show3D}
-      textSize={useTextSize}
       quote={quote}
       hasStarted={hasStarted}
       setHasStarted={setHasStarted}
@@ -103,7 +93,7 @@ export default function Play({
           <ResizablePanel minSize={30} defaultSize={defaultLayout[0]}>
             {OptionsMounted}
             <div
-              className={`-mt-12 flex h-[100%] items-center justify-center text-${useTextSize}`}
+              className={`-mt-12 flex h-[100%] items-center justify-center`}
             >
               {GameTextMounted}
             </div>
@@ -120,7 +110,7 @@ export default function Play({
         <>
           {OptionsMounted}
           <div
-            className={`mb-32 flex h-[100%] items-center justify-center text-${useTextSize}`}
+            className={`mb-32 flex h-[100%] items-center justify-center`}
           >
             {GameTextMounted}
           </div>

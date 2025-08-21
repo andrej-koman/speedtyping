@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 import { type OptionsProps } from "types/game";
-import { Box, SlidersHorizontal, Type, Star, RotateCcw } from "lucide-react";
+import { Box, SlidersHorizontal, Star, RotateCcw } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { Toggle } from "~/components/ui/toggle";
@@ -11,14 +11,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
 } from "~/components/ui/dropdown-menu";
 
 import { useGame } from "~/contexts/GameContext";
-import { textSizeMapping } from "~/lib/utils";
 
 import {
   Sheet,
@@ -42,10 +37,8 @@ import { useTranslations } from "next-intl";
 
 export default function Options({
   handle3DChange,
-  handleTextSizeChange,
   setHasStarted,
   show3D,
-  textSize,
   quote,
   hasStarted,
 }: OptionsProps) {
@@ -103,7 +96,6 @@ export default function Options({
     }
 
     if (isFavorite) {
-      // Remove from favorites
       await removeQuoteFromFavorites(quote.id).then((res) => {
         if (!res) {
           throw new Error("Something is wrong");
@@ -119,23 +111,24 @@ export default function Options({
             break;
         }
       });
-    } else {
-      // Add to favorites
-      await addQuoteToFavorites(quote.id).then((res) => {
-        if (!res) {
-          throw new Error("Something is wrong");
-        }
-        switch (res.status) {
-          case "error":
-            toast.error(res.message);
-            break;
-          case "success":
-            toast.success(res.message);
-            setIsFavorite(true);
-            break;
-        }
-      });
+
+      return;
     }
+
+    await addQuoteToFavorites(quote.id).then((res) => {
+      if (!res) {
+        throw new Error("Something is wrong");
+      }
+      switch (res.status) {
+        case "error":
+          toast.error(res.message);
+          break;
+        case "success":
+          toast.success(res.message);
+          setIsFavorite(true);
+          break;
+      }
+    });
   };
 
   useEffect(() => {
@@ -177,32 +170,6 @@ export default function Options({
         <div className="grid grid-cols-3 grid-rows-1 space-x-1 xl:w-[60rem]">
           <div></div>
           <div className="flex flex-row items-center justify-center space-x-1">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="outline">
-                  <Type className="mr-2 h-4 w-4" />
-                  {textSizeMapping[textSize]}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Text Size</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup
-                  value={textSize}
-                  onValueChange={handleTextSizeChange}
-                >
-                  <DropdownMenuRadioItem value="sm">
-                    Small
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="md">
-                    Medium
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="2xl">
-                    Large
-                  </DropdownMenuRadioItem>
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
             <Toggle
               defaultPressed={show3D}
               onPressedChange={handle3DChange}
