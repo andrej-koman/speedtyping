@@ -6,7 +6,7 @@ import { type PlayStats } from "types/game";
 
 export default function GameText({
   quote,
-  carSpeed,
+  carSpeed: _carSpeed,
   className,
   handleGameFinish,
   handleGameStart,
@@ -31,9 +31,10 @@ export default function GameText({
     [] as unknown as NodeListOf<Element>,
   );
 
-  // Single character index for simpler tracking
   const currentCharIndexRef = useRef(0);
   const gameStartedRef = useRef(false);
+  const targetTRef = useRef(0);
+  const animationFrameRef = useRef<number | null>(null);
 
   // Statistics
   const statistics = useRef<PlayStats>({
@@ -52,6 +53,13 @@ export default function GameText({
     currentCharIndexRef.current = 0;
     gameStartedRef.current = false;
     tRef.current = 0;
+    targetTRef.current = 0;
+    
+    // Cancel any ongoing animation
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
     
     statistics.current = {
       time: 0,
@@ -60,13 +68,16 @@ export default function GameText({
       mistakes: 0,
     };
 
-    // Initialize all letters as upcoming
     initializeLetterStates();
-    
-    // Set initial cursor
     updateCursor();
     
     const handleKeyDown = (e: { key: string }) => {
+      // Handle backspace/delete
+      if (e.key === "Backspace" || e.key === "Delete") {
+        handleBackspace();
+        return;
+      }
+
       if (!e.key.match(/^[a-zA-ZčšžČŠŽ!?:,;. ]{1}$/)) return;
 
       const currentChar = quote.text[currentCharIndexRef.current];
@@ -153,10 +164,44 @@ export default function GameText({
       moveCar();
     };
 
+    const handleBackspace = () => {
+      if (currentCharIndexRef.current <= 0) return;
+
+      // Move back one character
+      currentCharIndexRef.current--;
+
+      const { element } = getCurrentLetterElement();
+      if (element) {
+        element.classList.remove("correct", "incorrect", "typed");
+        element.classList.add("upcoming");
+      }
+
+      if (statistics.current.characters > 0) {
+        statistics.current.characters--;
+      }
+
+      if (quote.text[currentCharIndexRef.current] === " " && statistics.current.words > 0) {
+        statistics.current.words--;
+      }
+
+      updateCursor();
+      moveCar();
+    };
+
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+      
+      if (timerIntervalRef.current) {
+        window.clearInterval(timerIntervalRef.current);
+        timerIntervalRef.current = null;
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quote.id]);
@@ -198,16 +243,9 @@ export default function GameText({
   };
 
   const updateCursor = () => {
-    // Remove cursor from all elements
     document.querySelectorAll(".letter.cursor").forEach(el => el.classList.remove("cursor"));
 
-    // Skip if we're at the end
     if (currentCharIndexRef.current >= quote.text.length) {
-      return;
-    }
-
-    // Skip spaces - they don't get visual cursor
-    if (quote.text[currentCharIndexRef.current] === " ") {
       return;
     }
 
@@ -220,45 +258,68 @@ export default function GameText({
   const moveCar = () => {
     if (carRef.current && curveRef.current) {
       const totalCharacters = quote.text.length;
-      const progress = Math.min(currentCharIndexRef.current / totalCharacters, 1);
+      const targetProgress = Math.min(currentCharIndexRef.current / totalCharacters, 1);
       
-      tRef.current = progress;
-      
-      const point = curveRef.current.getPointAt(tRef.current);
-      const tangent = curveRef.current.getTangentAt(tRef.current);
-      carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
-
-      // Calculate the target rotation
-      if (targetQuaternionRef) {
-        (targetQuaternionRef.current as Quaternion).setFromAxisAngle(
-          new Vector3(0, 1, 0),
-          -Math.atan2(-tangent.x, tangent.z),
-        );
-
-        // Gradually rotate the car towards the target rotation
-        carRef.current.quaternion.slerp(
-          targetQuaternionRef.current as Quaternion,
-          0.5,
-        );
+      targetTRef.current = targetProgress;
+      if (!animationFrameRef.current) {
+        animateCarMovement();
       }
     }
   };
 
-  const updateText = () => {
-    if (textRef.current) {
-      // TODO
-      // - Implement basic camera settings, which will be saved in local storage
-      // - Implement the camera settings in the game
-      /*
-      (textRef.current as unknown as Object3D).lookAt(
+  const animateCarMovement = () => {
+    if (!carRef.current || !curveRef.current) return;
+
+    const currentT = tRef.current;
+    const targetT = targetTRef.current;
+    
+    // Calculate the distance to move this frame
+    const distance = targetT - currentT;
+    
+    // If we're close enough, snap to target and stop animation
+    if (Math.abs(distance) < 0.001) {
+      tRef.current = targetT;
+      updateCarPosition();
+      animationFrameRef.current = null;
+      return;
+    }
+    
+    // Move towards target smoothly
+    // Adjust the 0.05 value to make car faster (higher) or slower (lower)
+    const speed = Math.min(Math.abs(distance) * 0.1, 0.05);
+    tRef.current += distance > 0 ? speed : -speed;
+    
+    updateCarPosition();
+    
+    // Continue animation
+    animationFrameRef.current = requestAnimationFrame(animateCarMovement);
+  };
+
+  const updateCarPosition = () => {
+    if (!carRef.current || !curveRef.current) return;
+    
+    const point = curveRef.current.getPointAt(tRef.current);
+    const tangent = curveRef.current.getTangentAt(tRef.current);
+    carRef.current.position.set(point.x, point.y - 0.5, point.z + 8);
+
+    // Calculate the target rotation
+    if (targetQuaternionRef) {
+      (targetQuaternionRef.current as Quaternion).setFromAxisAngle(
+        new Vector3(0, 1, 0),
+        -Math.atan2(-tangent.x, tangent.z),
       );
-      */
+
+      // Gradually rotate the car towards the target rotation
+      carRef.current.quaternion.slerp(
+        targetQuaternionRef.current as Quaternion,
+        0.1, // Reduced from 0.5 for smoother rotation
+      );
     }
   };
 
   return (
     <div
-      className={`noselect flex w-[60rem] flex-row flex-wrap justify-center leading-relaxed text-2xl ${className ?? ""}`}
+      className={`noselect flex w-[60rem] flex-row flex-wrap justify-center leading-relaxed text-3xl ${className ?? ""}`}
       style={{ fontFamily: 'Consolas, "Courier New", monospace' }}
     >
       {quote.text.split(" ").map((word, wordIndex) => (

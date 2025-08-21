@@ -207,7 +207,7 @@ body {
 .cursor::after {
   content: "";
   position: absolute;
-  bottom: -2px;
+  bottom: 6px;
   left: 0;
   right: 0;
   height: 2px;
