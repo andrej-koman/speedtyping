@@ -8,14 +8,12 @@ export default function GameText({
   quote,
   carSpeed,
   className,
-  has3D,
   handleGameFinish,
   handleGameStart,
 }: {
   quote: Quote;
   carSpeed: number;
   className?: string;
-  has3D: boolean;
   handleGameFinish: (stats: PlayStats) => void;
   handleGameStart: () => void;
 }) {
@@ -220,7 +218,7 @@ export default function GameText({
   };
 
   const moveCar = () => {
-    if (carRef.current && curveRef.current && has3D) {
+    if (carRef.current && curveRef.current) {
       const totalCharacters = quote.text.length;
       const progress = Math.min(currentCharIndexRef.current / totalCharacters, 1);
       

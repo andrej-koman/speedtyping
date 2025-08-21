@@ -1,4 +1,5 @@
 // Mock quote data for playground testing
+import { type PlayStats } from "types/game";
 
 export const MOCK_QUOTES: Quote[] = [
   {
@@ -60,7 +61,7 @@ export const MOCK_QUOTES: Quote[] = [
 
 // Mock actions for playground (they don't actually save anything)
 export const playgroundActions = {
-  savePlayStats: async (stats: any, quoteId: number) => {
+  savePlayStats: async (stats: PlayStats, quoteId: number) => {
     console.log("Playground - Mock savePlayStats:", { stats, quoteId });
     return Promise.resolve(Math.floor(Math.random() * 1000));
   },
@@ -83,6 +84,5 @@ export const playgroundActions = {
 };
 
 export const DEFAULT_PLAYGROUND_SETTINGS = {
-  has3D: true,
   isFavorite: false,
 };

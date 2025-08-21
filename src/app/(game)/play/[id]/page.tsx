@@ -14,25 +14,12 @@ export async function generateMetadata() {
 }
 
 const getSettings = async (quoteId: number) => {
-  const settings = cookies().get("gameSettings")?.value ?? "";
   const isFavorite = await isQuoteFavoritedByUser(quoteId);
   const defaultSettings = {
-    has3D: false,
     isFavorite,
   };
 
-  if (!settings) {
-    return defaultSettings;
-  }
-
-  const settingsParsed = JSON.parse(settings) as {
-    has3D: boolean;
-  };
-
-  return {
-    ...settingsParsed,
-    isFavorite,
-  };
+  return defaultSettings;
 };
 
 export default async function PlayPage({ params }: { params: { id: number } }) {

@@ -7,33 +7,12 @@ import {
 } from "three";
 
 /**
- * Game settings
- */
-declare interface GameSettings {
-  has3D: MutableRefObject<boolean>;
-  textSize: MutableRefObject<string>;
-}
-
-/**
- *  Options props
- */
-declare interface OptionsProps {
-  handle3DChange: (pressed: boolean) => void;
-  setHasStarted: React.Dispatch<React.SetStateAction<boolean>>;
-  show3D: boolean;
-  quote?: Quote;
-  hasStarted: boolean;
-}
-
-/**
  * Game type
  */
 declare interface Game {
   carRef: MutableRefObject<Group<Object3DEventMap> | null>;
   carStartPositionRef: MutableRefObject<Vector3 | null>;
   carStartRotationRef: MutableRefObject<Euler | null>;
-  currentWordIndexRef: MutableRefObject<number>;
-  currentLetterIndexRef: MutableRefObject<number>;
   targetQuaternionRef: MutableRefObject<Quaternion>;
   tRef: MutableRefObject<number>;
   curveRef: MutableRefObject<CatmullRomCurve3 | null>;

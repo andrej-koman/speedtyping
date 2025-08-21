@@ -7,7 +7,6 @@ import {
 
 import GameText from "./game-text";
 import Game3DModel from "./game3d";
-import Options from "./options";
 
 import { useState } from "react";
 import { useGame } from "~/contexts/GameContext";
@@ -27,23 +26,15 @@ export default function Play({
   carSpeed: number;
   defaultLayout?: number[];
   settings: {
-    has3D: boolean;
     isFavorite: boolean;
   };
 }) {
   const router = useRouter();
-  const [show3D, setShow3D] = useState(settings.has3D);
   const [isLoading, setIsLoading] = useState(false);
   quote.isFavorite = settings.isFavorite;
 
   const { hasStartedState } = useGame();
   const [hasStarted, setHasStarted] = hasStartedState;
-
-  const handle3DChange = (pressed: boolean) => {
-    setShow3D(pressed);
-    settings.has3D = pressed;
-    document.cookie = `gameSettings=${JSON.stringify(settings)}; max-age=${24 * 60 * 60 * 365};`;
-  };
 
   const handleGameStart = () => {
     setHasStarted(true);
@@ -57,21 +48,10 @@ export default function Play({
     router.push(`/results/${id}`);
   };
 
-  const OptionsMounted = (
-    <Options
-      handle3DChange={handle3DChange}
-      show3D={show3D}
-      quote={quote}
-      hasStarted={hasStarted}
-      setHasStarted={setHasStarted}
-    />
-  );
-
   const GameTextMounted = (
     <GameText
       quote={quote}
       carSpeed={carSpeed}
-      has3D={show3D}
       handleGameStart={handleGameStart}
       handleGameFinish={handleGameFinish}
     />
@@ -81,41 +61,24 @@ export default function Play({
 
   return (
     <TooltipProvider>
-      {show3D ? (
-        <ResizablePanelGroup
-          direction="vertical"
-          onLayout={(sizes: number[]) => {
-            document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-              sizes,
-            )}; max-age=${24 * 60 * 60 * 365};`;
-          }}
-        >
-          <ResizablePanel minSize={30} defaultSize={defaultLayout[0]}>
-            {OptionsMounted}
-            <div
-              className={`-mt-12 flex h-[100%] items-center justify-center`}
-            >
-              {GameTextMounted}
-            </div>
-          </ResizablePanel>
-          <ResizableHandle
-            withHandle
-            className={hasStarted ? "opacity-0" : ""}
-          />
-          <ResizablePanel minSize={40} defaultSize={defaultLayout[1]}>
-            <Game3DModel />
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      ) : (
-        <>
-          {OptionsMounted}
-          <div
-            className={`mb-32 flex h-[100%] items-center justify-center`}
-          >
+      <ResizablePanelGroup
+        direction="vertical"
+        onLayout={(sizes: number[]) => {
+          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+            sizes,
+          )}; max-age=${24 * 60 * 60 * 365};`;
+        }}
+      >
+        <ResizablePanel minSize={30} defaultSize={defaultLayout[0]}>
+          <div className={`-mt-12 flex h-[100%] items-center justify-center`}>
             {GameTextMounted}
           </div>
-        </>
-      )}
+        </ResizablePanel>
+        <ResizableHandle withHandle className={hasStarted ? "opacity-0" : ""} />
+        <ResizablePanel minSize={40} defaultSize={defaultLayout[1]}>
+          <Game3DModel />
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </TooltipProvider>
   );
 }

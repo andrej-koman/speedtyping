@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useRef, useMemo } from "react";
-import { Euler, Quaternion, Vector3 } from "three";
+import { Quaternion, Vector3, Euler } from "three";
 import { type Game } from "types/game";
 
 // Create a new context with an undefined initial value
@@ -23,8 +23,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const carStartRotationRef = useRef<Euler>(new Euler(0, 0, 0));
   const targetQuaternionRef = useRef(new Quaternion());
   const tRef = useRef(0);
-  const currentWordIndexRef = useRef(0);
-  const currentLetterIndexRef = useRef(0);
   const curveRef = useRef(null);
   const textRef = useRef(null);
 
@@ -34,8 +32,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       carRef,
       carStartPositionRef,
       carStartRotationRef,
-      currentWordIndexRef,
-      currentLetterIndexRef,
       targetQuaternionRef,
       tRef,
       curveRef,
